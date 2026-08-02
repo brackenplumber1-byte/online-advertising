@@ -34,7 +34,7 @@ $areas      = unserialize(GP_AREAS);
         <div class="hero-proof">
           <div class="proof-item"><div class="proof-dot"><svg width="14" height="14" fill="#F87171" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></div><span class="proof-text">PIRB Registered<br>&amp; Fully Insured</span></div>
           <div class="proof-item"><div class="proof-dot"><svg width="14" height="14" fill="#F87171" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm.5 15h-1.5v-7h1.5v7zm0-9h-1.5V6.5h1.5V8z"/></svg></div><span class="proof-text">30-Min Emergency<br>Response</span></div>
-          <div class="proof-item"><div class="proof-dot"><svg width="14" height="14" fill="#F87171" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div><span class="proof-text">4.9★ Google<br>Rated</span></div>
+          <div class="proof-item"><div class="proof-dot"><svg width="14" height="14" fill="#F87171" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div><span class="proof-text">4.8★ Google<br>Rated</span></div>
           <div class="proof-item"><div class="proof-dot"><svg width="14" height="14" fill="#F87171" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="proof-text">No Call-Out<br>Fee Ever</span></div>
         </div>
       </div>
@@ -73,7 +73,7 @@ $areas      = unserialize(GP_AREAS);
   <div class="trust-item"><svg width="18" height="18" fill="#fff" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>PIRB Registered</div>
   <div class="trust-item"><svg width="18" height="18" fill="#fff" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm.5 15h-1.5v-7h1.5v7zm0-9h-1.5V6.5h1.5V8z"/></svg>Available 24/7</div>
   <div class="trust-item"><svg width="18" height="18" fill="#fff" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>No Call-Out Fee</div>
-  <div class="trust-item"><svg width="18" height="18" fill="#fff" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>4.9★ Google Rating</div>
+  <div class="trust-item"><svg width="18" height="18" fill="#fff" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>4.8★ Google Rating</div>
   <div class="trust-item"><svg width="18" height="18" fill="#fff" viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg>Guaranteed Work</div>
 </div></div>
 
@@ -82,7 +82,7 @@ $areas      = unserialize(GP_AREAS);
   <div class="stat-block"><div class="stat-num">10<span>+</span></div><div class="stat-label">Years Experience</div></div>
   <div class="stat-block"><div class="stat-num">1<span>,</span>500<span>+</span></div><div class="stat-label">Jobs Completed</div></div>
   <div class="stat-block"><div class="stat-num">24<span>/</span>7</div><div class="stat-label">Emergency Response</div></div>
-  <div class="stat-block"><div class="stat-num">4<span>.</span>9<span>★</span></div><div class="stat-label">Google Rating</div></div>
+  <div class="stat-block"><div class="stat-num">4<span>.</span>8<span>★</span></div><div class="stat-label">Google Rating</div></div>
 </div></div>
 
 <!-- ═══ REAL WORK PHOTO STRIP ═══════════════════════════════════════════ -->
