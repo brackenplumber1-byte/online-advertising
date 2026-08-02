@@ -100,12 +100,11 @@ $imgdir = get_template_directory_uri() . '/assets/images/';
 <!-- REVIEW STRIP -->
 <div class="review-strip">
   <div class="container">
-    <h2 style="font-size:1.4rem;font-weight:800;color:var(--navy);margin-bottom:24px">Trusted by <?php echo esc_html($name); ?> Residents</h2>
+    <h2 style="font-size:1.4rem;font-weight:800;color:var(--navy);margin-bottom:24px">What Our Customers Say</h2>
     <div class="review-strip-grid">
-      <div class="mini-review"><div class="stars">★★★★★</div><blockquote>"Called at midnight with a burst pipe. They were here in 20 minutes. Absolute professionals."</blockquote><div class="mini-reviewer">— Resident, <?php echo esc_html($name); ?></div></div>
-      <div class="mini-review"><div class="stars">★★★★★</div><blockquote>"Best plumber I've used in years. Honest pricing, clean work, and a proper guarantee."</blockquote><div class="mini-reviewer">— Homeowner, <?php echo esc_html($name); ?></div></div>
-      <div class="mini-review"><div class="stars">★★★★★</div><blockquote>"Fixed our geyser same day. Very professional. No surprise charges. Will use again."</blockquote><div class="mini-reviewer">— Customer, <?php echo esc_html($name); ?></div></div>
+      <?php echo gp_review_cards($slug); ?>
     </div>
+    <p style="margin-top:16px"><a href="<?php echo esc_url(gp_google()); ?>" target="_blank">Read all our Google reviews →</a></p>
   </div>
 </div>
 

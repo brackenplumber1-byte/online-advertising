@@ -251,10 +251,9 @@
   <div class="container">
     <h2 style="font-size:1.4rem;font-weight:800;color:var(--navy);margin-bottom:24px">What Our Customers Say</h2>
     <div class="review-strip-grid">
-      <div class="mini-review"><div class="stars">★★★★★</div><blockquote>"Fast, professional, and fixed the problem properly first time. No hidden charges. Highly recommend."</blockquote><div class="mini-reviewer">— Real reviews coming soon</div></div>
-      <div class="mini-review"><div class="stars">★★★★★</div><blockquote>"Responded within the hour on a public holiday. Excellent workmanship and a very fair price."</blockquote><div class="mini-reviewer">— Real reviews coming soon</div></div>
-      <div class="mini-review"><div class="stars">★★★★★</div><blockquote>"Best plumbers in the East Rand. Honest, reliable, and they clean up after themselves."</blockquote><div class="mini-reviewer">— Real reviews coming soon</div></div>
+      <?php echo gp_review_cards($slug); ?>
     </div>
+    <p style="margin-top:16px"><a href="<?php echo esc_url(gp_google()); ?>" target="_blank">Read all our Google reviews →</a></p>
   </div>
 </div>
 

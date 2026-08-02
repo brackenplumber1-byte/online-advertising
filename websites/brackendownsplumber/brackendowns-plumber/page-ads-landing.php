@@ -122,7 +122,7 @@ $imgdir     = get_template_directory_uri() . '/assets/images/';
 
   <div class="al-reviews">
     <div class="stars">★★★★★</div>
-    <p>4.9★ rated on Google — trusted by homeowners across Brackendowns and the East Rand</p>
+    <p>4.8★ rated on Google (21 reviews) — trusted by homeowners across Brackendowns and the East Rand</p>
   </div>
 
   <p class="al-footer-note">Brackendowns Plumber · Brackendowns, Alberton · PIRB Registered</p>

@@ -174,12 +174,7 @@ $areas      = unserialize(GP_AREAS);
       <a href="<?php echo esc_url($review); ?>" target="_blank" class="btn btn--red">⭐ Leave a Review</a>
     </div>
     <div class="rev-grid">
-      <!--
-        NOTE: Fabricated reviews (invented names/quotes, false "Google Review"
-        label) were removed here. This business has a real Google review
-        link — replace this comment with genuine review cards once real
-        customer reviews exist. Never invent quotes or fake the source label.
-      -->
+      <?php echo gp_review_cards('home', 6); ?>
     </div>
   </div>
 </section>
