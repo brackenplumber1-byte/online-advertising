@@ -63,6 +63,10 @@ function gp_service_icon_path($slug) {
     return $icons[$slug] ?? 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z';
 }
 
+// Alberton, Bedfordview, Benoni, Boksburg, Brackendowns, Brakpan, Edenvale,
+// Germiston and Glenvista are deliberately excluded here — those suburbs are
+// already covered by our other client, Bracken Downs Plumber, and we don't
+// want two managed sites competing for the same local searches.
 define('GP_AREAS', serialize([
     'midrand'        => 'Midrand',
     'centurion'      => 'Centurion',
@@ -75,29 +79,20 @@ define('GP_AREAS', serialize([
     'kempton-park'   => 'Kempton Park',
     'roodepoort'     => 'Roodepoort',
     'randburg'       => 'Randburg',
-    'boksburg'       => 'Boksburg',
-    'edenvale'       => 'Edenvale',
-    'alberton'       => 'Alberton',
-    'germiston'      => 'Germiston',
-    'brackendowns'   => 'Brackendowns',
     'norwood'        => 'Norwood',
     'parkview'       => 'Parkview',
     'mondeor'        => 'Mondeor',
     'kibler-park'    => 'Kibler Park',
-    'benoni'         => 'Benoni',
     'soweto'         => 'Soweto',
-    'brakpan'        => 'Brakpan',
     'tembisa'        => 'Tembisa',
     'krugersdorp'    => 'Krugersdorp',
     'midstream'      => 'Midstream Estate',
     'pretoria-north' => 'Pretoria North',
     'centurion-east' => 'Centurion East',
-    'bedfordview'    => 'Bedfordview',
     'bryanston'      => 'Bryanston',
     'rivonia'        => 'Rivonia',
     'melville'       => 'Melville',
     'rosebank'       => 'Rosebank',
-    'glenvista'      => 'Glenvista',
     'waterkloof'     => 'Waterkloof',
     'menlyn'         => 'Menlyn',
     'montana'        => 'Montana',
@@ -142,15 +137,7 @@ function gp_area_region($slug) {
         'randburg'       => 'west-rand',
         'roodepoort'     => 'west-rand',
         'krugersdorp'    => 'west-rand',
-        'boksburg'       => 'east-rand',
-        'edenvale'       => 'east-rand',
-        'alberton'       => 'east-rand',
-        'germiston'      => 'east-rand',
-        'brackendowns'   => 'east-rand',
-        'benoni'         => 'east-rand',
-        'brakpan'        => 'east-rand',
         'tembisa'        => 'east-rand',
-        'bedfordview'    => 'east-rand',
     ];
     return $regions[$slug] ?? 'midrand';
 }
@@ -176,6 +163,35 @@ function gp_nearby_areas($slug, $all_areas, $max = 6) {
         $result = $result + array_slice($others, 0, $needed, true);
     }
     return $result;
+}
+
+// Real Google reviews only, pulled from the business's actual Google
+// Business Profile — do not add fabricated names/quotes here.
+function gp_review_pool() {
+    return [
+        ['name' => 'Vis Naidu', 'text' => "It took a little over an hour from my call, to replacing a faulty pressure control valve. Charles was responsive, communicative, and a pleasure to deal with. I have no hesitation in recommending him."],
+        ['name' => 'Jerrica Jenkins', 'text' => "The quality of work was exceptional, and the price was very reasonable. I was impressed with the attention to detail and the care taken to protect my property during the repair."],
+        ['name' => "Complicated Lots", 'text' => "Can't recommend Charles enough \u{2014} reasonable pricing, on time, professional, job done, so pleased. He's saved in my phone, only plumber I'll call from now on."],
+        ['name' => 'Alan Krinch', 'text' => "I contacted at 8am requesting same-day assistance for a drain pipe that needed cleaning and a blockage cleared. Very pleasant, and explained everything they were going to do to fix my problem."],
+        ['name' => 'Matthew McCathie', 'text' => "247 Plumbers GP were fantastic. Charles arranged to assist me urgently. Quality service and very professional from him and his team. I highly recommend using them."],
+        ['name' => 'Tracy Fu', 'text' => "Prompt response and problem resolved immediately! Very happy!"],
+        ['name' => 'Hazel Kaye', 'text' => "Reliable quality service, would highly recommend."],
+        ['name' => 'Herman Swart', 'text' => "Charles and his team are amazing."],
+    ];
+}
+
+// Deterministic per-page rotation (same idea as $area_photo_pool below) so
+// different pages show a different real combination instead of identical
+// reviews everywhere, without picking randomly on every page load.
+function gp_pick_reviews($seed, $count = 3) {
+    $pool = gp_review_pool();
+    $n = count($pool);
+    $start = abs(crc32($seed)) % $n;
+    $picked = [];
+    for ($i = 0; $i < $count; $i++) {
+        $picked[] = $pool[($start + $i) % $n];
+    }
+    return $picked;
 }
 
 function gp_phone_link() {
@@ -807,7 +823,11 @@ function gp_create_all_pages() {
     ];
 
     foreach ($services_data as $slug => $data) {
-        $existing = get_posts(['name'=>$slug,'post_type'=>'gp_service','post_status'=>'publish','numberposts'=>1]);
+        // Match on 'any' status, not just 'publish' — matching publish-only
+        // meant every page load would re-insert a brand new duplicate post
+        // for any page an editor had intentionally set to draft/private,
+        // since the check couldn't see it and assumed it didn't exist yet.
+        $existing = get_posts(['name'=>$slug,'post_type'=>'gp_service','post_status'=>'any','numberposts'=>1]);
         if (empty($existing)) {
             $id = wp_insert_post(['post_title'=>$data[0],'post_name'=>$slug,'post_status'=>'publish','post_type'=>'gp_service','post_excerpt'=>$data[1]]);
             if ($id) update_post_meta($id, 'gp_meta_desc', $data[1]);
@@ -815,7 +835,7 @@ function gp_create_all_pages() {
     }
 
     foreach ($areas_data as $slug => $data) {
-        $existing = get_posts(['name'=>$slug,'post_type'=>'gp_area','post_status'=>'publish','numberposts'=>1]);
+        $existing = get_posts(['name'=>$slug,'post_type'=>'gp_area','post_status'=>'any','numberposts'=>1]);
         if (empty($existing)) {
             $post_args = ['post_title'=>$data[0],'post_name'=>$slug,'post_status'=>'publish','post_type'=>'gp_area','post_excerpt'=>$data[1]];
             if (isset($data[2])) $post_args['post_content'] = '<p>' . esc_html($data[2]) . '</p>';
@@ -827,7 +847,11 @@ function gp_create_all_pages() {
     flush_rewrite_rules(false);
 }
 add_action('after_switch_theme', 'gp_create_all_pages');
-add_action('init', 'gp_create_all_pages', 30); // also run on init in case theme switch hook was missed
+// Not hooked to 'init' anymore — running a get_posts()-per-area existence
+// check plus potential wp_insert_post() on every single request (including
+// every REST API call) is what caused runaway duplicate creation the
+// moment any one of these posts wasn't in 'publish' status. Page/post
+// creation only needs to happen once, on theme activation.
 
 // ── CUSTOMIZER ─────────────────────────────────────────────────────────────────
 function gp_customizer($wp_customize) {

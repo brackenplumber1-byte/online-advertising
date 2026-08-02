@@ -201,9 +201,9 @@ $areas      = unserialize(GP_AREAS);
       <a href="<?php echo esc_url($review); ?>" target="_blank" class="btn btn--red">⭐ Leave a Review</a>
     </div>
     <div class="rev-grid">
-      <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"Burst pipe at 11pm on a Sunday — they were at my door fast. Fixed the problem, cleaned up, and the price was very fair. Absolute lifesavers."</p><div class="rev-author">Thabo Mokoena</div><div class="rev-loc">Midrand</div><div class="rev-tag">✓ Google Review</div></div>
-      <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"Same-day geyser replacement, clear quote upfront, done in 3 hours. Very professional and neat. Won't use anyone else for plumbing ever again."</p><div class="rev-author">Sarah Ramos</div><div class="rev-loc">Fourways</div><div class="rev-tag">✓ Google Review</div></div>
-      <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"Slow drains for months. One call and they had everything flowing by lunchtime. Friendly, fast, and very fair pricing. Highly recommend."</p><div class="rev-author">David Nkosi</div><div class="rev-loc">Centurion</div><div class="rev-tag">✓ Google Review</div></div>
+      <?php foreach (gp_pick_reviews('homepage', 3) as $r): ?>
+      <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"<?php echo esc_html($r['text']); ?>"</p><div class="rev-author"><?php echo esc_html($r['name']); ?></div><div class="rev-tag">✓ Google Review</div></div>
+      <?php endforeach; ?>
     </div>
   </div>
 </section>

@@ -220,9 +220,9 @@
   <div class="container">
     <h2 style="font-size:1.4rem;font-weight:800;color:var(--navy);margin-bottom:24px">What Our Customers Say</h2>
     <div class="review-strip-grid">
-      <div class="mini-review"><div class="stars">★★★★★</div><blockquote>"Fast, professional, and fixed the problem properly first time. No hidden charges. Highly recommend."</blockquote><div class="mini-reviewer">— T. Mokoena, Midrand</div></div>
-      <div class="mini-review"><div class="stars">★★★★★</div><blockquote>"Responded within the hour on a public holiday. Excellent workmanship and a very fair price."</blockquote><div class="mini-reviewer">— S. Ramos, Fourways</div></div>
-      <div class="mini-review"><div class="stars">★★★★★</div><blockquote>"Best plumbers in Gauteng. Honest, reliable, and they clean up after themselves. 5 stars."</blockquote><div class="mini-reviewer">— D. Nkosi, Centurion</div></div>
+      <?php foreach (gp_pick_reviews('svc-'.$slug, 3) as $r): ?>
+      <div class="mini-review"><div class="stars">★★★★★</div><blockquote>"<?php echo esc_html($r['text']); ?>"</blockquote><div class="mini-reviewer">— <?php echo esc_html($r['name']); ?>, Google Review</div></div>
+      <?php endforeach; ?>
     </div>
   </div>
 </div>
