@@ -110,7 +110,7 @@ def cmd_list_posts(args):
         params["status"] = args.status
     if args.search:
         params["search"] = args.search
-    posts = request("GET", site, auth, "posts", params=params)
+    posts = request("GET", site, auth, args.post_type, params=params)
     result({
         "status": "ok",
         "count": len(posts),
@@ -130,7 +130,7 @@ def cmd_list_posts(args):
 
 def cmd_get_post(args):
     site, auth = get_config()
-    p = request("GET", site, auth, f"posts/{args.id}", params={"context": "edit"})
+    p = request("GET", site, auth, f"{args.post_type}/{args.id}", params={"context": "edit"})
     result({"status": "ok", "post": p})
 
 
@@ -158,7 +158,7 @@ def cmd_create_post(args):
         payload["featured_media"] = int(args.featured_media)
     if args.slug:
         payload["slug"] = args.slug
-    post = request("POST", site, auth, "posts", json=payload)
+    post = request("POST", site, auth, args.post_type, json=payload)
     result({
         "status": "ok",
         "action": "created",
@@ -188,7 +188,7 @@ def cmd_update_post(args):
     if not payload:
         result({"error": "Nothing to update — pass at least one of --title/--content/--content-file/--status/etc."})
         sys.exit(1)
-    post = request("POST", site, auth, f"posts/{args.id}", json=payload)
+    post = request("POST", site, auth, f"{args.post_type}/{args.id}", json=payload)
     result({
         "status": "ok",
         "action": "updated",
@@ -246,10 +246,12 @@ def main():
     p.add_argument("--status", default=None, help="publish|draft|future|pending|private")
     p.add_argument("--search", default=None)
     p.add_argument("--limit", type=int, default=10)
+    p.add_argument("--post-type", default="posts", help="REST base, e.g. 'posts', 'pages', or a custom post type like 'gp_area' (default: posts)")
     p.set_defaults(func=cmd_list_posts)
 
     p = sub.add_parser("get-post", help="Get one post by ID")
     p.add_argument("--id", required=True)
+    p.add_argument("--post-type", default="posts", help="REST base, e.g. 'posts', 'pages', or a custom post type like 'gp_area' (default: posts)")
     p.set_defaults(func=cmd_get_post)
 
     p = sub.add_parser("create-post", help="Create a new post")
@@ -262,6 +264,7 @@ def main():
     p.add_argument("--tags", default=None, help="Comma-separated tag IDs")
     p.add_argument("--featured-media", default=None, help="Media ID from upload-media")
     p.add_argument("--slug", default=None)
+    p.add_argument("--post-type", default="posts", help="REST base, e.g. 'posts', 'pages', or a custom post type like 'gp_area' (default: posts)")
     p.set_defaults(func=cmd_create_post)
 
     p = sub.add_parser("update-post", help="Update an existing post")
@@ -274,6 +277,7 @@ def main():
     p.add_argument("--categories", default=None)
     p.add_argument("--tags", default=None)
     p.add_argument("--featured-media", default=None)
+    p.add_argument("--post-type", default="posts", help="REST base, e.g. 'posts', 'pages', or a custom post type like 'gp_area' (default: posts)")
     p.set_defaults(func=cmd_update_post)
 
     p = sub.add_parser("upload-media", help="Upload an image/file to the media library")
