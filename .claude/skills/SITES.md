@@ -57,6 +57,29 @@ the matching `.env.example`, fill in the OAuth client + refresh token
 lengthy Google approval process required, unlike Google Business
 Profile), and `GSC_SITE_URL` set to the exact verified property.
 
+## ⚠️ Shared theme bug risk (gp_area / gp_service post types)
+
+247plumbersgp's theme (and presumably brackendownsplumber's, since it was
+built from "the 247gp architecture") auto-creates any missing area/service
+page via `gp_create_all_pages()`. In the pre-fix version of this theme,
+that function ran on **every single request** (hooked to `init`) and only
+checked for a post in `'publish'` status when deciding whether a page
+already existed. The moment any one of those posts was set to draft/
+private/trash, every subsequent request (page views, REST calls, even
+Googlebot crawling) treated it as missing and inserted a brand new
+duplicate — compounding into hundreds of duplicate posts within minutes.
+
+This was hit and fixed on 247plumbersgp on 2026-08-02 (see
+`websites/247plumbersgp/247gp/functions.php`: existence check now matches
+`post_status=>'any'`, and the `init` hook was removed entirely — page
+creation only needs to run once, on theme activation).
+
+**Before changing any `gp_area`/`gp_service` post's status (draft, trash,
+private) on brackendownsplumber or any future site sharing this theme
+family, first confirm that site's `functions.php` has the same fix.** If
+it doesn't, changing a post's status could trigger the same runaway
+duplication there too.
+
 ## Content/tracking file conventions
 
 `content-calendar`, `off-page-seo`, and `lead-generation` keep their
