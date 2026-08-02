@@ -14,11 +14,7 @@ import sys
 
 import requests
 
-try:
-    from dotenv import load_dotenv
-    load_dotenv()
-except ImportError:
-    pass
+from site_config import add_site_arg, load_site_env
 
 TOKEN_URL = "https://oauth2.googleapis.com/token"
 API_BASE = "https://mybusiness.googleapis.com/v4"
@@ -51,6 +47,7 @@ def get_access_token():
 
 def main():
     parser = argparse.ArgumentParser(description="Create a Google Business Profile local post")
+    add_site_arg(parser)
     parser.add_argument("--summary", required=True, help="Post text, ~1500 char max")
     parser.add_argument("--cta-type", default=None,
                          choices=["CALL", "BOOK", "ORDER", "SHOP", "LEARN_MORE", "SIGN_UP"])
@@ -58,6 +55,7 @@ def main():
     parser.add_argument("--image-url", default=None, help="Publicly reachable image URL")
     parser.add_argument("--language", default="en-ZA")
     args = parser.parse_args()
+    load_site_env(args.site, result)
 
     require_env("GBP_ACCOUNT_ID", "GBP_LOCATION_ID")
     account_id = os.environ["GBP_ACCOUNT_ID"]

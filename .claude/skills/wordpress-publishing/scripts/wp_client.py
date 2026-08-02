@@ -10,15 +10,17 @@ import argparse
 import json
 import os
 import sys
+from pathlib import Path
 from urllib.parse import urljoin
 
 import requests
 
 try:
     from dotenv import load_dotenv
-    load_dotenv()
 except ImportError:
-    pass
+    load_dotenv = None
+
+SITES_DIR = Path(__file__).resolve().parent.parent / "sites"
 
 
 def log(msg):
@@ -29,19 +31,46 @@ def result(obj):
     print("RESULT: " + json.dumps(obj))
 
 
+def available_sites():
+    if not SITES_DIR.is_dir():
+        return []
+    return sorted(p.stem for p in SITES_DIR.glob("*.env"))
+
+
+def load_site_env(site):
+    """Load credentials for a named business (sites/<site>.env), or the
+    plain ./.env in the current directory if no --site was given (single-
+    business backward-compatible mode)."""
+    if load_dotenv is None:
+        return
+    if site:
+        env_path = SITES_DIR / f"{site}.env"
+        if not env_path.is_file():
+            result({
+                "error": f"No config found for site '{site}' at {env_path}.",
+                "available_sites": available_sites(),
+            })
+            sys.exit(1)
+        load_dotenv(env_path, override=True)
+    else:
+        load_dotenv(override=True)
+
+
 def get_config():
-    site = os.environ.get("WP_SITE_URL", "").rstrip("/")
+    site_url = os.environ.get("WP_SITE_URL", "").rstrip("/")
     user = os.environ.get("WP_USERNAME")
     app_password = os.environ.get("WP_APP_PASSWORD")
-    if not site or not user or not app_password:
+    if not site_url or not user or not app_password:
         result({
             "error": "Missing WP_SITE_URL, WP_USERNAME, or WP_APP_PASSWORD. "
-                     "Copy .env.example to .env and fill them in, or export "
-                     "them in your shell. Generate an Application Password "
-                     "at wp-admin -> Users -> Profile -> Application Passwords."
+                     "Use --site <name> to pick a configured business (see "
+                     "sites/), or copy .env.example to .env for single-site "
+                     "use. Generate an Application Password at wp-admin -> "
+                     "Users -> Profile -> Application Passwords.",
+            "available_sites": available_sites(),
         })
         sys.exit(1)
-    return site, (user, app_password)
+    return site_url, (user, app_password)
 
 
 def api_base(site):
@@ -204,6 +233,11 @@ def cmd_list_categories(args):
 
 def main():
     parser = argparse.ArgumentParser(description="WordPress REST API client")
+    parser.add_argument("--site", default=None,
+                         help="Named business config to use (sites/<site>.env). "
+                              "Omit to use the plain ./.env file (single-site mode). "
+                              "Must come before the subcommand, e.g. "
+                              "'wp_client.py --site 247plumbersgp whoami'.")
     sub = parser.add_subparsers(dest="command", required=True)
 
     sub.add_parser("whoami", help="Verify credentials and show capabilities").set_defaults(func=cmd_whoami)
@@ -250,6 +284,7 @@ def main():
     sub.add_parser("list-categories", help="List categories (to find IDs)").set_defaults(func=cmd_list_categories)
 
     args = parser.parse_args()
+    load_site_env(args.site)
     args.func(args)
 
 

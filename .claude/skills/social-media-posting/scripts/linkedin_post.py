@@ -13,14 +13,9 @@ import sys
 
 import requests
 
-try:
-    from dotenv import load_dotenv
-    load_dotenv()
-except ImportError:
-    pass
+from site_config import add_site_arg, load_site_env
 
 API_BASE = "https://api.linkedin.com/rest"
-LINKEDIN_VERSION = os.environ.get("LINKEDIN_API_VERSION", "202601")
 
 
 def result(obj):
@@ -37,7 +32,7 @@ def require_env(*names):
 def headers(token):
     return {
         "Authorization": f"Bearer {token}",
-        "LinkedIn-Version": LINKEDIN_VERSION,
+        "LinkedIn-Version": os.environ.get("LINKEDIN_API_VERSION", "202601"),
         "X-Restli-Protocol-Version": "2.0.0",
         "Content-Type": "application/json",
     }
@@ -68,10 +63,12 @@ def upload_image(author_urn, token, image_path):
 
 def main():
     parser = argparse.ArgumentParser(description="Post to LinkedIn via the Posts API")
+    add_site_arg(parser)
     parser.add_argument("--text", required=True)
     parser.add_argument("--image", default=None, help="Local path to an image to attach")
     parser.add_argument("--visibility", default="PUBLIC", choices=["PUBLIC", "CONNECTIONS"])
     args = parser.parse_args()
+    load_site_env(args.site, result)
 
     require_env("LINKEDIN_ACCESS_TOKEN", "LINKEDIN_AUTHOR_URN")
     token = os.environ["LINKEDIN_ACCESS_TOKEN"]

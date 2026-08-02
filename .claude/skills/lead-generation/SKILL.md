@@ -3,7 +3,8 @@ name: lead-generation
 description: |
   Improve how many leads the website actually captures, research new
   prospects worth reaching out to, and roll up lead numbers from
-  existing channels into a regular report. Use this whenever the user
+  existing channels into a regular report. Manages multiple businesses
+  via per-site tracking (see ../SITES.md). Use this whenever the user
   asks about "getting more leads", "quote requests", "who should we
   reach out to", "leads report", "how many leads did we get", or wants
   to improve conversion on the website/socials/Google Business Profile
@@ -11,6 +12,11 @@ description: |
 ---
 
 # Lead Generation Skill
+
+This skill manages **multiple businesses** — see `../SITES.md` for the
+full list and slugs. All tracking files live under a per-business
+subdirectory (`sites/<slug>/`) — confirm which business before reading
+or writing one if it isn't already obvious from context.
 
 Three workflows live here — pick based on what the user is actually
 asking for:
@@ -121,7 +127,7 @@ form." Concrete and small beats a long audit report nobody acts on.
    contract conversation, not a hard sell. Distinct from the
    `off-page-seo` outreach emails (those ask for a link; these ask for
    a business relationship).
-4. Track in `./lead-generation/prospects.csv`:
+4. Track in `./sites/<slug>/prospects.csv`:
    ```
    date,organization,category,contact,status,notes
    2026-08-01,Example Property Mgmt,property-management,info@example.co.za,contacted,sent intro email

@@ -4,11 +4,12 @@ description: |
   Plan, draft, and track a recurring daily/weekly/monthly content
   cadence across WordPress, Facebook, Instagram, LinkedIn, and Google
   Business Profile — one content pipeline instead of five disconnected
-  ones. Use this whenever the user asks "what should I post today/this
-  week", "plan out this month's content", "we need more social posts",
-  "keep up our posting schedule", or wants a consistent, ongoing
-  presence across the website and socials rather than a one-off post.
-  Hands off actual publishing to the wordpress-publishing and
+  ones. Manages multiple businesses via a per-site calendar (see
+  ../SITES.md). Use this whenever the user asks "what should I post
+  today/this week", "plan out this month's content", "we need more
+  social posts", "keep up our posting schedule", or wants a consistent,
+  ongoing presence across the website and socials rather than a one-off
+  post. Hands off actual publishing to the wordpress-publishing and
   social-media-posting skills.
 ---
 
@@ -21,15 +22,21 @@ asked. Actual publishing is handled by other skills
 (`wordpress-publishing`, `social-media-posting`); this skill is the
 planning and drafting layer that feeds them.
 
+This skill manages **multiple businesses** — see `../SITES.md` for the
+full list and slugs. Every calendar file lives under a per-business
+subdirectory (`sites/<slug>/calendar.csv`) — confirm which business
+before reading or writing one if it isn't already obvious from context.
+
 ---
 
 ## Operating rules — read first
 
 1. **Check the calendar before drafting anything.** Read
-   `./content-calendar/calendar.csv` (create it from the template if it
-   doesn't exist yet) to see what's already planned, drafted, or
-   published recently. Don't re-suggest something posted two weeks ago,
-   and don't duplicate a slot that's already filled.
+   `./sites/<slug>/calendar.csv` for the business in question (create
+   it from `templates/calendar_template.csv` if it doesn't exist yet)
+   to see what's already planned, drafted, or published recently. Don't
+   re-suggest something posted two weeks ago, and don't duplicate a
+   slot that's already filled.
 2. **One piece of source material, many formats.** The efficient way to
    run this is: pick one underlying idea/topic per week, then adapt it
    per channel — a long-form WordPress article, a short FB/IG caption
@@ -84,8 +91,8 @@ surface area:
 
 ## The calendar file
 
-Keep state in `./content-calendar/calendar.csv` (create from
-`templates/calendar_template.csv` on first use):
+Keep state in `./sites/<slug>/calendar.csv`, one per business (create
+from `templates/calendar_template.csv` on first use):
 
 ```
 date,channel,pillar,topic,status,link,notes

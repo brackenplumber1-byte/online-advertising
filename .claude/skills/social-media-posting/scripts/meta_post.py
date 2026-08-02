@@ -14,11 +14,7 @@ import time
 
 import requests
 
-try:
-    from dotenv import load_dotenv
-    load_dotenv()
-except ImportError:
-    pass
+from site_config import add_site_arg, load_site_env
 
 GRAPH_VERSION = "v21.0"
 GRAPH_BASE = f"https://graph.facebook.com/{GRAPH_VERSION}"
@@ -107,6 +103,7 @@ def post_instagram(args):
 
 def main():
     parser = argparse.ArgumentParser(description="Post to Facebook or Instagram via Meta Graph API")
+    add_site_arg(parser)
     sub = parser.add_subparsers(dest="platform", required=True)
 
     fb = sub.add_parser("facebook", help="Post to a Facebook Page")
@@ -121,6 +118,7 @@ def main():
     ig.set_defaults(func=post_instagram)
 
     args = parser.parse_args()
+    load_site_env(args.site, result)
     args.func(args)
 
 

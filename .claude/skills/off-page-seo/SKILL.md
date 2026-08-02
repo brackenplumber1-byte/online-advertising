@@ -4,8 +4,9 @@ description: |
   Build local citations (consistent NAP listings on business
   directories) and pursue general backlink outreach (non-journalist
   sites — local blogs, suppliers, community/industry sites) to improve
-  local search rankings and domain authority. Use this whenever the
-  user asks for "citation building", "directory listings", "get us
+  local search rankings and domain authority. Manages multiple
+  businesses via per-site tracking (see ../SITES.md). Use this whenever
+  the user asks for "citation building", "directory listings", "get us
   listed on [directory]", "backlinks" outside of a journalist/PR
   context, "local SEO", or "link building" that isn't about pitching
   journalists (for that, use the existing qwoted-seo-backlinks skill
@@ -13,6 +14,13 @@ description: |
 ---
 
 # Off-Page SEO: Citations & Outreach Link Building
+
+This skill manages **multiple businesses** — see `../SITES.md` for the
+full list and slugs. All tracking files below live under a per-business
+subdirectory (`sites/<slug>/`) — confirm which business before reading
+or writing one if it isn't already obvious from context. NAP details
+(name/address/phone) are different per business and must never be
+mixed up between them.
 
 Two related but distinct workflows live here:
 
@@ -96,7 +104,7 @@ farm.
 
 ### Tracking
 
-Keep `./off-page-seo/citations.csv`:
+Keep `./sites/<slug>/citations.csv`:
 
 ```
 directory,url,status,date_submitted,listing_url,notes
@@ -176,7 +184,7 @@ much stronger pitch than a bare request.
 
 ### Tracking
 
-Keep `./off-page-seo/outreach_log.csv`:
+Keep `./sites/<slug>/outreach_log.csv`:
 
 ```
 date,site,contact,topic,status,notes
