@@ -9,7 +9,7 @@ this list.
 | Slug | Business name | Domain | WordPress config | Social config | Search Console config |
 |---|---|---|---|---|---|
 | `brackendownsplumber` | Bracken Downs Plumber | brackendownsplumber.co.za | ✅ live (Application Password configured) | not yet configured | not yet configured |
-| `247plumbersgp` | 247 Plumbers GP | 247plumbersgp.co.za | ✅ live (Application Password configured) | not yet configured | pending verification (siteUnverifiedUser) |
+| `247plumbersgp` | 247 Plumbers GP | 247plumbersgp.co.za | ✅ live (Application Password configured) | not yet configured | ✅ live (siteOwner, via Site Kit) |
 | `mondeorplumbingservices` | Mondeor Plumbing Services | mondeorplumbingservices.co.za | template only, needs Application Password | not yet configured | not yet configured |
 | `tysonsplumbersroodepoort` | Tysons Plumbers Roodepoort | tysonsplumbersroodepoort.co.za | template only, needs Application Password | not yet configured | not yet configured |
 | `247renovations` | 247 Renovations | 247renovations.co.za | template only, needs Application Password | not yet configured | not yet configured |
