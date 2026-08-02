@@ -1,17 +1,18 @@
 # Managed businesses
 
 Shared registry of every business these skills operate on. Referenced by
-`wordpress-publishing`, `social-media-posting`, `content-calendar`,
-`off-page-seo`, and `lead-generation` — when a task doesn't specify which
-business, ask; don't assume it's the first one in this list.
+`wordpress-publishing`, `social-media-posting`, `google-search-console`,
+`content-calendar`, `off-page-seo`, and `lead-generation` — when a task
+doesn't specify which business, ask; don't assume it's the first one in
+this list.
 
-| Slug | Business name | Domain | WordPress config | Social config |
-|---|---|---|---|---|
-| `brackendownsplumber` | Bracken Downs Plumber | brackendownsplumber.co.za | ✅ live (Application Password configured) | not yet configured |
-| `247plumbersgp` | 247 Plumbers GP | 247plumbersgp.co.za | template only, needs Application Password | not yet configured |
-| `mondeorplumbingservices` | Mondeor Plumbing Services | mondeorplumbingservices.co.za | template only, needs Application Password | not yet configured |
-| `tysonsplumbersroodepoort` | Tysons Plumbers Roodepoort | tysonsplumbersroodepoort.co.za | template only, needs Application Password | not yet configured |
-| `247renovations` | 247 Renovations | 247renovations.co.za | template only, needs Application Password | not yet configured |
+| Slug | Business name | Domain | WordPress config | Social config | Search Console config |
+|---|---|---|---|---|---|
+| `brackendownsplumber` | Bracken Downs Plumber | brackendownsplumber.co.za | ✅ live (Application Password configured) | not yet configured | not yet configured |
+| `247plumbersgp` | 247 Plumbers GP | 247plumbersgp.co.za | template only, needs Application Password | not yet configured | not yet configured |
+| `mondeorplumbingservices` | Mondeor Plumbing Services | mondeorplumbingservices.co.za | template only, needs Application Password | not yet configured | not yet configured |
+| `tysonsplumbersroodepoort` | Tysons Plumbers Roodepoort | tysonsplumbersroodepoort.co.za | template only, needs Application Password | not yet configured | not yet configured |
+| `247renovations` | 247 Renovations | 247renovations.co.za | template only, needs Application Password | not yet configured | not yet configured |
 
 ## How the slug is used
 
@@ -47,6 +48,14 @@ the matching `.env.example`, fill in only the platforms already set up
 for that business (see `social-media-posting/references/*.md` for how
 to obtain each platform's credentials), leave the rest blank to keep
 that platform in draft-only mode for that business.
+
+## Onboarding a new business's Search Console access
+
+Same pattern under `google-search-console/sites/<slug>.env` — copy from
+the matching `.env.example`, fill in the OAuth client + refresh token
+(see `google-search-console/SKILL.md` for how to obtain them — no
+lengthy Google approval process required, unlike Google Business
+Profile), and `GSC_SITE_URL` set to the exact verified property.
 
 ## Content/tracking file conventions
 
