@@ -76,6 +76,9 @@ creation only needs to run once, on theme activation). Fixed theme was
 uploaded to the live site and verified safe (drafted all 9 overlapping
 suburb pages with no recurrence of the duplication bug).
 
+All 29 remaining published area pages on 247plumbersgp now have unique,
+locally-specific content (doorway-page cleanup complete as of 2026-08-02).
+
 **Before changing any `gp_area`/`gp_service` post's status (draft, trash,
 private) on brackendownsplumber or any future site sharing this theme
 family, first confirm that site's `functions.php` has the same fix.** If
