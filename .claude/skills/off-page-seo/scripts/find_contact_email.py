@@ -46,6 +46,9 @@ CANDIDATE_PATHS = [
 
 EMAIL_RE = re.compile(r"[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}")
 IGNORE_DOMAINS = {"sentry.io", "example.com", "domain.com", "yourdomain.com", "wixpress.com"}
+# Asset filenames like "logo@2x.png" or "banner@2x.webp" match the email regex
+# (word@word.ext) since srcset/retina naming looks identical in shape.
+IGNORE_TLDS = {"png", "webp", "jpg", "jpeg", "gif", "svg", "ico", "avif"}
 
 
 def _normalize(domain_or_url: str) -> str:
@@ -77,7 +80,10 @@ def find_contact_emails(domain_or_url: str) -> dict:
             found_here.add(m.group(0))
 
         found_here = {
-            e for e in found_here if urlparse(f"mailto:{e}").path.split("@")[-1].lower() not in IGNORE_DOMAINS
+            e
+            for e in found_here
+            if urlparse(f"mailto:{e}").path.split("@")[-1].lower() not in IGNORE_DOMAINS
+            and e.rsplit(".", 1)[-1].lower() not in IGNORE_TLDS
         }
 
         if found_here:
