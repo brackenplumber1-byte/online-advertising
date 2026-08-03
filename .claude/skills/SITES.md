@@ -72,7 +72,9 @@ duplicate — compounding into hundreds of duplicate posts within minutes.
 This was hit and fixed on 247plumbersgp on 2026-08-02 (see
 `websites/247plumbersgp/247gp/functions.php`: existence check now matches
 `post_status=>'any'`, and the `init` hook was removed entirely — page
-creation only needs to run once, on theme activation).
+creation only needs to run once, on theme activation). Fixed theme was
+uploaded to the live site and verified safe (drafted all 9 overlapping
+suburb pages with no recurrence of the duplication bug).
 
 **Before changing any `gp_area`/`gp_service` post's status (draft, trash,
 private) on brackendownsplumber or any future site sharing this theme
