@@ -138,6 +138,20 @@ offer (heat pumps, water filtration, gutters, grease trap cleaning,
 drain camera inspections, maintenance contracts) to avoid implying
 services that aren't actually available.
 
+**AIOSEO "Basics" polish pass (2026-08-04):** after a page hit 81/100
+once keyphrase+content fixes were live and the editor was opened (score
+badge does refresh on manual editor visit, confirmed), 3 remaining
+AIOSEO flags were addressed across all 84 area+service pages on both
+sites: (1) added one relevant `<img>` tag per page, reusing existing
+theme image assets in rotation — no new images fetched; (2) added one
+outbound link per page to https://www.pirb.co.za/ (verified live,
+official PIRB site) in a natural compliance-certificate context; (3)
+expanded every page to 300+ words via a genuine area-specific or
+service-specific FAQ block, with a follow-up top-up pass for the ~49
+pages still under 300 after the first pass. Verified 0 pages remain
+under 300 words / missing an image / missing the outbound link, on
+both sites.
+
 **Before changing any `gp_area`/`gp_service` post's status (draft, trash,
 private) on brackendownsplumber or any future site sharing this theme
 family, first confirm that site's `functions.php` has the same fix.** If
