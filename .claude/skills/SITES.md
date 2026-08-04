@@ -102,6 +102,28 @@ issue to fix). Same AIOSEO score-badge caveat applies: real content/
 keyphrase fixes are live, but the visible score number needs a manual
 wp-admin editor visit per page to refresh.
 
+**Keyword-alignment pass (2026-08-04), from uploaded 939-keyword
+spreadsheet:** AIOSEO title field was synced to match the theme's real
+rendered `<title>`/description on all 84 area+service pages across both
+sites (previously only tested on one page, never applied system-wide —
+this is what was causing AIOSEO to show "Germiston" instead of "Plumber
+in Germiston" as the headline). Service+Area (480 keywords) was already
+fully covered by existing internal linking ("{Service} in {Area}" anchor
+text present on every area page for every relevant service — verified
+on both sites, no changes needed). Service+Modifier (128) and most of
+Cost/Comparison (24, minus a mapping bug in the source spreadsheet that
+pointed all cost keywords at one page — corrected) covered by a new FAQ
+block (near me / cost / same-day / affordable) appended to all 25
+service pages across both sites. Brand/Broad (29) mostly pre-covered by
+existing homepage trust signals; added one more homepage section
+covering "residential/commercial/trusted/contractor" to
+brackendownsplumber (needed the theme zip, which was provided and is
+now in the repo at websites/brackendownsplumber/ — same runaway-
+duplication bug was present in this zip too and has been fixed the same
+way as 247plumbersgp's). Informational/Blog (38) — brackendownsplumber
+had only 1 existing blog post; wrote and published all 38 topics as new
+posts with focus keyphrases set (post IDs 124-161).
+
 **Before changing any `gp_area`/`gp_service` post's status (draft, trash,
 private) on brackendownsplumber or any future site sharing this theme
 family, first confirm that site's `functions.php` has the same fix.** If
