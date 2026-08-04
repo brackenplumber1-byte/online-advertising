@@ -124,6 +124,20 @@ way as 247plumbersgp's). Informational/Blog (38) — brackendownsplumber
 had only 1 existing blog post; wrote and published all 38 topics as new
 posts with focus keyphrases set (post IDs 124-161).
 
+**247plumbersgp (2026-08-04):** same keyword-alignment pass applied.
+AIOSEO title-sync and service-page FAQ blocks had already run for this
+site in the same batch as brackendownsplumber's (verified live — no
+extra work needed there). Added the same homepage "Residential &
+Commercial" trust item (theme zip re-sent to user for upload). For the
+blog gap: 247plumbersgp already had 6 of the 38 spreadsheet topics
+covered; published the remaining 25 as new posts (post IDs 427-451),
+reusing brackendownsplumber's content directly where generic (23 posts)
+and rewriting the 2 Alberton-specific ones for Midrand/Gauteng branding.
+Deliberately skipped 6 topics referencing services 247plumbersgp doesn't
+offer (heat pumps, water filtration, gutters, grease trap cleaning,
+drain camera inspections, maintenance contracts) to avoid implying
+services that aren't actually available.
+
 **Before changing any `gp_area`/`gp_service` post's status (draft, trash,
 private) on brackendownsplumber or any future site sharing this theme
 family, first confirm that site's `functions.php` has the same fix.** If
