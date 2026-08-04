@@ -136,6 +136,7 @@ $areas      = unserialize(GP_AREAS);
           <div class="why-row"><div class="why-n">02</div><div class="why-c"><h3>Honest Upfront Pricing</h3><p>We quote before we start. No hidden charges, no inflated invoices — just a fair price agreed upfront every time.</p></div></div>
           <div class="why-row"><div class="why-n">03</div><div class="why-c"><h3>30-Minute Local Response</h3><p>Based in Brackendowns, we reach most of Alberton and the East Rand fast for emergencies.</p></div></div>
           <div class="why-row"><div class="why-n">04</div><div class="why-c"><h3>Guaranteed Workmanship</h3><p>Not satisfied? We come back and fix it free. Our reputation is built on every single job we complete.</p></div></div>
+          <div class="why-row"><div class="why-n">05</div><div class="why-c"><h3>Residential &amp; Commercial</h3><p>From single-family homes to office parks and commercial kitchens, we're a trusted plumbing contractor for both — the same PIRB-registered standards apply to every job, big or small.</p></div></div>
         </div>
       </div>
       <div>

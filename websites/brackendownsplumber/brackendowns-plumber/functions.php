@@ -787,7 +787,11 @@ function gp_create_all_pages() {
     ];
 
         foreach ($services_data as $slug => $data) {
-        $existing = get_posts(['name'=>$slug,'post_type'=>'gp_service','post_status'=>'publish','numberposts'=>1]);
+        // Match on 'any' status, not just 'publish' — matching publish-only
+        // meant every page load would re-insert a brand new duplicate post
+        // for any page an editor had intentionally set to draft/private,
+        // since the check couldn't see it and assumed it didn't exist yet.
+        $existing = get_posts(['name'=>$slug,'post_type'=>'gp_service','post_status'=>'any','numberposts'=>1]);
         if (empty($existing)) {
             $id = wp_insert_post(['post_title'=>$data[0],'post_name'=>$slug,'post_status'=>'publish','post_type'=>'gp_service','post_excerpt'=>$data[1]]);
             if ($id) update_post_meta($id, 'gp_meta_desc', $data[1]);
@@ -795,7 +799,7 @@ function gp_create_all_pages() {
     }
 
     foreach ($areas_data as $slug => $data) {
-        $existing = get_posts(['name'=>$slug,'post_type'=>'gp_area','post_status'=>'publish','numberposts'=>1]);
+        $existing = get_posts(['name'=>$slug,'post_type'=>'gp_area','post_status'=>'any','numberposts'=>1]);
         if (empty($existing)) {
             $post_args = ['post_title'=>$data[0],'post_name'=>$slug,'post_status'=>'publish','post_type'=>'gp_area','post_excerpt'=>$data[1]];
             if (isset($data[2])) $post_args['post_content'] = '<p>' . esc_html($data[2]) . '</p>';
@@ -807,7 +811,12 @@ function gp_create_all_pages() {
     flush_rewrite_rules(false);
 }
 add_action('after_switch_theme', 'gp_create_all_pages');
-add_action('init', 'gp_create_all_pages', 30); // also run on init in case theme switch hook was missed
+// Not hooked to 'init' anymore — running a get_posts()-per-area existence
+// check plus potential wp_insert_post() on every single request (including
+// every REST API call) is what caused runaway duplicate creation on
+// 247plumbersgp the moment any one of these posts wasn't in 'publish'
+// status. Page/post creation only needs to happen once, on theme
+// activation.
 
 // ── CUSTOMIZER ─────────────────────────────────────────────────────────────────
 function gp_customizer($wp_customize) {
