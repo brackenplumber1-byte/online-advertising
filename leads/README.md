@@ -46,11 +46,14 @@ marketing by email. In short:
   business is lower-risk than mailing a private individual, but it's not risk-free — a strict
   reading of POPIA covers a named individual's work email too.
 - **Every marketing email needs**: your business's identity and physical address, and a
-  working, honored opt-out. Both templates in `/email-templates` already have these fields
-  built in — fill in `[YOUR BUSINESS PHYSICAL ADDRESS]` and wire up `{{unsubscribe_link}}` to
-  something that actually suppresses future sends before you use them.
-- **Honor opt-outs immediately** and keep a suppression list — resending to someone who opted
-  out is the single biggest complaint/legal risk in a campaign like this.
+  working, honored opt-out. Both templates in `/email-templates` already have these — the
+  footer states the address and asks recipients to reply "UNSUBSCRIBE" to opt out, which works
+  fine for manual sending as long as you actually honor it (see below). If you move to an
+  email platform later, switch this to that platform's built-in unsubscribe link/suppression
+  list instead.
+- **Honor opt-outs immediately** and keep a suppression list — even a simple spreadsheet of
+  "companies that replied UNSUBSCRIBE" that you check before every future send. Resending to
+  someone who opted out is the single biggest complaint/legal risk in a campaign like this.
 - This is general guidance, not legal advice — for a campaign at real volume, a quick check with
   someone who knows POPIA direct-marketing rules is worth it.
 

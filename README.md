@@ -25,20 +25,16 @@ posters/
   estate-agent-maintenance-poster.html printable A4 flyer — property-brochure style
 ```
 
-## Before you send anything
+## Contact details already filled in
 
-Every template has three placeholders you need to fill in — search for them across
-`email-templates/` and `posters/`:
+- Phone: 072 280 7602
+- Website: [247plumbersgp.co.za](https://247plumbersgp.co.za)
+- Address (POPIA-required footer): 38 San Souci Street, Johannesburg
+- Opt-out: reply-based ("Reply UNSUBSCRIBE") — see **Sending manually** below for why, and keep
+  a suppression list per `leads/README.md`.
 
-- `[YOUR PHONE NUMBER]`
-- `[YOUR WEBSITE]`
-- `[YOUR BUSINESS PHYSICAL ADDRESS]` (email templates only — POPIA requires this on marketing
-  email)
-
-The emails also use two mail-merge fields, `{{contact_first_name}}` and `{{company_name}}`, and
-an `{{unsubscribe_link}}` that needs to point at something that actually suppresses future
-sends. Read `leads/README.md` for what POPIA requires here — the short version is: real
-opt-out, your real address, and don't re-mail anyone who's opted out.
+The emails still have two mail-merge fields to fill per recipient: `{{contact_first_name}}` and
+`{{company_name}}`.
 
 ## Using the posters
 
@@ -47,24 +43,33 @@ Open either `.html` file in a browser — they're built as a fixed A4 sheet, so:
   sized for it).
 - **Digital/social use**: full-page screenshot, or open it as a Claude Artifact to share a link.
 
-## Using the email templates + leads list
+## Sending manually
 
-The HTML files are inline-styled on purpose so they survive being pasted into Gmail/Outlook or
-run through a mail-merge tool. A simple way to send in batches:
-1. Fill in the placeholders above.
-2. Match each `leads/*.csv` row to the matching template (construction list → construction
+`marketing@247plumbersgp.co.za` is hosted with your domain provider, not Gmail/Microsoft, so
+there's no direct inbox connector for it yet — for this list size (22 contacts), sending by
+hand is genuinely the fastest option:
+
+1. Match each `leads/*.csv` row to the matching template (construction list → construction
    email, estate agent list → estate agent email).
-3. Merge `{{contact_first_name}}` / `{{company_name}}` per row, either by hand for this small a
-   list, or with a mail-merge tool (Gmail's own mail-merge add-ons, or any CSV-driven sender)
-   once the list grows.
+2. Open the `.html` file, copy the rendered email (open it in a browser, select all, copy) into
+   your webmail's compose window — or use the `.txt` version for a plain-text send.
+3. Swap in `{{contact_first_name}}` / `{{company_name}}` for that recipient.
+4. Send from `marketing@247plumbersgp.co.za`, in a couple of batches rather than all 22 at once.
+5. Track opt-outs (anyone who replies "UNSUBSCRIBE") in a simple list and check it before any
+   future send — that's your POPIA suppression list.
 
-## Automating sending
+## Automating sending later
 
-If you'd like this connected to your actual inbox so drafts (or sends) happen automatically,
-say so and share which mailbox to use (`marketing@247plumbersgp.co.za` or another) — the
-recommended setup is generating personalized **drafts** for your review first, rather than
-fully automated blind sending, both so you can catch mistakes and because POPIA compliance
-(consent basis, opt-outs) is easier to get right with a human check before each batch goes out.
+Once the list outgrows manual sending, two paths:
+- **A marketing-email platform** (e.g. Brevo) built for bulk outreach with unsubscribe/
+  suppression handled automatically — needs `247plumbersgp.co.za` verified via SPF/DKIM records
+  with your domain provider, then connected to Claude from claude.ai's connector settings.
+- **Connect the mailbox directly** — if `marketing@247plumbersgp.co.za` is ever set up as a
+  Gmail/Google Workspace "send mail as" alias, the Gmail connector already available in this
+  session could draft (or send) directly.
+
+Either way, generating **drafts** for your review first is the safer default over fully
+automated blind sending, at least until the messaging is proven.
 
 ## Growing the leads list
 
