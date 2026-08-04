@@ -79,6 +79,19 @@ suburb pages with no recurrence of the duplication bug).
 All 29 remaining published area pages on 247plumbersgp now have unique,
 locally-specific content (doorway-page cleanup complete as of 2026-08-02).
 
+**AIOSEO score note (2026-08-04):** all 29 area pages + 9 service pages
+now have a real focus keyphrase set and expanded post_content (services
+list + CTA) via the `/aioseo/v1/post` REST route. AIOSEO's displayed
+score badge (e.g. "53/100") does NOT auto-recompute via the API — it's
+calculated by AIOSEO's client-side JS analyzer and only updates when a
+human opens the post in the wp-admin editor. No REST route exists to
+force a bulk recalculation (checked — no such endpoint). The underlying
+content/keyphrase fixes are real; only the visible number needs a manual
+editor visit per page to refresh. Also note: the theme's own PHP
+generates the real `<title>`/meta tags directly and does not use
+AIOSEO's title/description fields at all on the live site — those
+AIOSEO fields only affect the internal score display, not real SEO.
+
 **Before changing any `gp_area`/`gp_service` post's status (draft, trash,
 private) on brackendownsplumber or any future site sharing this theme
 family, first confirm that site's `functions.php` has the same fix.** If
