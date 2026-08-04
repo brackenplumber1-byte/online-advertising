@@ -1,0 +1,352 @@
+<!--
+  247PlumbersGP — Construction Plumbing poster
+  Audience: building & construction companies (site managers, project managers, QS/procurement)
+  Design intent: industrial "spec sheet" — treated like site signage / a technical data sheet,
+  not a soft consumer flyer. Palette and type stay fixed regardless of viewer theme because this
+  sheet is meant to be printed or exported as a flyer image — only the surrounding backdrop
+  responds to light/dark so it frames the sheet naturally on screen.
+  Fill in [YOUR PHONE NUMBER] and [YOUR WEBSITE] before sending/printing.
+-->
+<title>247PlumbersGP — Construction Plumbing</title>
+<style>
+  :root{
+    --backdrop-light:#dfe3e6;
+    --backdrop-dark:#0b0f13;
+  }
+  @media (prefers-color-scheme: dark){ :root{ --backdrop: var(--backdrop-dark); } }
+  @media (prefers-color-scheme: light){ :root{ --backdrop: var(--backdrop-light); } }
+  :root{ --backdrop: var(--backdrop-light); }
+  :root[data-theme="dark"]{ --backdrop: var(--backdrop-dark); }
+  :root[data-theme="light"]{ --backdrop: var(--backdrop-light); }
+
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:var(--backdrop);
+    display:flex;
+    justify-content:center;
+    padding:40px 16px;
+    font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---- fixed brand palette for the sheet itself (intentionally theme-independent) ---- */
+  .sheet{
+    --ink:#141b21;
+    --steel:#48606f;
+    --steel-light:#8ba0ac;
+    --paper:#eceeef;
+    --panel:#ffffff;
+    --accent:#d9631e;
+    --accent-deep:#a94413;
+    --line: #c9cdcf;
+
+    width:794px;
+    max-width:100%;
+    min-height:1123px;
+    background:var(--paper);
+    color:var(--ink);
+    position:relative;
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* masthead */
+  .masthead{
+    background:var(--ink);
+    color:var(--paper);
+    padding:34px 44px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    border-bottom:6px solid var(--accent);
+  }
+  .brand{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+  .brand .name{
+    font-size:30px;
+    font-weight:800;
+    letter-spacing:.02em;
+    text-transform:uppercase;
+  }
+  .brand .name span{ color:var(--accent); }
+  .brand .sub{
+    font-size:12.5px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--steel-light);
+  }
+  .doc-tag{
+    text-align:right;
+    font-size:11px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--steel-light);
+    line-height:1.7;
+  }
+  .doc-tag b{ color:var(--paper); display:block; font-size:12px; letter-spacing:.08em; }
+
+  /* hero line */
+  .hero{
+    padding:38px 44px 26px;
+    border-bottom:1px solid var(--line);
+  }
+  .hero .eyebrow{
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--accent-deep);
+    margin:0 0 10px;
+  }
+  .hero h1{
+    margin:0;
+    font-size:40px;
+    line-height:1.08;
+    font-weight:800;
+    letter-spacing:-.01em;
+    text-wrap:balance;
+    max-width:640px;
+  }
+  .hero p.lede{
+    margin:14px 0 0;
+    font-size:15px;
+    line-height:1.6;
+    color:var(--steel);
+    max-width:560px;
+  }
+
+  /* pipe-run divider: simple diagram made of straight runs + joints, not decorative clutter */
+  .pipe-run{
+    padding:0 44px;
+    margin:22px 0 0;
+  }
+  .pipe-run svg{ display:block; width:100%; height:34px; }
+
+  /* spec grid */
+  .specs{
+    padding:30px 44px 8px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px 20px;
+  }
+  .spec-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-left:4px solid var(--accent);
+    padding:16px 18px;
+  }
+  .spec-card .code{
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.1em;
+    color:var(--accent-deep);
+    margin:0 0 6px;
+  }
+  .spec-card h3{
+    margin:0 0 6px;
+    font-size:16.5px;
+    font-weight:750;
+  }
+  .spec-card p{
+    margin:0;
+    font-size:13px;
+    line-height:1.55;
+    color:var(--steel);
+  }
+
+  /* capability strip */
+  .strip{
+    margin:26px 44px 0;
+    display:flex;
+    border:1px solid var(--ink);
+  }
+  .strip .cell{
+    flex:1;
+    padding:16px 14px;
+    text-align:center;
+    border-right:1px solid var(--ink);
+  }
+  .strip .cell:last-child{ border-right:none; }
+  .strip .cell .num{
+    font-size:24px;
+    font-weight:800;
+    font-variant-numeric:tabular-nums;
+    color:var(--accent-deep);
+  }
+  .strip .cell .lbl{
+    font-size:10.5px;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--steel);
+    margin-top:2px;
+  }
+
+  /* scope list */
+  .scope{
+    margin:28px 44px 0;
+  }
+  .scope h2{
+    font-size:13px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--ink);
+    border-bottom:2px solid var(--ink);
+    padding-bottom:8px;
+    margin:0 0 14px;
+  }
+  .scope ul{
+    list-style:none;
+    margin:0;
+    padding:0;
+    columns:2;
+    column-gap:28px;
+  }
+  .scope li{
+    break-inside:avoid;
+    font-size:13.5px;
+    line-height:1.5;
+    padding:7px 0 7px 20px;
+    position:relative;
+    border-bottom:1px solid var(--line);
+  }
+  .scope li::before{
+    content:"";
+    position:absolute;
+    left:0; top:14px;
+    width:9px; height:9px;
+    background:var(--accent);
+  }
+
+  /* footer / contact block */
+  .footer{
+    margin-top:auto;
+    background:var(--ink);
+    color:var(--paper);
+    padding:26px 44px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:24px;
+  }
+  .footer .cta h4{
+    margin:0 0 4px;
+    font-size:18px;
+    font-weight:800;
+  }
+  .footer .cta p{
+    margin:0;
+    font-size:12.5px;
+    color:var(--steel-light);
+  }
+  .footer .contact{
+    text-align:right;
+    font-size:13.5px;
+    line-height:1.7;
+  }
+  .footer .contact .ph{
+    font-size:20px;
+    font-weight:800;
+    color:var(--accent);
+    font-variant-numeric:tabular-nums;
+  }
+  .footer .contact a{ color:var(--paper); text-decoration:none; }
+
+  @media print{
+    body{ padding:0; background:#fff; }
+    .sheet{ box-shadow:none; width:210mm; min-height:297mm; }
+    @page{ size:A4; margin:0; }
+  }
+</style>
+
+<div class="sheet">
+  <div class="masthead">
+    <div class="brand">
+      <div class="name">247<span>Plumbers</span>GP</div>
+      <div class="sub">Construction &amp; Contract Plumbing — Gauteng</div>
+    </div>
+    <div class="doc-tag">
+      <b>Trade Capability Sheet</b>
+      Plumbing Subcontractor · Gauteng
+    </div>
+  </div>
+
+  <div class="hero">
+    <p class="eyebrow">For Site &amp; Project Managers</p>
+    <h1>Plumbing subcontractor built for build programmes, not call-outs.</h1>
+    <p class="lede">247PlumbersGP fits into your build schedule — rough-in through final fix, snag-free handover, and site-ready teams that show up on the day they're booked.</p>
+  </div>
+
+  <div class="pipe-run" aria-hidden="true">
+    <svg viewBox="0 0 706 34" xmlns="http://www.w3.org/2000/svg">
+      <line x1="0" y1="17" x2="706" y2="17" stroke="#48606f" stroke-width="3"/>
+      <circle cx="90" cy="17" r="7" fill="#eceeef" stroke="#141b21" stroke-width="3"/>
+      <circle cx="280" cy="17" r="7" fill="#eceeef" stroke="#141b21" stroke-width="3"/>
+      <circle cx="470" cy="17" r="7" fill="#eceeef" stroke="#141b21" stroke-width="3"/>
+      <circle cx="616" cy="17" r="7" fill="#d9631e" stroke="#141b21" stroke-width="3"/>
+    </svg>
+  </div>
+
+  <div class="specs">
+    <div class="spec-card">
+      <p class="code">01 — ROUGH-IN</p>
+      <h3>Bulk &amp; internal reticulation</h3>
+      <p>Water, waste and vent stacks installed to SANS 10252 ahead of slab/wall close-up, coordinated with your build sequence.</p>
+    </div>
+    <div class="spec-card">
+      <p class="code">02 — FINAL FIX</p>
+      <h3>Fittings &amp; commissioning</h3>
+      <p>Sanitaryware, geysers and fixtures installed and pressure-tested, ready for municipal inspection and handover.</p>
+    </div>
+    <div class="spec-card">
+      <p class="code">03 — MULTI-UNIT</p>
+      <h3>Estates &amp; sectional title builds</h3>
+      <p>Repeatable installs across units on complexes and townhouse developments, with consistent quality unit to unit.</p>
+    </div>
+    <div class="spec-card">
+      <p class="code">04 — SNAGGING</p>
+      <h3>Handover &amp; defects support</h3>
+      <p>Fast turnaround on snag lists during the defects liability period — we don't disappear after practical completion.</p>
+    </div>
+  </div>
+
+  <div class="strip">
+    <div class="cell"><div class="num">24/7</div><div class="lbl">Emergency callout</div></div>
+    <div class="cell"><div class="num">SANS</div><div class="lbl">10252 compliant</div></div>
+    <div class="cell"><div class="num">GP</div><div class="lbl">Coverage, all Gauteng</div></div>
+    <div class="cell"><div class="num">COC</div><div class="lbl">Compliance certs issued</div></div>
+  </div>
+
+  <div class="scope">
+    <h2>Scope of Work</h2>
+    <ul>
+      <li>Bulk water &amp; sewer reticulation</li>
+      <li>Hot &amp; cold water reticulation</li>
+      <li>Drainage &amp; stormwater connections</li>
+      <li>Geyser &amp; solar water heating installs</li>
+      <li>Sanitaryware &amp; fixture fitting</li>
+      <li>Gas piping installation (LPG)</li>
+      <li>Pump &amp; booster set installation</li>
+      <li>Pressure testing &amp; commissioning</li>
+      <li>Municipal water connections</li>
+      <li>Compliance certificates (COC)</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <div class="cta">
+      <h4>Get on our tender/subcontractor list</h4>
+      <p>Send us your next programme — we'll quote against it.</p>
+    </div>
+    <div class="contact">
+      <div class="ph">[YOUR PHONE NUMBER]</div>
+      <div><a href="mailto:marketing@247plumbersgp.co.za">marketing@247plumbersgp.co.za</a></div>
+      <div>[YOUR WEBSITE] · Gauteng, South Africa</div>
+    </div>
+  </div>
+</div>

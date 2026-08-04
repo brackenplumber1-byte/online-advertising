@@ -1,0 +1,306 @@
+<!--
+  247PlumbersGP — Maintenance Plumbing poster
+  Audience: estate agents, letting agents, body corporates & property managers
+  Design intent: styled like a polished property listing/brochure sheet — the vocabulary this
+  audience already reads daily — rather than a trade spec sheet. Distinct navy/brass palette and
+  serif display separate it visually from the construction poster, matching the different reader.
+  Fill in [YOUR PHONE NUMBER] and [YOUR WEBSITE] before sending/printing.
+-->
+<title>247PlumbersGP — Maintenance Plumbing</title>
+<style>
+  :root{
+    --backdrop-light:#e4e1d8;
+    --backdrop-dark:#0c0e0b;
+  }
+  @media (prefers-color-scheme: dark){ :root{ --backdrop: var(--backdrop-dark); } }
+  @media (prefers-color-scheme: light){ :root{ --backdrop: var(--backdrop-light); } }
+  :root{ --backdrop: var(--backdrop-light); }
+  :root[data-theme="dark"]{ --backdrop: var(--backdrop-dark); }
+  :root[data-theme="light"]{ --backdrop: var(--backdrop-light); }
+
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:var(--backdrop);
+    display:flex;
+    justify-content:center;
+    padding:40px 16px;
+    font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---- fixed brand palette for the sheet itself (intentionally theme-independent) ---- */
+  .sheet{
+    --navy:#16283d;
+    --navy-deep:#0d1a28;
+    --paper:#f1eee6;
+    --panel:#ffffff;
+    --brass:#a9803f;
+    --brass-deep:#7d5e2c;
+    --ink:#20241f;
+    --stone:#6b6459;
+    --line:#ddd7c9;
+
+    width:794px;
+    max-width:100%;
+    min-height:1123px;
+    background:var(--paper);
+    color:var(--ink);
+    position:relative;
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+
+  .masthead{
+    background:var(--navy);
+    color:var(--paper);
+    padding:36px 48px 28px;
+    text-align:center;
+    border-bottom:3px solid var(--brass);
+  }
+  .masthead .name{
+    font-size:26px;
+    letter-spacing:.06em;
+    font-weight:400;
+  }
+  .masthead .name b{ font-weight:700; color:var(--brass); }
+  .masthead .sub{
+    margin-top:6px;
+    font-family:-apple-system,"Segoe UI",Roboto,sans-serif;
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:#c7cfd8;
+  }
+
+  .hero{
+    padding:40px 60px 8px;
+    text-align:center;
+    border-bottom:1px solid var(--line);
+    padding-bottom:28px;
+  }
+  .hero .eyebrow{
+    font-family:-apple-system,"Segoe UI",Roboto,sans-serif;
+    font-size:11.5px;
+    font-weight:700;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--brass-deep);
+    margin:0 0 12px;
+  }
+  .hero h1{
+    margin:0 auto;
+    max-width:560px;
+    font-size:34px;
+    line-height:1.22;
+    font-weight:400;
+    font-style:italic;
+    text-wrap:balance;
+    color:var(--navy);
+  }
+  .hero p.lede{
+    margin:16px auto 0;
+    max-width:480px;
+    font-family:-apple-system,"Segoe UI",Roboto,sans-serif;
+    font-size:14px;
+    line-height:1.65;
+    color:var(--stone);
+  }
+
+  /* listing-style stat row, echoes a property-listing feature strip */
+  .stats{
+    display:flex;
+    justify-content:center;
+    gap:0;
+    margin:24px 60px 0;
+    font-family:-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  .stats .stat{
+    flex:1;
+    text-align:center;
+    padding:14px 10px;
+    border-right:1px solid var(--line);
+  }
+  .stats .stat:last-child{ border-right:none; }
+  .stats .stat .val{
+    font-size:21px;
+    font-weight:700;
+    color:var(--navy);
+    font-variant-numeric:tabular-nums;
+  }
+  .stats .stat .lbl{
+    font-size:10px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--stone);
+    margin-top:3px;
+  }
+
+  /* features, styled like a listing "property features" section */
+  .features{
+    margin:34px 60px 0;
+  }
+  .features h2{
+    font-family:-apple-system,"Segoe UI",Roboto,sans-serif;
+    font-size:12px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--navy);
+    margin:0 0 4px;
+  }
+  .features .rule{
+    height:1px;
+    background:var(--brass);
+    margin:0 0 18px;
+  }
+  .features ul{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px 26px;
+  }
+  .features li{
+    font-family:-apple-system,"Segoe UI",Roboto,sans-serif;
+    font-size:13.5px;
+    line-height:1.5;
+    padding-left:20px;
+    position:relative;
+    color:var(--ink);
+  }
+  .features li::before{
+    content:"◆";
+    position:absolute;
+    left:0; top:0;
+    font-size:9px;
+    color:var(--brass);
+  }
+
+  /* why-us panel */
+  .why{
+    margin:32px 60px 0;
+    background:var(--panel);
+    border:1px solid var(--line);
+    padding:22px 26px;
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:18px;
+    font-family:-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  .why .item h3{
+    margin:0 0 5px;
+    font-size:13.5px;
+    color:var(--navy);
+  }
+  .why .item p{
+    margin:0;
+    font-size:12px;
+    line-height:1.55;
+    color:var(--stone);
+  }
+
+  .footer{
+    margin-top:auto;
+    background:var(--navy);
+    color:var(--paper);
+    padding:26px 48px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    font-family:-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  .footer .cta h4{
+    margin:0 0 4px;
+    font-size:17px;
+    font-weight:700;
+  }
+  .footer .cta p{
+    margin:0;
+    font-size:12px;
+    color:#c7cfd8;
+  }
+  .footer .contact{
+    text-align:right;
+    font-size:13px;
+    line-height:1.7;
+  }
+  .footer .contact .ph{
+    font-size:19px;
+    font-weight:700;
+    color:var(--brass);
+    font-variant-numeric:tabular-nums;
+  }
+  .footer .contact a{ color:var(--paper); text-decoration:none; }
+
+  @media print{
+    body{ padding:0; background:#fff; }
+    .sheet{ box-shadow:none; width:210mm; min-height:297mm; }
+    @page{ size:A4; margin:0; }
+  }
+</style>
+
+<div class="sheet">
+  <div class="masthead">
+    <div class="name">247<b>Plumbers</b>GP</div>
+    <div class="sub">Preferred Maintenance Plumber · Gauteng</div>
+  </div>
+
+  <div class="hero">
+    <p class="eyebrow">For Estate &amp; Letting Agents, Body Corporates</p>
+    <h1>The plumber your tenants stop calling you about.</h1>
+    <p class="lede">One call-out number for every property on your book. Fast response, tenant-friendly service, and a paper trail your landlords and body corporates can rely on.</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="val">&lt;2 hrs</div><div class="lbl">Avg. response, Gauteng</div></div>
+    <div class="stat"><div class="val">24/7</div><div class="lbl">Emergency line</div></div>
+    <div class="stat"><div class="val">COC</div><div class="lbl">Compliance on request</div></div>
+    <div class="stat"><div class="val">Net 30</div><div class="lbl">Agency account terms</div></div>
+  </div>
+
+  <div class="features">
+    <h2>Services on Call</h2>
+    <div class="rule"></div>
+    <ul>
+      <li>Burst pipe &amp; leak emergencies</li>
+      <li>Geyser repair &amp; replacement</li>
+      <li>Blocked drains &amp; sewer lines</li>
+      <li>Tap, toilet &amp; fixture repairs</li>
+      <li>Pre-lease &amp; move-out inspections</li>
+      <li>Water leak detection</li>
+      <li>Complex &amp; body corporate maintenance</li>
+      <li>Section 3(3) compliance reports</li>
+    </ul>
+  </div>
+
+  <div class="why">
+    <div class="item">
+      <h3>One number, every unit</h3>
+      <p>A single account contact for your whole portfolio — no chasing different plumbers per building.</p>
+    </div>
+    <div class="item">
+      <h3>Tenant-ready</h3>
+      <p>Uniformed, on-time technicians and photo job reports you can forward straight to landlords.</p>
+    </div>
+    <div class="item">
+      <h3>Priced for volume</h3>
+      <p>Agency call-out rates and monthly account billing across all managed properties.</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="cta">
+      <h4>Put us on your preferred supplier list</h4>
+      <p>We'll set up your agency account within 48 hours.</p>
+    </div>
+    <div class="contact">
+      <div class="ph">[YOUR PHONE NUMBER]</div>
+      <div><a href="mailto:marketing@247plumbersgp.co.za">marketing@247plumbersgp.co.za</a></div>
+      <div>[YOUR WEBSITE] · Gauteng, South Africa</div>
+    </div>
+  </div>
+</div>

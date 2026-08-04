@@ -1,0 +1,37 @@
+Subject: One plumber for every property on your book — 247PlumbersGP
+
+Hi {{contact_first_name}},
+
+I'm with 247PlumbersGP — we handle maintenance plumbing for estate and
+letting agents across Gauteng: burst pipes, geysers, blocked drains and the
+general call-outs that land on your desk every week.
+
+I'd like {{company_name}} to have one reliable number for every property on
+your book, instead of juggling different plumbers per building. A few
+reasons agencies keep us on the preferred supplier list:
+
+  - Under 2-hour average response across Gauteng
+  - 24/7 emergency line for burst pipes and leaks
+  - Photo job reports you can forward straight to landlords
+  - Compliance reports for lease handovers on request
+  - Monthly account billing, net 30 terms for agencies
+
+Happy to set up an agency account for {{company_name}} — no cost, no
+minimum call-outs, you just get priority booking when something comes up.
+Worth a quick call?
+
+Reply to this email or call [YOUR PHONE NUMBER] any time.
+
+Regards,
+247PlumbersGP Team
+Maintenance & Emergency Plumbing — Gauteng
+[YOUR PHONE NUMBER] | marketing@247plumbersgp.co.za | [YOUR WEBSITE]
+Serving all of Gauteng · 24/7 emergency call-out
+
+---
+You're receiving this because {{company_name}} is an estate agency /
+property management business operating in Gauteng and this is a
+business-to-business communication about trade services relevant to your
+industry. 247PlumbersGP, [YOUR BUSINESS PHYSICAL ADDRESS], Gauteng, South
+Africa.
+Unsubscribe / opt out of future emails: {{unsubscribe_link}}
