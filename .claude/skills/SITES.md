@@ -92,6 +92,16 @@ generates the real `<title>`/meta tags directly and does not use
 AIOSEO's title/description fields at all on the live site — those
 AIOSEO fields only affect the internal score display, not real SEO.
 
+**brackendownsplumber (2026-08-04):** same content/AIOSEO pass applied —
+all 30 area pages (already had unique content) got a services list + CTA
+appended, and all 16 service pages (previously empty post_content) got
+real written content, all with focus keyphrases set. Confirmed no
+duplicate-post bug fired (checked before and after — exact 30/16 counts
+both times) and reviews here were already genuine (no fake-testimonial
+issue to fix). Same AIOSEO score-badge caveat applies: real content/
+keyphrase fixes are live, but the visible score number needs a manual
+wp-admin editor visit per page to refresh.
+
 **Before changing any `gp_area`/`gp_service` post's status (draft, trash,
 private) on brackendownsplumber or any future site sharing this theme
 family, first confirm that site's `functions.php` has the same fix.** If
