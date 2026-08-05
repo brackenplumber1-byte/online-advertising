@@ -254,6 +254,17 @@ function gp_assets() {
 }
 add_action('wp_enqueue_scripts', 'gp_assets');
 
+// WP core loads jQuery in <head> with no defer/async while every theme
+// script is already deferred to the footer — add defer specifically to
+// the two jQuery handles rather than touching how they're enqueued, so
+// dependency order stays intact.
+add_filter('script_loader_tag', function($tag, $handle) {
+    if (in_array($handle, ['jquery-core', 'jquery-migrate'], true) && strpos($tag, 'defer') === false) {
+        $tag = str_replace(' src=', ' defer src=', $tag);
+    }
+    return $tag;
+}, 10, 2);
+
 // ── PRECONNECT + ASYNC FONT LOADING ────────────────────────────────────────────
 // Preconnect tells the browser to open the connection to Google Fonts' two
 // domains early, in parallel with everything else, instead of waiting to

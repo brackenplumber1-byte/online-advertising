@@ -92,10 +92,10 @@ $areas      = unserialize(GP_AREAS);
     <h2 class="display" style="font-size:clamp(1.6rem,3vw,2.2rem);color:var(--navy);margin:6px 0 24px">Real Plumbers. Real Jobs. Real Gauteng.</h2>
     <div class="photo-strip-grid">
       <?php $imgdir = get_template_directory_uri() . '/assets/images/'; ?>
-      <img src="<?php echo esc_url($imgdir . 'geyser-branded.jpg'); ?>" alt="247 Plumbers GP geyser repair technician">
-      <img src="<?php echo esc_url($imgdir . 'water-meter-install.jpg'); ?>" alt="247 Plumbers GP water meter and pressure valve installation">
-      <img src="<?php echo esc_url($imgdir . 'pipe-branded.jpg'); ?>" alt="247 Plumbers GP pipe repair technician">
-      <img src="<?php echo esc_url($imgdir . 'geyser-solar-roof.jpg'); ?>" alt="247 Plumbers GP solar geyser installation">
+      <img src="<?php echo esc_url($imgdir . 'geyser-branded.webp'); ?>" alt="247 Plumbers GP geyser repair technician" width="800" height="600" loading="lazy">
+      <img src="<?php echo esc_url($imgdir . 'water-meter-install.webp'); ?>" alt="247 Plumbers GP water meter and pressure valve installation" width="600" height="800" loading="lazy">
+      <img src="<?php echo esc_url($imgdir . 'pipe-branded.webp'); ?>" alt="247 Plumbers GP pipe repair technician" width="534" height="800" loading="lazy">
+      <img src="<?php echo esc_url($imgdir . 'geyser-solar-roof.webp'); ?>" alt="247 Plumbers GP solar geyser installation" width="600" height="800" loading="lazy">
     </div>
   </div>
 </section>
