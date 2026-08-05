@@ -198,6 +198,24 @@ already have unique content), and Google Analytics being allow-listed
 but not installed was flagged for the user's own confirmation, not
 acted on unilaterally.
 
+**Manual equivalent audit on 247plumbersgp (2026-08-05):** since the
+plugin only loads in a fresh session, ran the same checks by hand.
+Titles were already fine (52-61 chars, not the 71-72 char problem
+brackendownsplumber had) and organizationName/metaDescription
+templates were already clean — no duplicate-suffix bug there. Found
+and fixed: same stray-"@" bug in AIOSEO's social username (double-@
+TikTok, malformed LinkedIn), same thin tagline ("Plumbers Midrand" →
+real one), same un-deferred jQuery, and the same oversized homepage
+images (4 JPEGs resized + converted to WebP, 51-53% smaller, explicit
+width/height + lazy-loading added). Confirmed clean: robots.txt,
+canonical tags, homepage indexing status via GSC URL Inspection
+(PASS, "Submitted and indexed"). One open item: this site uses
+LiteSpeed Cache, which has no REST-exposed purge endpoint (checked
+both API versions) — the AIOSEO/tagline fixes are applied server-side
+but the homepage will keep serving a stale cached copy (24h TTL)
+until the user manually purges via the wp-admin toolbar or it expires
+naturally. Theme zip sent for the jQuery/image fixes.
+
 **Before changing any `gp_area`/`gp_service` post's status (draft, trash,
 private) on brackendownsplumber or any future site sharing this theme
 family, first confirm that site's `functions.php` has the same fix.** If
