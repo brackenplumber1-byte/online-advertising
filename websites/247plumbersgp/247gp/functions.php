@@ -106,6 +106,7 @@ define('GP_AREAS', serialize([
     'blue-hills'     => 'Blue Hills',
     'erand-gardens'  => 'Erand Gardens',
     'randjiespark'   => 'Randjiespark',
+    'waterfall'      => 'Waterfall City',
 ]));
 
 // ── HELPERS ────────────────────────────────────────────────────────────────────
@@ -131,6 +132,7 @@ function gp_area_region($slug) {
         'blue-hills'     => 'midrand',
         'erand-gardens'  => 'midrand',
         'randjiespark'   => 'midrand',
+        'waterfall'      => 'midrand',
         'centurion'      => 'centurion',
         'centurion-east' => 'centurion',
         'pretoria'       => 'centurion',
