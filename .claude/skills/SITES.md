@@ -152,6 +152,19 @@ pages still under 300 after the first pass. Verified 0 pages remain
 under 300 words / missing an image / missing the outbound link, on
 both sites.
 
+**New Midrand suburbs (2026-08-05):** replaced the 9 unpublished
+East Rand slots on 247plumbersgp with 9 genuinely relevant Midrand-area
+suburbs instead — Vorna Valley, Carlswald, Noordwyk, Halfway Gardens,
+Halfway House, Kyalami, Blue Hills, Erand Gardens, Randjiespark (post
+IDs 454-462). Confirmed real existing search demand for several of
+these via GSC before building (kyalami, carlswald, noordwyk, blue
+hills already showing impressions with no dedicated page). Built to
+the same quality bar as every other area page: unique local paragraph,
+services list, image, PIRB outbound link, FAQ block, 300+ words.
+Added to GP_AREAS and the region map (grouped under 'midrand') in
+functions.php for cross-linking — theme zip re-sent to user for
+upload; cross-linking won't show these until that's live.
+
 **Before changing any `gp_area`/`gp_service` post's status (draft, trash,
 private) on brackendownsplumber or any future site sharing this theme
 family, first confirm that site's `functions.php` has the same fix.** If
