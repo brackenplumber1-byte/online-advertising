@@ -186,6 +186,18 @@ function gp_assets() {
 }
 add_action('wp_enqueue_scripts', 'gp_assets');
 
+// WP core loads jQuery (a dependency of some admin-bar/embed scripts) in
+// <head> with no defer/async, while every theme script below is already
+// deferred to the footer — this was the one inconsistency flagged in the
+// SEO audit. Add defer specifically to the two jQuery handles rather than
+// touching how they're enqueued, so dependency order stays intact.
+add_filter('script_loader_tag', function($tag, $handle) {
+    if (in_array($handle, ['jquery-core', 'jquery-migrate'], true) && strpos($tag, 'defer') === false) {
+        $tag = str_replace(' src=', ' defer src=', $tag);
+    }
+    return $tag;
+}, 10, 2);
+
 // ── PRECONNECT + ASYNC FONT LOADING ────────────────────────────────────────────
 // Preconnect tells the browser to open the connection to Google Fonts' two
 // domains early, in parallel with everything else, instead of waiting to
@@ -244,10 +256,14 @@ function gp_build_page_title() {
         return 'Brackendowns Plumber | 24/7 Plumber Alberton & East Rand';
     }
     if ($wp_query->is_singular('gp_service')) {
+        // Shortened from "$name Alberton & East Rand | Brackendowns Plumber"
+        // (71-72 chars, clipped by Google around 60) — location is already
+        // covered in the meta description and body copy, so it doesn't need
+        // to be in the title too.
         $services = unserialize(GP_SERVICES);
         $slug = get_post_field('post_name', get_the_ID());
         $name = $services[$slug] ?? get_the_title();
-        return $name . ' Alberton & East Rand | Brackendowns Plumber';
+        return $name . ' | Brackendowns Plumber';
     }
     if ($wp_query->is_singular('gp_area')) {
         $area = get_post_meta(get_the_ID(), 'gp_area_name', true) ?: get_the_title();

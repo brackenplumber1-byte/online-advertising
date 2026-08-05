@@ -92,10 +92,10 @@ $areas      = unserialize(GP_AREAS);
     <h2 class="display" style="font-size:clamp(1.6rem,3vw,2.2rem);color:var(--navy);margin:6px 0 24px">Real Plumbers. Real Jobs. Real East Rand.</h2>
     <div class="photo-strip-grid">
       <?php $imgdir = get_template_directory_uri() . '/assets/images/'; ?>
-      <img src="<?php echo esc_url($imgdir . 'job-geyser-roofspace.jpg'); ?>" alt="Brackendowns Plumber geyser repair technician">
-      <img src="<?php echo esc_url($imgdir . 'job-water-meter-valve.jpg'); ?>" alt="Brackendowns Plumber water meter and pressure valve installation">
-      <img src="<?php echo esc_url($imgdir . 'job-pipe-excavation.jpg'); ?>" alt="Brackendowns Plumber pipe repair technician">
-      <img src="<?php echo esc_url($imgdir . 'job-ariston-install.jpg'); ?>" alt="Brackendowns Plumber geyser installation">
+      <img src="<?php echo esc_url($imgdir . 'job-geyser-roofspace.webp'); ?>" alt="Brackendowns Plumber geyser repair technician" width="600" height="800" loading="lazy">
+      <img src="<?php echo esc_url($imgdir . 'job-water-meter-valve.webp'); ?>" alt="Brackendowns Plumber water meter and pressure valve installation" width="600" height="800" loading="lazy">
+      <img src="<?php echo esc_url($imgdir . 'job-pipe-excavation.webp'); ?>" alt="Brackendowns Plumber pipe repair technician" width="600" height="800" loading="lazy">
+      <img src="<?php echo esc_url($imgdir . 'job-ariston-install.webp'); ?>" alt="Brackendowns Plumber geyser installation" width="600" height="800" loading="lazy">
     </div>
   </div>
 </section>
