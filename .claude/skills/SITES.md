@@ -170,6 +170,34 @@ naming the real named estates within it — Polo Fields, Munyaka,
 Kikuyu — verified accurate via web search before writing (all three
 are genuine Waterfall City precincts) rather than assumed.
 
+**searchfit-seo audit fixes (2026-08-05, brackendownsplumber):** user
+ran the searchfit-seo plugin against brackendownsplumber (not
+247plumbersgp — plugin only loads in a fresh session, wasn't available
+in this one). All 4 critical/high findings verified independently
+before fixing, then fixed: (1) duplicate/conflicting Organization
+schema — AIOSEO's `organizationName` had a redundant hardcoded
+"Brackendowns Plumber" suffix appended to `#site_title`, doubling the
+name; `sameUsername.username` had a stray leading "@" double-prefixing
+TikTok and breaking the LinkedIn URL shape — both fixed via
+`/aioseo/v1/options`. Also fixed the WP tagline (was the thin
+"Plumbers Alberton", now "24/7 Emergency Plumbers in Alberton & the
+East Rand") and removed the same redundant-suffix bug from AIOSEO's
+global meta description template. (2) jQuery core/migrate were the
+only render-blocking scripts left in `<head>` — added `defer` via a
+`script_loader_tag` filter. (3) 4 homepage JPEGs (1200x1600,
+270-315KB) were served at 74-76% larger than needed for their actual
+~200px-tall display size — resized to 600x800 WebP (~70-80KB each),
+added explicit width/height + `loading="lazy"`. (4) All 16 service
+page titles were 71-72 chars ("$name Alberton & East Rand |
+Brackendowns Plumber", clipped by Google ~60 chars) — shortened the
+theme's title template and re-synced all 16 AIOSEO title fields to
+match (all now 33-59 chars). Theme zip re-sent to user for upload.
+Two audit "notes" didn't need action: the 30 near-identical area pages
+concern was already resolved by earlier work in this session (all 30
+already have unique content), and Google Analytics being allow-listed
+but not installed was flagged for the user's own confirmation, not
+acted on unilaterally.
+
 **Before changing any `gp_area`/`gp_service` post's status (draft, trash,
 private) on brackendownsplumber or any future site sharing this theme
 family, first confirm that site's `functions.php` has the same fix.** If
