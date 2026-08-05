@@ -165,6 +165,11 @@ Added to GP_AREAS and the region map (grouped under 'midrand') in
 functions.php for cross-linking — theme zip re-sent to user for
 upload; cross-linking won't show these until that's live.
 
+Added a 10th: **Waterfall City** (post ID 465, slug `waterfall`),
+naming the real named estates within it — Polo Fields, Munyaka,
+Kikuyu — verified accurate via web search before writing (all three
+are genuine Waterfall City precincts) rather than assumed.
+
 **Before changing any `gp_area`/`gp_service` post's status (draft, trash,
 private) on brackendownsplumber or any future site sharing this theme
 family, first confirm that site's `functions.php` has the same fix.** If
