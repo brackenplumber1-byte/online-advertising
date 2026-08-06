@@ -17,6 +17,7 @@ define('GP_TIKTOK',   'https://www.tiktok.com/@brackendownsplumber');
 define('GP_YT',       '');
 define('GP_GOOGLE',   'https://share.google/ltGieJmxVgIjZDukU');
 define('GP_REVIEW',   'https://g.page/r/CfF8WyEVjuinEAE/review');
+define('GP_ADDRESS',  '2 Andries Road, Brackendowns, Alberton, 1448');
 
 // ── ADS & ANALYTICS TRACKING IDS (set these in Customizer once you have them) ──
 // GA4 measurement ID looks like: G-XXXXXXXXXX
@@ -159,6 +160,7 @@ function gp_wa_link($msg='Hi, I need a plumber') {
 }
 function gp_phone()  { return get_theme_mod('gp_phone',    GP_PHONE);  }
 function gp_email()  { return get_theme_mod('gp_email',    GP_EMAIL);  }
+function gp_address(){ return get_theme_mod('gp_address',  GP_ADDRESS);}
 function gp_fb()     { return get_theme_mod('gp_facebook', GP_FB);     }
 function gp_ig()     { return get_theme_mod('gp_instagram',GP_IG);     }
 function gp_tiktok() { return get_theme_mod('gp_tiktok',   GP_TIKTOK); }
@@ -395,7 +397,7 @@ function gp_seo_meta() {
         'telephone'=>'+27735376298',
         'priceRange'=>'$$',
         'description'=>'Brackendowns Plumber — trusted local plumbers serving Brackendowns, Alberton and the East Rand. 24/7 emergency plumbing, geyser repairs, drain cleaning, leak detection. No call-out fee. PIRB registered.',
-        'address'=>['@type'=>'PostalAddress','addressLocality'=>'Brackendowns','addressRegion'=>'Gauteng','postalCode'=>'1448','addressCountry'=>'ZA'],
+        'address'=>['@type'=>'PostalAddress','streetAddress'=>'2 Andries Road','addressLocality'=>'Brackendowns','addressRegion'=>'Gauteng','postalCode'=>'1448','addressCountry'=>'ZA'],
         'geo'=>['@type'=>'GeoCoordinates','latitude'=>-26.3167,'longitude'=>28.1167],
         'openingHoursSpecification'=>[['@type'=>'OpeningHoursSpecification','dayOfWeek'=>['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],'opens'=>'00:00','closes'=>'23:59']],
         'areaServed'=>array_map(function($name){ return ['@type'=>'City','name'=>$name]; }, array_values($all_areas)),
@@ -844,6 +846,7 @@ function gp_customizer($wp_customize) {
         'gp_phone'    =>['Phone Number (display)',       GP_PHONE],
         'gp_whatsapp' =>['WhatsApp Number (intl format)',GP_PHONE_RAW],
         'gp_email'    =>['Email Address',                GP_EMAIL],
+        'gp_address'  =>['Business Address',              GP_ADDRESS],
         'gp_facebook' =>['Facebook Page URL',            GP_FB],
         'gp_instagram'=>['Instagram Profile URL',        GP_IG],
         'gp_tiktok'   =>['TikTok Profile URL',           GP_TIKTOK],
