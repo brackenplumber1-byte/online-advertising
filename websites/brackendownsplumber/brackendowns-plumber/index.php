@@ -6,6 +6,7 @@ $phone_link = gp_phone_link();
 $wa_link    = gp_wa_link();
 $fb         = gp_fb();
 $ig         = gp_ig();
+$tiktok     = gp_tiktok();
 $google     = gp_google();
 $review     = gp_review();
 $maps       = get_theme_mod('gp_maps','');
@@ -155,6 +156,7 @@ $areas      = unserialize(GP_AREAS);
             <div class="soc-row">
               <a href="<?php echo esc_url($fb); ?>" target="_blank" class="soc-btn">Facebook</a>
               <a href="<?php echo esc_url($ig); ?>" target="_blank" class="soc-btn">Instagram</a>
+              <a href="<?php echo esc_url($tiktok); ?>" target="_blank" class="soc-btn">TikTok</a>
               <a href="<?php echo esc_url($google); ?>" target="_blank" class="soc-btn">Google</a>
             </div>
           </div>

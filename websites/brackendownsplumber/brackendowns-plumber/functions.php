@@ -13,6 +13,7 @@ define('GP_PHONE_RAW','27735376298');
 define('GP_EMAIL',    'info@brackendownsplumber.co.za');
 define('GP_FB',       'https://www.facebook.com/brackendownsplumber');
 define('GP_IG',       'https://www.instagram.com/brackendownsplumber');
+define('GP_TIKTOK',   'https://www.tiktok.com/@brackendownsplumber');
 define('GP_YT',       '');
 define('GP_GOOGLE',   'https://share.google/ltGieJmxVgIjZDukU');
 define('GP_REVIEW',   'https://g.page/r/CfF8WyEVjuinEAE/review');
@@ -160,6 +161,7 @@ function gp_phone()  { return get_theme_mod('gp_phone',    GP_PHONE);  }
 function gp_email()  { return get_theme_mod('gp_email',    GP_EMAIL);  }
 function gp_fb()     { return get_theme_mod('gp_facebook', GP_FB);     }
 function gp_ig()     { return get_theme_mod('gp_instagram',GP_IG);     }
+function gp_tiktok() { return get_theme_mod('gp_tiktok',   GP_TIKTOK); }
 function gp_google() { return get_theme_mod('gp_google',   GP_GOOGLE); }
 function gp_review() { return get_theme_mod('gp_review',   GP_REVIEW); }
 
@@ -400,7 +402,7 @@ function gp_seo_meta() {
         'hasOfferCatalog'=>['@type'=>'OfferCatalog','name'=>'Plumbing Services Brackendowns','itemListElement'=>
             array_map(function($name){ return ['@type'=>'Offer','itemOffered'=>['@type'=>'Service','name'=>$name]]; }, array_values($all_services))
         ],
-        'sameAs'=>array_values(array_filter([gp_fb(), gp_ig(), GP_YT, gp_google()])),
+        'sameAs'=>array_values(array_filter([gp_fb(), gp_ig(), gp_tiktok(), GP_YT, gp_google()])),
     ];
     echo '<script type="application/ld+json">'.wp_json_encode($schema, JSON_UNESCAPED_SLASHES).'</script>'."\n";
 }
@@ -844,6 +846,7 @@ function gp_customizer($wp_customize) {
         'gp_email'    =>['Email Address',                GP_EMAIL],
         'gp_facebook' =>['Facebook Page URL',            GP_FB],
         'gp_instagram'=>['Instagram Profile URL',        GP_IG],
+        'gp_tiktok'   =>['TikTok Profile URL',           GP_TIKTOK],
         'gp_google'   =>['Google Business Profile URL',  GP_GOOGLE],
         'gp_review'   =>['Google Review Link',           GP_REVIEW],
         'gp_maps'     =>['Google Maps Embed URL',        ''],

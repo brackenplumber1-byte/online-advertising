@@ -10,6 +10,7 @@
         <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
           <a href="<?php echo esc_url(gp_fb()); ?>" target="_blank" style="color:#64748B;font-size:.82rem;font-weight:600">Facebook</a>
           <a href="<?php echo esc_url(gp_ig()); ?>" target="_blank" style="color:#64748B;font-size:.82rem;font-weight:600">Instagram</a>
+          <a href="<?php echo esc_url(gp_tiktok()); ?>" target="_blank" style="color:#64748B;font-size:.82rem;font-weight:600">TikTok</a>
           <a href="<?php echo esc_url(GP_YT); ?>" target="_blank" style="color:#64748B;font-size:.82rem;font-weight:600">YouTube</a>
           <a href="<?php echo esc_url(gp_google()); ?>" target="_blank" style="color:#64748B;font-size:.82rem;font-weight:600">Google Business</a>
           <a href="<?php echo esc_url(gp_review()); ?>" target="_blank" style="color:#F87171;font-size:.82rem;font-weight:600">⭐ Leave a Review</a>
@@ -49,6 +50,7 @@
       <div class="footer-soc">
         <a href="<?php echo esc_url(gp_fb()); ?>" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
         <a href="<?php echo esc_url(gp_ig()); ?>" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#475569" stroke="none"/></svg></a>
+        <a href="<?php echo esc_url(gp_tiktok()); ?>" target="_blank"><svg viewBox="0 0 24 24"><path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z" fill="#475569"/></svg></a>
         <a href="<?php echo esc_url(GP_YT); ?>" target="_blank"><svg viewBox="0 0 24 24"><path d="M21.582 7.186a2.506 2.506 0 0 0-1.768-1.768C18.254 5 12 5 12 5s-6.254 0-7.814.418a2.506 2.506 0 0 0-1.768 1.768C2 8.746 2 12 2 12s0 3.254.418 4.814a2.506 2.506 0 0 0 1.768 1.768C5.746 19 12 19 12 19s6.254 0 7.814-.418a2.506 2.506 0 0 0 1.768-1.768C22 15.254 22 12 22 12s0-3.254-.418-4.814zM10 15.5v-7l6 3.5-6 3.5z" fill="#475569"/></svg></a>
         <a href="<?php echo esc_url(gp_google()); ?>" target="_blank"><svg viewBox="0 0 24 24"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133C17.293 20.473 15.1 22 12 22 6.477 22 2 17.523 2 12S6.477 2 12 2c2.6 0 4.507 1.027 5.907 2.347l-2.307 2.307C14.507 5.527 13.4 5 12 5 8.686 5 6 7.686 6 11s2.686 6 6 6c2.6 0 4.507-1.027 5.507-2.6H12.48v-3.48z" fill="#475569"/></svg></a>
       </div>
