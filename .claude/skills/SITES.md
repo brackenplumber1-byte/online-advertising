@@ -216,6 +216,19 @@ but the homepage will keep serving a stale cached copy (24h TTL)
 until the user manually purges via the wp-admin toolbar or it expires
 naturally. Theme zip sent for the jQuery/image fixes.
 
+**TikTok social link added (2026-08-06, brackendownsplumber):** user
+provided real social URLs — Instagram matched what was already stored
+(`GP_IG`), but TikTok (tiktok.com/@brackendownsplumber, verified live,
+HTTP 200) had zero presence in the theme: no constant, no accessor
+function, no schema `sameAs` entry, no visible link anywhere on the
+site. Added `GP_TIKTOK`/`gp_tiktok()` following the existing
+Facebook/Instagram pattern, wired into the Organization schema's
+`sameAs` array, added a Customizer field, and added visible links in
+the footer (text + SVG icon) and the homepage "Follow Us" panel.
+Deliberately left AIOSEO's `sameUsername.tiktokUrl` auto-template
+alone — it already produces an equivalent URL now that the stray "@"
+bug was fixed in the earlier audit pass. Theme zip re-sent for upload.
+
 **Before changing any `gp_area`/`gp_service` post's status (draft, trash,
 private) on brackendownsplumber or any future site sharing this theme
 family, first confirm that site's `functions.php` has the same fix.** If
