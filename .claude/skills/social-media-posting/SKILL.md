@@ -103,6 +103,9 @@ python3 scripts/linkedin_post.py --site <slug> --text "..." [--image path/to/ima
 
 # Google Business Profile local post
 python3 scripts/gbp_post.py --site <slug> --summary "..." --cta-type CALL --cta-url "tel:+27..."
+
+# One-time: discover GBP_ACCOUNT_ID / GBP_LOCATION_ID once OAuth is set up
+python3 scripts/gbp_discover.py --site <slug>
 ```
 
 Every script prints one `RESULT: {...}` JSON line. Read the matching

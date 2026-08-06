@@ -9,10 +9,13 @@ draft-only mode for GBP posts in the meantime.
    verified, and (per Google's stated prerequisites) generally
    expected to have been verified for a meaningful period — a brand
    new/unverified listing will not qualify for API access.
-2. **Create a Google Cloud project**, enable the **Business Profile
-   APIs** (Business Information API + the Business Profile Performance
-   API; Local Posts live under the Business Information API's
-   `localPosts` resource).
+2. **Create a Google Cloud project** (or reuse one that already exists
+   for this business — e.g. if `google-search-console` is already set
+   up for this site, that project already has a working OAuth client;
+   just enable the extra APIs on it below instead of creating a new
+   client ID/secret), enable the **Business Profile APIs** (Business
+   Information API + the Business Profile Performance API; Local Posts
+   live under the Business Information API's `localPosts` resource).
 3. **Request API access**: Google gates this behind a manual approval
    — submit the request through Google's Business Profile API access
    request form, describing the use case plainly ("publish our own
@@ -23,7 +26,15 @@ draft-only mode for GBP posts in the meantime.
 4. Once approved, set up OAuth 2.0 credentials (Client ID/Secret) in
    the Cloud project and complete a one-time OAuth consent flow to get
    a refresh token for the Google account that manages the listing.
-5. Find your **Account ID** and **Location ID**:
+5. Find your **Account ID** and **Location ID** — once `GOOGLE_CLIENT_ID`,
+   `GOOGLE_CLIENT_SECRET`, and `GOOGLE_REFRESH_TOKEN` are in
+   `sites/<slug>.env`, run:
+   ```
+   python3 scripts/gbp_discover.py --site <slug>
+   ```
+   which calls these two endpoints and prints every account/location the
+   authenticated Google account manages, so you don't have to hand-craft
+   the requests:
    ```
    GET https://mybusinessaccountmanagement.googleapis.com/v1/accounts
    GET https://mybusinessbusinessinformation.googleapis.com/v1/accounts/{accountId}/locations
