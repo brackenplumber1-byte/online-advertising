@@ -229,6 +229,43 @@ Deliberately left AIOSEO's `sameUsername.tiktokUrl` auto-template
 alone — it already produces an equivalent URL now that the stray "@"
 bug was fixed in the earlier audit pass. Theme zip re-sent for upload.
 
+**LocalFalcon geo-grid audit + street address added (2026-08-06,
+brackendownsplumber):** user shared a LocalFalcon "plumber alberton"
+7x7 grid scan (SoLV 4.08%, avg rank 6.12). Verified via haversine that
+the scan's grid center (-26.4678635, 27.9889259) is 25.9km/16.1mi from
+real Alberton CBD (-26.26786, 28.12225) — down near Meyerton/
+Walkerville, confirmed visually from the map screenshot (Vereeniging
+Airport, De Deur, Henley-on-Klip all visible, none of which are
+Alberton). The real Alberton/Brackendowns area falls entirely outside
+the scanned 5-mile-radius grid, so the "south region weak" finding is
+mostly Meyerton-area noise, not a real local-pack problem — flagged
+for the user to check their actual GBP pin placement, since that's
+either a LocalFalcon geocoding quirk or a genuinely mis-placed pin
+(the latter would be the single highest-leverage fix available).
+Real findings acted on: theme's schema `address` had no `streetAddress`
+(suburb+postcode only) — user provided the real registered address (2
+Andries Road, Brackendowns, Alberton, 1448); added to schema, new
+`GP_ADDRESS`/`gp_address()` + Customizer field, and footer now shows
+the full address instead of just "Brackendowns, Gauteng" for
+NAP-consistency with citation directories. GBP business description
+(was missing) and 24/7 hours (was unset) drafted/flagged for the user
+to paste into GBP Manager directly — no GBP API access yet (pending
+Google's approval, see the GBP-linking note above).
+
+**Citation-building attempt (2026-08-06, brackendownsplumber):** tried
+to automate directory listing submission to Brabys, Cylex, Yalwa,
+Hellopeter, and Snupit. Tested directly rather than assumed: Brabys
+and Yalwa return Cloudflare bot-challenges (403), Cylex is blocked at
+the network level (502), and Hellopeter/Snupit load fine via plain
+HTTP fetch but reset every Playwright browser session (3 retries with
+anti-detection args, consistent failure) — same failure mode as the
+Qwoted login blocker earlier. None of the 5 have a public listing API.
+Conclusion: unattended automation isn't achievable from this sandboxed
+environment for any of the 5. Built a copy-paste-ready NAP/description/
+citation kit instead (scratchpad, sent to user) — manual entry is ~5
+min/site and has better ROI than fighting bot walls for a one-time
+listing anyway.
+
 **Before changing any `gp_area`/`gp_service` post's status (draft, trash,
 private) on brackendownsplumber or any future site sharing this theme
 family, first confirm that site's `functions.php` has the same fix.** If
