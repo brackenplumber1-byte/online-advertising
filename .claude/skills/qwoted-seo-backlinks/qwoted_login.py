@@ -171,14 +171,23 @@ def run(
         timeout_s=timeout_s,
     )
 
+    # Some sandboxed environments pre-install a specific Chromium build
+    # outside of Playwright's own version-pinned cache (e.g. under
+    # /opt/pw-browsers) and block fetching another one. Use it if present
+    # instead of the revision Playwright's Python package expects.
+    preinstalled_chromium = Path("/opt/pw-browsers/chromium")
+    launch_kwargs = dict(
+        user_data_dir=str(profile_dir),
+        headless=headless,
+        user_agent=USER_AGENT,
+        viewport={"width": 1280, "height": 900},
+        args=["--no-first-run", "--no-default-browser-check"],
+    )
+    if preinstalled_chromium.exists():
+        launch_kwargs["executable_path"] = str(preinstalled_chromium)
+
     with sync_playwright() as pw:
-        ctx = pw.chromium.launch_persistent_context(
-            user_data_dir=str(profile_dir),
-            headless=headless,
-            user_agent=USER_AGENT,
-            viewport={"width": 1280, "height": 900},
-            args=["--no-first-run", "--no-default-browser-check"],
-        )
+        ctx = pw.chromium.launch_persistent_context(**launch_kwargs)
         page = ctx.pages[0] if ctx.pages else ctx.new_page()
 
         log(f"opening {LOGIN_URL}")
