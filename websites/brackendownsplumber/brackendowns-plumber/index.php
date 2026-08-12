@@ -255,7 +255,7 @@ if ($home_articles->have_posts()):
         <div>
           <div class="cm"><div class="cm-i"><svg width="19" height="19" fill="#F87171" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></div><div><div class="cm-l">Phone — 24/7</div><div class="cm-v"><a href="<?php echo esc_attr($phone_link); ?>"><?php echo esc_html($phone); ?></a></div></div></div>
           <div class="cm"><div class="cm-i"><svg width="19" height="19" fill="#F87171" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div><div><div class="cm-l">Email</div><div class="cm-v"><a href="mailto:<?php echo esc_attr(gp_email()); ?>"><?php echo esc_html(gp_email()); ?></a></div></div></div>
-          <div class="cm"><div class="cm-i"><svg width="19" height="19" fill="#F87171" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div><div><div class="cm-l">Location</div><div class="cm-v" style="color:#CBD5E1">1 Fire Finch, Albertsdal, Alberton, 1448</div></div></div>
+          <div class="cm"><div class="cm-i"><svg width="19" height="19" fill="#F87171" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div><div><div class="cm-l">Location</div><div class="cm-v" style="color:#CBD5E1">Brackendowns, Alberton, 1448</div></div></div>
           <div class="cm"><div class="cm-i"><svg width="19" height="19" fill="#F87171" viewBox="0 0 24 24"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133C17.293 20.473 15.1 22 12 22 6.477 22 2 17.523 2 12S6.477 2 12 2c2.6 0 4.507 1.027 5.907 2.347l-2.307 2.307C14.507 5.527 13.4 5 12 5 8.686 5 6 7.686 6 11s2.686 6 6 6c2.6 0 4.507-1.027 5.507-2.6H12.48v-3.48z"/></svg></div><div><div class="cm-l">Google Business</div><div class="cm-v"><a href="<?php echo esc_url($google); ?>" target="_blank">View our Google Profile</a></div></div></div>
         </div>
         <div style="display:flex;gap:8px;margin-top:20px;flex-wrap:wrap">
@@ -272,7 +272,7 @@ if ($home_articles->have_posts()):
         </div>
         <?php else: ?>
         <div class="map-wrap">
-          <iframe src="https://www.google.com/maps?q=1+Fire+Finch,+Albertsdal,+Alberton,+Gauteng&output=embed" allowfullscreen loading="lazy" title="Brackendowns Plumber location — Albertsdal"></iframe>
+          <iframe src="https://www.google.com/maps?q=Brackendowns,+Alberton,+Gauteng&output=embed" allowfullscreen loading="lazy" title="Brackendowns Plumber location — Brackendowns"></iframe>
         </div>
         <?php endif; ?>
         <div class="cf-box">
