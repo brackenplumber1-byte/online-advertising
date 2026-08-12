@@ -22,8 +22,8 @@ $areas      = unserialize(GP_AREAS);
     <div class="hero-inner">
       <div>
         <div class="hero-eyebrow">Midrand · Centurion · Gauteng</div>
-        <h1>Burst Pipe? <span>We're On Our Way.</span><br>24/7 Plumbers, Gauteng-Wide.</h1>
-        <p class="hero-sub">Licensed, insured plumbers <strong>on call around the clock</strong> — Midrand-based, fast to reach you anywhere in Gauteng. Straight answers, fair pricing, no call-out fee.</p>
+        <h1>Burst Pipe? <span>We're On Our Way.</span><br>Your 24/7 Midrand Plumber, Gauteng-Wide.</h1>
+        <p class="hero-sub">Your local <strong>Midrand plumbers</strong> — licensed, insured, <strong>on call around the clock</strong>, fast to reach you anywhere in Gauteng. Straight answers, fair pricing, no call-out fee.</p>
         <div class="hero-actions">
           <a href="<?php echo esc_attr($phone_link); ?>" class="btn btn--red" style="font-size:1.05rem;padding:17px 34px">
             <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
