@@ -191,7 +191,7 @@ $imgdir     = get_template_directory_uri() . '/assets/images/';
 
   <div class="al-reviews">
     <div class="stars">★★★★★</div>
-    <p>4.9★ rated on Google — trusted by homeowners across Midrand and Gauteng</p>
+    <p>5.0★ rated on Google (30 reviews) — trusted by homeowners across Midrand and Gauteng</p>
   </div>
 
   <p class="al-footer-note">247 Plumbers GP · Silkwood Complex, Berger Rd, Vorna Valley, Midrand · PIRB Registered</p>

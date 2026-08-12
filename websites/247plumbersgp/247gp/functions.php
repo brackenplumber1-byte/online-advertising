@@ -760,6 +760,10 @@ function gp_legacy_area_redirects() {
         'plumber-in-parkview'    => '/areas/parkview/',
         'sample-page'            => '/',
         'category/uncategorized' => '/articles/',
+        // Found via Search Console export 12-Aug-2026 — stray dated
+        // duplicate of the geyser-size post still indexed, competing with
+        // the current post at the 07/17 permalink.
+        '2026/07/10/how-to-choose-the-right-geyser-size' => '/2026/07/17/how-to-choose-the-right-geyser-size/',
     ];
     if (isset($legacy_url_map[$path])) {
         wp_redirect(home_url($legacy_url_map[$path]), 301);

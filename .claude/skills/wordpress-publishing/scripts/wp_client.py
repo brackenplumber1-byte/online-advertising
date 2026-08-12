@@ -185,6 +185,8 @@ def cmd_update_post(args):
         payload["tags"] = [int(t) for t in args.tags.split(",")]
     if args.featured_media:
         payload["featured_media"] = int(args.featured_media)
+    if args.slug:
+        payload["slug"] = args.slug
     if not payload:
         result({"error": "Nothing to update — pass at least one of --title/--content/--content-file/--status/etc."})
         sys.exit(1)
@@ -277,6 +279,7 @@ def main():
     p.add_argument("--categories", default=None)
     p.add_argument("--tags", default=None)
     p.add_argument("--featured-media", default=None)
+    p.add_argument("--slug", default=None)
     p.add_argument("--post-type", default="posts", help="REST base, e.g. 'posts', 'pages', or a custom post type like 'gp_area' (default: posts)")
     p.set_defaults(func=cmd_update_post)
 

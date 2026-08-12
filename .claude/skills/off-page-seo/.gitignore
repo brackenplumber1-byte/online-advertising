@@ -1,0 +1,21 @@
+# --- Stage output — never commit generated stats pages -------------
+statistics_pages/
+
+# --- Python --------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+
+# --- Editors / OS --------------------------------------------------
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# --- Logs / scratch ------------------------------------------------
+*.log
+.tmp/
+tmp/
