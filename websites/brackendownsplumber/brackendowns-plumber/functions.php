@@ -377,7 +377,7 @@ function gp_seo_meta() {
         'telephone'=>'+27735376298',
         'priceRange'=>'$$',
         'description'=>'Brackendowns Plumber — trusted local plumbers serving Brackendowns, Alberton and the East Rand. 24/7 emergency plumbing, geyser repairs, drain cleaning, leak detection. No call-out fee. PIRB registered.',
-        'address'=>['@type'=>'PostalAddress','addressLocality'=>'Brackendowns','addressRegion'=>'Gauteng','postalCode'=>'1448','addressCountry'=>'ZA'],
+        'address'=>['@type'=>'PostalAddress','streetAddress'=>'25 Bamboes St','addressLocality'=>'Brackendowns','addressRegion'=>'Gauteng','postalCode'=>'1454','addressCountry'=>'ZA'],
         'geo'=>['@type'=>'GeoCoordinates','latitude'=>-26.3167,'longitude'=>28.1167],
         'openingHoursSpecification'=>[['@type'=>'OpeningHoursSpecification','dayOfWeek'=>['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],'opens'=>'00:00','closes'=>'23:59']],
         'areaServed'=>array_map(function($name){ return ['@type'=>'City','name'=>$name]; }, array_values($all_areas)),
