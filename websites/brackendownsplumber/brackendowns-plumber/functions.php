@@ -283,7 +283,7 @@ function gp_build_meta_description() {
     }
     if ($wp_query->is_singular('gp_area')) {
         $area = get_post_meta(get_the_ID(), 'gp_area_name', true) ?: get_the_title();
-        return 'Looking for a plumber in ' . $area . '? Brackendowns Plumber offers 24/7 emergency plumbing, geyser repairs and drain cleaning. No call-out fee. Call ' . gp_phone() . '.';
+        return 'Need a plumber in ' . $area . '? Brackendowns Plumber offers 24/7 emergency plumbing, geyser repairs & drain cleaning. No call-out fee. Call ' . gp_phone() . '.';
     }
     if ($wp_query->is_singular('post')) {
         $excerpt = get_the_excerpt();
