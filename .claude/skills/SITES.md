@@ -10,7 +10,7 @@ this list.
 |---|---|---|---|---|---|
 | `brackendownsplumber` | Bracken Downs Plumber | brackendownsplumber.co.za | ✅ live (Application Password configured) | not yet configured | not yet configured |
 | `247plumbersgp` | 247 Plumbers GP | 247plumbersgp.co.za | ✅ live (Application Password configured) | not yet configured | ✅ live (siteOwner, via Site Kit) |
-| `mondeorplumbingservices` | Mondeor Plumbing Services | mondeorplumbingservices.co.za | template only, needs Application Password | not yet configured | not yet configured |
+| `mondeorplumbingservices` | Mondeor Plumbing Services | mondeorplumbingservices.co.za | ✅ live (Application Password configured) | not yet configured | not yet configured |
 | `tysonsplumbersroodepoort` | Tysons Plumbers Roodepoort | tysonsplumbersroodepoort.co.za | template only, needs Application Password | not yet configured | not yet configured |
 | `247renovations` | 247 Renovations | 247renovations.co.za | template only, needs Application Password | not yet configured | not yet configured |
 
@@ -84,6 +84,24 @@ private) on brackendownsplumber or any future site sharing this theme
 family, first confirm that site's `functions.php` has the same fix.** If
 it doesn't, changing a post's status could trigger the same runaway
 duplication there too.
+
+**mondeorplumbingservices had the same bug, live, as of 2026-08-14** —
+found while onboarding WordPress access for this site. Unlike
+247plumbersgp, this one had already produced real duplicates: 21 area
+pages and 8 service pages each existed twice (e.g. `comet` /
+`comet-2`), all with an identical creation timestamp, consistent with
+`after_switch_theme` and `init` both firing the insert in the same
+initial request rather than an ongoing runaway. Fixed the same way
+(`post_status=>'any'`, `init` hook removed) in
+`websites/mondeorplumbingservices/mondeorplumbingservices/functions.php`
+and in the `gp_create_articles_page()` function too (same pattern, via
+`get_page_by_path()` with an explicit status array). Existing
+duplicates need manual cleanup once the fixed theme is deployed.
+
+Given this has now hit 2 of 3 deployed sites in this theme family, treat
+`tysonsplumbersroodepoort` and `247renovations` as suspect too the
+moment they're deployed — check `gp_create_all_pages()`'s hook
+registration and status check before doing anything else on them.
 
 ## Content/tracking file conventions
 
