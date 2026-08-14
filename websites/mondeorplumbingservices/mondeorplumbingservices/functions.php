@@ -426,7 +426,7 @@ function gp_build_meta_description() {
     }
     if ($wp_query->is_singular('gp_area')) {
         $area = get_post_meta(get_the_ID(), 'gp_area_name', true) ?: get_the_title();
-        return 'Looking for a plumber near you in ' . $area . '? Mondeor Plumbing Services offers 24/7 emergency plumbing, geyser repairs and drain cleaning. No call-out fee. Call ' . gp_phone() . '.';
+        return 'Need a plumber in ' . $area . '? We offer 24/7 emergency plumbing, geyser repairs & drain cleaning. No call-out fee. Call ' . gp_phone() . '.';
     }
     if ($wp_query->is_singular('post')) {
         $excerpt = get_the_excerpt();
@@ -498,10 +498,27 @@ function gp_seo_meta() {
         echo '<meta name="description" content="'.esc_attr($desc).'">'."\n";
         echo '<meta property="og:description" content="'.esc_attr($desc).'">'."\n";
 
+        // og:url — get_permalink() returns false on the front page when it's
+        // the posts index rather than a static page, which left this empty
+        // there. home_url(add_query_arg(...)) covers every context.
+        $current_url = is_singular() ? get_permalink() : home_url(add_query_arg([], $_SERVER['REQUEST_URI'] ?? '/'));
+
         echo '<meta property="og:type" content="website">'."\n";
         echo '<meta property="og:title" content="'.esc_attr(gp_build_page_title()).'">'."\n";
-        echo '<meta property="og:url" content="'.esc_url(get_permalink()).'">'."\n";
+        echo '<meta property="og:url" content="'.esc_url($current_url).'">'."\n";
         echo '<meta property="og:locale" content="en_ZA">'."\n";
+
+        // og:image / twitter:image — was missing on every single page (no
+        // fallback existed at all, unlike description/title above). Use the
+        // post's own featured image where one is set, otherwise a branded
+        // default share image, so every page always has one.
+        $og_image = (is_singular() && has_post_thumbnail()) ? get_the_post_thumbnail_url(get_the_ID(), 'large') : '';
+        if (!$og_image) $og_image = home_url('/wp-content/uploads/2026/08/mondeor-og-default.png');
+        echo '<meta property="og:image" content="'.esc_url($og_image).'">'."\n";
+        echo '<meta property="og:image:width" content="1200">'."\n";
+        echo '<meta property="og:image:height" content="630">'."\n";
+        echo '<meta name="twitter:card" content="summary_large_image">'."\n";
+        echo '<meta name="twitter:image" content="'.esc_url($og_image).'">'."\n";
     }
     // else: Yoast/RankMath/AIOSEO already outputs robots, canonical,
     // description, and Open Graph tags — outputting our own here would
