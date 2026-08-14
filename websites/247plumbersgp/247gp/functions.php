@@ -97,6 +97,17 @@ define('GP_AREAS', serialize([
     'menlyn'         => 'Menlyn',
     'montana'        => 'Montana',
     'moreleta-park'  => 'Moreleta Park',
+    'edenvale'       => 'Edenvale',
+    'vorna-valley'   => 'Vorna Valley',
+    'carlswald'      => 'Carlswald',
+    'noordwyk'       => 'Noordwyk',
+    'halfway-gardens'=> 'Halfway Gardens',
+    'halfway-house'  => 'Halfway House',
+    'kyalami'        => 'Kyalami',
+    'blue-hills'     => 'Blue Hills',
+    'erand-gardens'  => 'Erand Gardens',
+    'randjiespark'   => 'Randjiespark',
+    'waterfall'      => 'Waterfall City',
 ]));
 
 // ── HELPERS ────────────────────────────────────────────────────────────────────
@@ -138,6 +149,17 @@ function gp_area_region($slug) {
         'roodepoort'     => 'west-rand',
         'krugersdorp'    => 'west-rand',
         'tembisa'        => 'east-rand',
+        'edenvale'       => 'east-rand',
+        'vorna-valley'   => 'midrand',
+        'carlswald'      => 'midrand',
+        'noordwyk'       => 'midrand',
+        'halfway-gardens'=> 'midrand',
+        'halfway-house'  => 'midrand',
+        'kyalami'        => 'midrand',
+        'blue-hills'     => 'midrand',
+        'erand-gardens'  => 'midrand',
+        'randjiespark'   => 'midrand',
+        'waterfall'      => 'midrand',
     ];
     return $regions[$slug] ?? 'midrand';
 }
