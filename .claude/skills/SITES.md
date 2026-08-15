@@ -11,7 +11,7 @@ this list.
 | `brackendownsplumber` | Bracken Downs Plumber | brackendownsplumber.co.za | ✅ live (Application Password configured) | not yet configured | not yet configured |
 | `247plumbersgp` | 247 Plumbers GP | 247plumbersgp.co.za | ✅ live (Application Password configured) | not yet configured | ✅ live (siteOwner, via Site Kit) |
 | `mondeorplumbingservices` | Mondeor Plumbing Services | mondeorplumbingservices.co.za | ✅ live (Application Password configured) | not yet configured | not yet configured |
-| `tysonsplumbersroodepoort` | Tysons Plumbers Roodepoort | tysonsplumbersroodepoort.co.za | template only, needs Application Password | not yet configured | not yet configured |
+| `tysonsplumbersroodepoort` | Tysons Plumbers Roodepoort | tysonsplumbersroodepoort.co.za | ✅ live (Application Password configured) | not yet configured | not yet configured |
 | `247renovations` | 247 Renovations | 247renovations.co.za | template only, needs Application Password | not yet configured | not yet configured |
 
 ## How the slug is used
@@ -99,9 +99,20 @@ and in the `gp_create_articles_page()` function too (same pattern, via
 duplicates need manual cleanup once the fixed theme is deployed.
 
 Given this has now hit 2 of 3 deployed sites in this theme family, treat
-`tysonsplumbersroodepoort` and `247renovations` as suspect too the
-moment they're deployed — check `gp_create_all_pages()`'s hook
-registration and status check before doing anything else on them.
+`247renovations` as suspect too the moment it's deployed — check
+`gp_create_all_pages()`'s hook registration and status check before
+doing anything else on it.
+
+**tysonsplumbersroodepoort is a different, unrelated theme build**
+(`tp_area`/`tp_service` post types, not `gp_area`/`gp_service` — a more
+recent "Pro" build, `tysons-plumbers-roodepoort`, currently v2.0.1).
+Checked on 2026-08-15 while onboarding WordPress access: its equivalent
+function (`tp_create_pages()`) already guards itself with a one-time
+`get_option('tp_pages_v4')` flag checked before anything else runs —
+arguably a more robust fix than the `post_status=>'any'` patch applied
+to the other three sites, since it guarantees the function executes at
+most once ever, regardless of any post's status later. No bug found,
+no fix needed.
 
 ## Content/tracking file conventions
 

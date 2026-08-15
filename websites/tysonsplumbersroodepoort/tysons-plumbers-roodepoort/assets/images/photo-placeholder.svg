@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 900 600">
+<rect width="900" height="600" fill="#1B2A4A"/>
+<rect width="900" height="600" fill="url(#diag)" opacity="0.06"/>
+<defs>
+<pattern id="diag" width="40" height="40" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+<line x1="0" y1="0" x2="0" y2="40" stroke="#FFFFFF" stroke-width="14"/>
+</pattern>
+</defs>
+<g transform="translate(450,255)" fill="none" stroke="#FF6B35" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+<path d="M-45 40 C-45 15 -25 -5 0 -5 C25 -5 45 15 45 40" />
+<circle cx="0" cy="-25" r="20"/>
+<path d="M-14 -18 L14 -18" stroke="#1B2A4A" stroke-width="6"/>
+</g>
+<text x="450" y="345" font-family="Montserrat,Arial" font-size="20" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing="0.5">Photo coming soon</text>
+<text x="450" y="372" font-family="Open Sans,Arial" font-size="14" fill="#9FB1D1" text-anchor="middle">Tysons Plumbers Roodepoort</text>
+</svg>
