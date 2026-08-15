@@ -45,11 +45,19 @@ if (hamburger && navMenu) {
 }
 
 // ── FAQ accordion ─────────────────────────────────────────────────────────
+// Sets a per-answer --h custom property (its real scrollHeight) so the CSS
+// max-height transition animates to the exact content height instead of a
+// fixed cap — keeps short and long answers both animating at the same speed.
 function toggleFaq(el) {
   var isOpen = el.classList.contains('open');
   document.querySelectorAll('.faq-q').forEach(function(q) { q.classList.remove('open'); });
-  document.querySelectorAll('.faq-a').forEach(function(a) { a.classList.remove('open'); });
-  if (!isOpen) { el.classList.add('open'); el.nextElementSibling.classList.add('open'); }
+  document.querySelectorAll('.faq-a').forEach(function(a) { a.classList.remove('open'); a.style.removeProperty('--h'); });
+  if (!isOpen) {
+    el.classList.add('open');
+    var ans = el.nextElementSibling;
+    ans.classList.add('open'); // applies final padding first, so scrollHeight below includes it
+    ans.style.setProperty('--h', ans.scrollHeight + 'px');
+  }
 }
 
 // ── Contact/sidebar form ──────────────────────────────────────────────────
