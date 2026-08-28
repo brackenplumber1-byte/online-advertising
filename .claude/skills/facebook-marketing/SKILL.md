@@ -1,21 +1,23 @@
 ---
 name: facebook-marketing
 description: |
-  Connect to a Facebook Page and Ad Account via the Meta Graph &
-  Marketing APIs so Claude can help create/schedule Facebook posts and
-  build/manage Facebook & Instagram ad campaigns (campaigns, ad sets,
+  Connect to a Facebook Page, a linked Instagram Business account, and
+  an Ad Account via the Meta Graph & Marketing APIs so Claude can help
+  create/schedule Facebook posts, publish to Instagram, and build/
+  manage Facebook & Instagram ad campaigns (campaigns, ad sets,
   creatives, ads, budgets, targeting, insights). Use this skill
-  whenever the user asks to "post to Facebook", "schedule a Facebook
-  post", "create a Facebook ad", "run Facebook ads", "check ad
-  performance/insights", "pause my ads", or similar for Facebook/
-  Instagram/Meta.
+  whenever the user asks to "post to Facebook", "post to Instagram",
+  "schedule a post", "create a Facebook ad", "run Facebook ads",
+  "check ad performance/insights", "pause my ads", or similar for
+  Facebook/Instagram/Meta.
 ---
 
 # Facebook Marketing Skill — playbook for Claude
 
-Your job is to help the user **publish Facebook Page content** and
-**run Facebook/Instagram ad campaigns** through the Meta Graph API and
-Marketing API, on their behalf.
+Your job is to help the user **publish Facebook Page content**,
+**publish to a linked Instagram account**, and **run Facebook/
+Instagram ad campaigns** through the Meta Graph API, the Instagram
+Graph API, and the Marketing API, on their behalf.
 
 ---
 
@@ -78,7 +80,8 @@ Marketing API, on their behalf.
 ```
 facebook_login.py   # OAuth login (idempotent), token check, list/refresh Page tokens
 facebook_post.py     # create (draft/schedule/publish), list, get, delete Page posts
-facebook_ads.py       # campaigns, ad sets, creatives, ads, insights, status changes
+instagram_post.py     # create (container/publish), list, get, delete Instagram media
+facebook_ads.py         # campaigns, ad sets, creatives, ads, insights, status changes
 ```
 
 All tokens live under `~/.facebook/tokens.json` (override with
@@ -109,6 +112,14 @@ holds live access tokens.
    they want ads help, and optionally save `FB_PAGE_ID` /
    `FB_AD_ACCOUNT_ID` in `.env` so you don't have to pass them every
    command.
+7. **For Instagram**, the user needs an Instagram **Business or
+   Creator** account (not personal) linked to the Facebook Page —
+   done in the Instagram app under Settings and privacy → Account
+   type and tools → Business, then linking it to the Page from that
+   same menu. Once linked, run
+   `python3 facebook_login.py --action instagram` to discover and
+   save the linked account. If it reports no linked account, walk the
+   user through linking it before trying `instagram_post.py`.
 
 ---
 
@@ -123,6 +134,9 @@ holds live access tokens.
 | "What have I posted recently?" | `facebook_post.py --action list --include-drafts` |
 | "How did that post do?" | `facebook_post.py --action get --post-id <id>` (likes/comments/shares) |
 | "Delete that post" | `facebook_post.py --action delete --post-id <id>` — confirm with the user first, this is permanent |
+| "Post X to Instagram" / "post this photo to Instagram" | `instagram_post.py --action create --image <public-url> --caption "..."` (creates a container, doesn't go live) → show the user → `--action publish --container-id <id>` on approval |
+| "Post a reel" | `create --video <public-url> --reels --caption "..."` then publish once approved |
+| "What have I posted on Instagram?" | `instagram_post.py --action list` |
 | "Set up a Facebook ad campaign for X" | Walk the full ad build (below) — ends PAUSED, ask before activating |
 | "How are my ads doing?" / "check performance" | `facebook_ads.py --action insights --level campaign --id <id>` (or `--level account`) |
 | "Pause/resume campaign N" | `facebook_ads.py --action update-status --id <id> --status PAUSED` (resume needs `--status ACTIVE --confirm-spend` + explicit approval) |
@@ -152,6 +166,38 @@ python3 facebook_post.py --action create --message "..." --publish-now
 Always show the user the exact `message`/`link`/`image` and, for
 scheduled posts, the resolved local time, before calling `publish` or
 using `--publish-now`.
+
+---
+
+## Publishing to Instagram
+
+Instagram has no text-only posts and no native "draft" — publishing is
+inherently two steps: create a media container (safe, not live), then
+publish it (goes live). Treat `create` like a draft and always confirm
+with the user before `publish`.
+
+**Image/video must be a public URL** — Instagram's API can't accept a
+local file upload directly the way `facebook_post.py --image` can. If
+the user only has a local file, ask them to host it somewhere public
+first (their website, a public S3/Cloudinary link, etc.) — do not
+invent or guess a URL.
+
+```bash
+# 1. Create the container (not live yet)
+python3 instagram_post.py --action create --image https://example.com/job-photo.jpg --caption "New arrivals 🎉"
+
+# 2. Show the caption + image to the user, then publish on approval
+python3 instagram_post.py --action publish --container-id <container_id>
+
+# Reels / video (processing can take a while — poll before publishing)
+python3 instagram_post.py --action create --video https://example.com/clip.mp4 --reels --caption "..."
+python3 instagram_post.py --action publish --container-id <container_id> --wait-ready 60
+
+# List / inspect
+python3 instagram_post.py --action list
+python3 instagram_post.py --action get --media-id <id>
+python3 instagram_post.py --action delete --media-id <id>   # confirm with the user first, permanent
+```
 
 ---
 
@@ -227,6 +273,9 @@ don't just dump the JSON on the user.
 | `state mismatch (possible CSRF)` | OAuth redirect didn't match what was sent | Re-run `facebook_login.py --action login` |
 | Graph API error `OAuthException` | Token expired/invalid/missing a permission | Re-run login; check `--action check` for granted scopes |
 | Graph API error mentioning `special_ad_categories` | Ad content likely falls under Housing/Employment/Credit/Social Issues rules | Ask the user, set `--special-ad-categories` accordingly |
+| `No Instagram Business account id found` | Instagram not linked, or not yet discovered | Run `facebook_login.py --action instagram`; if it reports none linked, walk the user through switching to Business/Creator and linking the Page |
+| `--image must be a public URL` (Instagram) | You passed a local file path | Ask the user for a public URL, or have them upload the image somewhere reachable first |
+| `media not ready` / container `status_code=IN_PROGRESS` (Instagram) | Video/Reel still processing | Retry `--action publish` shortly, or use `--wait-ready N` |
 
 ---
 
@@ -240,7 +289,12 @@ don't just dump the JSON on the user.
   values that came back in a `RESULT:` line.
 * **Never publish a post immediately without showing the draft text
   (and image/link) to the user first**, unless they've already told
-  you explicitly to post it live.
+  you explicitly to post it live. This applies to Instagram containers
+  too — never `--action publish` without showing the caption/media
+  first.
+* **Never invent or guess a public URL for an Instagram image/video.**
+  If the user only has a local file, ask them to host it and give you
+  the real URL.
 * **Never commit or paste `~/.facebook/tokens.json` contents** — it's
   a live credential, equivalent to a password.
 * **Never silently default ad targeting.** Ask, or require the
@@ -258,13 +312,22 @@ python3 facebook_login.py --action login                 # idempotent; skips bro
 python3 facebook_login.py --action login --force         # force a fresh browser login
 python3 facebook_login.py --action check                 # debug the current token (validity, scopes, expiry)
 python3 facebook_login.py --action pages                 # list Pages + (re)save their Page tokens
+python3 facebook_login.py --action instagram              # discover + save Instagram accounts linked to each Page
 
-# Posts
+# Posts (Facebook)
 python3 facebook_post.py --action create --message "..." [--link URL] [--image PATH_OR_URL] [--scheduled-time ISO] [--publish-now]
 python3 facebook_post.py --action publish --post-id ID
 python3 facebook_post.py --action list [--include-drafts] [--limit N]
 python3 facebook_post.py --action get --post-id ID
 python3 facebook_post.py --action delete --post-id ID
+
+# Posts (Instagram)
+python3 instagram_post.py --action create --image PUBLIC_URL --caption "..."      # or --video URL [--reels]
+python3 instagram_post.py --action publish --container-id ID [--wait-ready SECONDS]
+python3 instagram_post.py --action status --container-id ID
+python3 instagram_post.py --action list [--limit N]
+python3 instagram_post.py --action get --media-id ID
+python3 instagram_post.py --action delete --media-id ID
 
 # Ads
 python3 facebook_ads.py --action create-campaign --name "..." --objective OUTCOME_TRAFFIC

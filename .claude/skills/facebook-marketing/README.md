@@ -1,10 +1,11 @@
 # Facebook Marketing Skill
 
-> **Let Claude Code create Facebook posts and run Facebook/Instagram ad
-> campaigns for you**, via the official Meta Graph API and Marketing
-> API — real OAuth login, drafts you approve before they go live, and
-> ad objects that are always created paused so nothing spends money
-> without your explicit go-ahead.
+> **Let Claude Code create Facebook and Instagram posts and run
+> Facebook/Instagram ad campaigns for you**, via the official Meta
+> Graph API, Instagram Graph API and Marketing API — real OAuth login,
+> drafts you approve before they go live, and ad objects that are
+> always created paused so nothing spends money without your explicit
+> go-ahead.
 
 This skill teaches Claude Code (or any AI agent that can shell out) how
 to:
@@ -13,6 +14,8 @@ to:
   stored passwords) and cache a Page access token per Page you manage.
 - Create, schedule, publish, list and delete Facebook Page posts —
   text, links, and photos.
+- Publish to a linked Instagram Business/Creator account — photos and
+  Reels, always as a reviewable container before going live.
 - Build a full ad funnel — campaign → ad set → creative → ad — with
   budgets, targeting and objectives, always starting `PAUSED`.
 - Turn campaigns on/off and pull performance insights (spend,
@@ -23,6 +26,7 @@ So you can say things like:
 - *"Post 'Our fall sale starts today!' to my Page with a link to the
   sale page."*
 - *"Schedule that post for 9am next Tuesday."*
+- *"Post this photo to Instagram with the caption 'New arrivals'."*
 - *"Set up a $20/day traffic campaign targeting US adults 25-45
   interested in outdoor gear, using this product photo."*
 - *"How did last week's campaign perform?"*
@@ -58,6 +62,10 @@ cp .env.example .env
    [Meta Ads Manager](https://adsmanager.facebook.com) (Settings — it
    looks like `act_1234567890`) and put it in `.env` as
    `FB_AD_ACCOUNT_ID`.
+7. If you want Instagram posting too, switch that Instagram account to
+   **Business or Creator** (Instagram app → Settings and privacy →
+   Account type and tools) and link it to the Facebook Page from that
+   same menu.
 
 > While the app is in Development mode, only accounts added as
 > admins/developers/testers on the app can log in and manage the Page.
@@ -74,9 +82,15 @@ This opens Facebook's real consent screen in your browser. Approve
 the requested permissions (posting, ads management, insights) and the
 script captures a long-lived (~60 day) user token plus a Page token
 per Page you manage — Page tokens don't expire while the underlying
-grant is valid. Everything is saved to `~/.facebook/tokens.json`
-(override the location with `FACEBOOK_HOME`). Re-running the command
-later is instant if the saved token is still valid — no browser opens.
+grant is valid. If a Page has a linked Instagram Business/Creator
+account, its Instagram user ID is discovered and saved too. Everything
+is saved to `~/.facebook/tokens.json` (override the location with
+`FACEBOOK_HOME`). Re-running the command later is instant if the saved
+token is still valid — no browser opens.
+
+Linked Instagram accounts after the fact? Re-run
+`python3 facebook_login.py --action instagram` to pick them up without
+a full re-login.
 
 ## Use it with Claude Code
 
@@ -90,6 +104,7 @@ You can also call the scripts directly:
 
 ```bash
 python3 facebook_post.py --action create --message "Hello world!" --publish-now
+python3 instagram_post.py --action create --image https://example.com/photo.jpg --caption "Hello world!"
 python3 facebook_ads.py --action list --of campaigns
 ```
 
@@ -102,11 +117,12 @@ machine-readable output; everything else on stderr is just logging.
 
 ```
 facebook_common.py   # shared config, token store, Graph API request wrapper
-facebook_login.py    # OAuth login (idempotent), token check, Page-token listing
+facebook_login.py    # OAuth login (idempotent), token check, Page/Instagram-account listing
 facebook_post.py      # create/list/get/publish/delete Page posts
-facebook_ads.py        # campaigns/ad sets/creatives/ads/insights/status changes
-SKILL.md               # the playbook Claude follows — safety rules + decision tree
-.env.example            # copy to .env and fill in
+instagram_post.py       # create (container/publish)/list/get/delete Instagram media
+facebook_ads.py           # campaigns/ad sets/creatives/ads/insights/status changes
+SKILL.md                    # the playbook Claude follows — safety rules + decision tree
+.env.example                  # copy to .env and fill in
 ```
 
 ## Security notes
@@ -121,5 +137,8 @@ SKILL.md               # the playbook Claude follows — safety rules + decision
 - Posts are created as **unpublished drafts by default** — nothing
   goes live until you (or Claude, after you approve) calls
   `--action publish` or passes `--publish-now`.
-- This skill only talks to `graph.facebook.com`. No third-party
-  telemetry, no other network calls.
+- Instagram media works the same way: `--action create` only creates a
+  container, never live until `--action publish`.
+- This skill only talks to `graph.facebook.com` (which also serves the
+  Instagram Graph API). No third-party telemetry, no other network
+  calls.

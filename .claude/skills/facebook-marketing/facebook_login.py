@@ -53,6 +53,7 @@ from facebook_common import (
     load_tokens,
     log,
     result_line,
+    save_instagram_account,
     save_page_token,
     save_tokens,
 )
@@ -67,6 +68,8 @@ DEFAULT_SCOPES = [
     "ads_read",
     "read_insights",
     "business_management",
+    "instagram_basic",
+    "instagram_content_publish",
 ]
 
 
@@ -118,11 +121,23 @@ def _user_token_still_valid(token: str) -> bool:
 
 
 def _fetch_and_save_pages(user_token: str) -> list[dict]:
-    body = graph_request("GET", "me/accounts", user_token, params={"fields": "id,name,access_token,category,tasks", "limit": 200})
+    fields = "id,name,access_token,category,tasks,instagram_business_account{id,username}"
+    body = graph_request("GET", "me/accounts", user_token, params={"fields": fields, "limit": 200})
     pages = body.get("data", [])
     for p in pages:
         save_page_token(p["id"], p.get("name", ""), p["access_token"], p.get("category"))
+        ig = p.get("instagram_business_account")
+        if ig:
+            save_instagram_account(p["id"], ig["id"], ig.get("username"))
     return pages
+
+
+def _page_summary(p: dict) -> dict:
+    summary = {"id": p["id"], "name": p.get("name"), "category": p.get("category")}
+    ig = p.get("instagram_business_account")
+    if ig:
+        summary["instagram"] = {"id": ig["id"], "username": ig.get("username")}
+    return summary
 
 
 def cmd_login(args: argparse.Namespace) -> None:
@@ -138,7 +153,7 @@ def cmd_login(args: argparse.Namespace) -> None:
         result_line({
             "status": "logged_in",
             "reused_existing_token": True,
-            "pages": [{"id": p["id"], "name": p.get("name")} for p in pages],
+            "pages": [_page_summary(p) for p in pages],
         })
         return
 
@@ -212,9 +227,11 @@ def cmd_login(args: argparse.Namespace) -> None:
         "status": "logged_in",
         "reused_existing_token": False,
         "expires_in_seconds": expires_in,
-        "pages": [{"id": p["id"], "name": p.get("name"), "category": p.get("category")} for p in pages],
+        "pages": [_page_summary(p) for p in pages],
         "note": "Page access tokens were saved and do not expire while the user grant is valid. "
-                "Ad account access uses the user token directly (see facebook_ads.py).",
+                "Ad account access uses the user token directly (see facebook_ads.py). Any Page "
+                "with a linked Instagram Business account shows an `instagram` field — use "
+                "instagram_post.py to publish there.",
     })
 
 
@@ -250,13 +267,33 @@ def cmd_pages(args: argparse.Namespace) -> None:
     result_line({
         "status": "ok",
         "count": len(pages),
-        "pages": [{"id": p["id"], "name": p.get("name"), "category": p.get("category")} for p in pages],
+        "pages": [_page_summary(p) for p in pages],
+    })
+
+
+def cmd_instagram(args: argparse.Namespace) -> None:
+    """Re-fetch Pages and report which have a linked Instagram Business account."""
+    token = args.access_token or load_tokens().get("user_access_token")
+    if not token:
+        fail("No user token available. Run --action login first, or pass --access-token.")
+    pages = _fetch_and_save_pages(token)
+    linked = [_page_summary(p) for p in pages if p.get("instagram_business_account")]
+    unlinked = [p.get("name") for p in pages if not p.get("instagram_business_account")]
+    result_line({
+        "status": "ok",
+        "linked": linked,
+        "pages_without_instagram": unlinked,
+        "note": None if linked else (
+            "No Page has a linked Instagram Business account yet. In the Instagram app: "
+            "Settings and privacy > Account type and tools > switch to a Business/Creator "
+            "account, then link it to your Facebook Page from that same settings area."
+        ),
     })
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="OAuth login + Page token management for Facebook.")
-    parser.add_argument("--action", required=True, choices=["login", "check", "pages"])
+    parser.add_argument("--action", required=True, choices=["login", "check", "pages", "instagram"])
     parser.add_argument("--port", type=int, default=8765, help="Local port for the OAuth redirect (must match the app's Valid OAuth Redirect URI).")
     parser.add_argument("--timeout", type=int, default=180, help="Seconds to wait for the browser redirect before giving up.")
     parser.add_argument("--scopes", default=None, help="Comma-separated scopes to request. Defaults to a sensible posts+ads set.")
@@ -271,6 +308,8 @@ def main() -> None:
             cmd_check(args)
         elif args.action == "pages":
             cmd_pages(args)
+        elif args.action == "instagram":
+            cmd_instagram(args)
     except Exception as e:  # noqa: BLE001
         fail(str(e))
 

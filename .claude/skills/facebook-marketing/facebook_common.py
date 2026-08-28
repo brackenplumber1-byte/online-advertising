@@ -143,6 +143,22 @@ def get_saved_page_token(page_id: str) -> str | None:
     return entry.get("access_token") if entry else None
 
 
+def save_instagram_account(page_id: str, ig_user_id: str, username: str | None = None) -> None:
+    data = load_tokens()
+    accounts = data.setdefault("instagram_accounts", {})
+    accounts[page_id] = {
+        "id": ig_user_id,
+        "username": username,
+        "saved_at": datetime.now(timezone.utc).isoformat(),
+    }
+    save_tokens(data)
+
+
+def get_saved_instagram_account(page_id: str) -> dict[str, Any] | None:
+    accounts = load_tokens().get("instagram_accounts", {})
+    return accounts.get(page_id)
+
+
 # ---------------------------------------------------------------------------
 # Config
 # ---------------------------------------------------------------------------
