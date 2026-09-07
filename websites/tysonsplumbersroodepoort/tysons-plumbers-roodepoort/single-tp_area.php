@@ -165,14 +165,49 @@
         <li>PIRB Certificates of Compliance issued for geyser work</li>
       </ul>
 
-      <h3>Emergency Plumber in <?php echo esc_html($area_name); ?> — Right Now</h3>
-      <p>Plumbing emergencies in <?php echo esc_html($area_name); ?> don't wait for business hours. If you have a burst pipe, blocked drain, or no hot water in <?php echo esc_html($area_name); ?>, call Tysons Plumbers Roodepoort immediately on <a href="<?php echo esc_attr(tp_plink()); ?>" style="color:var(--fire);font-weight:700"><?php echo esc_html(tp_phone()); ?></a>. We're available right now — 24 hours a day.</p>
+      <?php
+      // Rotated phrasing for these three sub-sections so 75 area pages don't
+      // render near-identical boilerplate — selection is a stable hash of
+      // the area slug (plus a per-block salt so the three blocks don't all
+      // land on the same variant for a given area), not a sequential index.
+      $phone_link = '<a href="'.esc_attr(tp_plink()).'" style="color:var(--fire);font-weight:700">'.esc_html(tp_phone()).'</a>';
+      $an = esc_html($area_name);
 
-      <h3>Geyser Repair in <?php echo esc_html($area_name); ?></h3>
-      <p>No hot water in <?php echo esc_html($area_name); ?>? Our geyser specialists can diagnose and repair your geyser — or supply and install a replacement — same day in most cases. We carry PIRB Compliance Certificates (CoC) as required by your home insurer.</p>
+      $emergency_variants = [
+        ['Emergency Plumber in '.$an.' — Right Now', "Plumbing emergencies in $an don't wait for business hours. If you have a burst pipe, blocked drain, or no hot water in $an, call Tysons Plumbers Roodepoort immediately on $phone_link. We're available right now — 24 hours a day."],
+        ['Need an Emergency Plumber in '.$an.' Today?', "Burst pipes, blocked drains and no hot water in $an are all treated as emergencies. Call $phone_link and we'll get someone on the way — no need to wait until Monday morning."],
+        ['24/7 Emergency Plumbing, '.$an, "A burst geyser or blocked main line in $an rarely happens at a convenient time. That's why we run a genuine 24/7 line — call $phone_link any hour, any day, including weekends and public holidays."],
+        ['Out-of-Hours Plumber for '.$an, "If something's gone wrong in $an outside normal hours, you don't have to wait it out. Phone $phone_link and we'll talk you through what to do while help is on the way."],
+      ];
+      $geyser_variants = [
+        ['Geyser Repair in '.$an, "No hot water in $an? Our geyser specialists can diagnose and repair your geyser — or supply and install a replacement — same day in most cases. We carry PIRB Compliance Certificates (CoC) as required by your home insurer."],
+        ['Geyser Problems in '.$an.'?', "A geyser that's leaking, tripping the electrics, or simply not heating is one of the most common calls we get from $an. We'll diagnose it on-site and, where a repair isn't worthwhile, quote you honestly on a replacement instead."],
+        ['Hot Water Issues in '.$an, "Whether it's an electric, gas or solar geyser, our team can usually get hot water running again the same day in $an. Where compliance certification is needed for insurance purposes, we issue a PIRB CoC on completion."],
+        ['Geyser Repairs &amp; Replacements — '.$an, "We see a lot of ageing geysers across $an, and most problems fall into a handful of common faults we can usually fix on the first visit. Where a unit is beyond repair, we'll say so rather than patch it temporarily."],
+      ];
+      $drain_variants = [
+        ['Blocked Drain Cleaning in '.$an, "Blocked drains are one of the most common plumbing problems in $an. Our team uses high-pressure hydro jetting to clear blockages completely — not just temporarily. Kitchen drains, bathroom drains, blocked toilets, and main sewer lines all cleared fast."],
+        ['Drain Blockages in '.$an, "From slow-draining sinks to a fully blocked sewer line, drain issues in $an get cleared properly with high-pressure jetting rather than a quick snake-and-hope fix that just pushes the problem further down the line."],
+        ['Clearing Blocked Drains — '.$an, "A blocked drain in $an is usually more than just an inconvenience — left long enough it can back up into the house. We clear the full length of the line with hydro jetting, not just the visible clog."],
+        ['Drain Cleaning Service, '.$an, "Whether it's a single blocked toilet or a main line backing up across the property, our team carries the equipment to clear it properly the first time in $an — no repeat call-outs for the same blockage."],
+      ];
 
-      <h3>Blocked Drain Cleaning in <?php echo esc_html($area_name); ?></h3>
-      <p>Blocked drains are one of the most common plumbing problems in <?php echo esc_html($area_name); ?>. Our team uses high-pressure hydro jetting to clear blockages completely — not just temporarily. Kitchen drains, bathroom drains, blocked toilets, and main sewer lines all cleared fast.</p>
+      $pick = function($variants, $salt) use ($slug) {
+        return $variants[abs(crc32($salt.$slug)) % count($variants)];
+      };
+      [$e_h3, $e_body] = $pick($emergency_variants, 'emergency-');
+      [$g_h3, $g_body] = $pick($geyser_variants, 'geyser-');
+      [$d_h3, $d_body] = $pick($drain_variants, 'drain-');
+      ?>
+
+      <h3><?php echo $e_h3; ?></h3>
+      <p><?php echo $e_body; ?></p>
+
+      <h3><?php echo $g_h3; ?></h3>
+      <p><?php echo $g_body; ?></p>
+
+      <h3><?php echo $d_h3; ?></h3>
+      <p><?php echo $d_body; ?></p>
 
       <div class="highlight-box">
         <h3>Need a Plumber in <?php echo esc_html($area_name); ?> Now?</h3>
@@ -212,17 +247,16 @@
   </div>
 </div>
 
-<!-- MINI REVIEWS -->
+<!-- REAL REVIEWS CTA -->
+<?php if (tp_review()): ?>
 <div style="background:var(--light);padding:56px 0;border-top:1px solid var(--border)">
   <div class="container">
-    <h2 style="margin-bottom:28px;font-size:1.6rem">Trusted by <?php echo esc_html($area_name); ?> Residents</h2>
-    <div class="mini-rev-grid">
-      <div class="mini-rev"><div class="rev-stars">★★★★★</div><blockquote>"Called at midnight with a burst pipe. They were here in under 40 minutes. Absolute professionals."</blockquote><div class="mini-rev-author">— Resident, <?php echo esc_html($area_name); ?></div></div>
-      <div class="mini-rev"><div class="rev-stars">★★★★★</div><blockquote>"Best plumber I've used. Honest pricing, clean work, and a proper 12-month guarantee."</blockquote><div class="mini-rev-author">— Homeowner, <?php echo esc_html($area_name); ?></div></div>
-      <div class="mini-rev"><div class="rev-stars">★★★★★</div><blockquote>"Fixed our geyser same day. Professional, tidy, no surprise charges. Highly recommend."</blockquote><div class="mini-rev-author">— Customer, <?php echo esc_html($area_name); ?></div></div>
-    </div>
+    <h2 style="margin-bottom:16px;font-size:1.6rem">Trusted by <?php echo esc_html($area_name); ?> Residents</h2>
+    <p style="margin-bottom:20px">See what real customers are saying on Google, or leave a review of your own after a job.</p>
+    <a href="<?php echo esc_url(tp_review()); ?>" target="_blank" class="btn btn--fire">⭐ Read Our Reviews on Google</a>
   </div>
 </div>
+<?php endif; ?>
 
 <?php endwhile; ?>
 <?php get_footer(); ?>

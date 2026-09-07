@@ -276,13 +276,14 @@
       <h2>Other Plumbing Services in Roodepoort</h2>
       <ul><?php echo $other; ?></ul>
 
-      <!-- MINI REVIEWS -->
-      <h2 style="margin-top:40px">What Roodepoort Customers Say</h2>
-      <div class="mini-rev-grid">
-        <div class="mini-rev"><div class="rev-stars">★★★★★</div><blockquote>"Fast, professional, and fixed it properly. No call-out fee and a fair price."</blockquote><div class="mini-rev-author">— T. Mokoena, Wilgeheuwel</div></div>
-        <div class="mini-rev"><div class="rev-stars">★★★★★</div><blockquote>"Called on a public holiday and they were here within an hour. Outstanding."</blockquote><div class="mini-rev-author">— K. van der Berg, Honeydew</div></div>
-        <div class="mini-rev"><div class="rev-stars">★★★★★</div><blockquote>"The best plumbers in Roodepoort. Honest, skilled, and clean workers."</blockquote><div class="mini-rev-author">— D. Okonkwo, Constantia Kloof</div></div>
+      <!-- REAL REVIEWS CTA -->
+      <?php if (tp_review()): ?>
+      <div class="highlight-box" style="margin-top:40px">
+        <h2 style="margin-top:0">What Roodepoort Customers Say</h2>
+        <p>See what real customers are saying on Google, or leave a review of your own after a job.</p>
+        <a href="<?php echo esc_url(tp_review()); ?>" target="_blank" class="btn btn--fire">⭐ Read Our Reviews on Google</a>
       </div>
+      <?php endif; ?>
     </div>
 
     <?php get_template_part('template-parts/sidebar'); ?>
