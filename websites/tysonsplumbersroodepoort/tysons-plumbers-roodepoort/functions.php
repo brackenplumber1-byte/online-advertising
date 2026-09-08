@@ -349,6 +349,20 @@ function tp_seo_head() {
 }
 add_action('wp_head','tp_seo_head',1);
 
+// When AIOSEO (or another major SEO plugin) already returns a complete
+// title via its own document_title_parts filter, WordPress core still
+// appends the site name as a separate 'site' part by default — producing
+// a double-suffixed title like "Plumbers X | 24/7 Service — Tysons
+// Plumbers Roodepoort – Tysons Plumbers Roodepoort". Drop the redundant
+// 'site' part in that case; the plugin's title already includes the
+// brand name where it wants it.
+add_filter('document_title_parts', function($parts) {
+    if (tp_seo_plugin_active() && !empty($parts['title'])) {
+        unset($parts['site']);
+    }
+    return $parts;
+}, 20);
+
 // When AIOSEO is active but hasn't been given a custom description for a
 // specific page yet, fall back to this theme's own good description
 // instead of AIOSEO's generic default — steps aside automatically once a

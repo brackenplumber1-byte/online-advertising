@@ -95,9 +95,24 @@ function rn_favicon() {
 add_action('wp_head', 'rn_favicon', 0);
 
 // ── SEO META + SCHEMA ──────────────────────────────────────────────────────────
+// Detect if a major SEO plugin is active — if so, that plugin owns the
+// title, meta description, canonical URL, robots tag and Open Graph tags.
+// We defer to it for those rather than risk two competing sets of tags in
+// <head> (this was previously unconditional and caused exactly that: a
+// duplicated description/robots/og:* tag pair, and a title double-suffixed
+// with the site name, on every rn_service/rn_area page). We still output
+// LocalBusiness/Service schema regardless, since that's renovation-specific
+// structured data most SEO plugins don't generate without manual config.
+function rn_seo_plugin_active() {
+    return function_exists('aioseo')            // All in One SEO
+        || defined('WPSEO_VERSION')              // Yoast SEO
+        || defined('RANK_MATH_VERSION');          // Rank Math
+}
+
 function rn_seo_head() {
     $services = unserialize(RN_SERVICES);
     $areas    = unserialize(RN_AREAS);
+    $has_seo_plugin = rn_seo_plugin_active();
 
     if (is_singular('rn_service')) {
         $post = get_post();
@@ -105,9 +120,11 @@ function rn_seo_head() {
         $svc  = $services[$slug] ?? [get_the_title(), get_the_title(), ''];
         $desc = $svc[2] . ' Free quotes, workmanship guaranteed. Call ' . rn_phone() . '.';
         $kw   = str_replace('Johannesburg', '', $svc[0]) . ', johannesburg, gauteng, contractors, free quote';
-        echo '<meta name="description" content="' . esc_attr($desc) . '">' . "\n";
-        echo '<meta name="keywords" content="' . esc_attr($kw) . '">' . "\n";
-        echo '<link rel="canonical" href="' . esc_url(get_permalink()) . '">' . "\n";
+        if (!$has_seo_plugin) {
+            echo '<meta name="description" content="' . esc_attr($desc) . '">' . "\n";
+            echo '<meta name="keywords" content="' . esc_attr($kw) . '">' . "\n";
+            echo '<link rel="canonical" href="' . esc_url(get_permalink()) . '">' . "\n";
+        }
         $schema = [
             '@context' => 'https://schema.org', '@type' => 'HomeAndConstructionBusiness',
             'name' => RN_BRAND . ' — ' . $svc[1],
@@ -120,14 +137,18 @@ function rn_seo_head() {
     } elseif (is_singular('rn_area')) {
         $area = get_post_meta(get_the_ID(), 'rn_area_name', true) ?: get_the_title();
         $desc = "247 Renovations offers professional renovation and building services in $area, Johannesburg. Kitchen renovations, bathroom renovations, roof repairs, extensions and more. Free quotes. Workmanship guaranteed.";
-        echo '<meta name="description" content="' . esc_attr($desc) . '">' . "\n";
-        echo '<meta name="keywords" content="renovations ' . esc_attr(strtolower($area)) . ', builders ' . esc_attr(strtolower($area)) . ', kitchen bathroom renovations ' . esc_attr(strtolower($area)) . '">' . "\n";
-        echo '<link rel="canonical" href="' . esc_url(get_permalink()) . '">' . "\n";
+        if (!$has_seo_plugin) {
+            echo '<meta name="description" content="' . esc_attr($desc) . '">' . "\n";
+            echo '<meta name="keywords" content="renovations ' . esc_attr(strtolower($area)) . ', builders ' . esc_attr(strtolower($area)) . ', kitchen bathroom renovations ' . esc_attr(strtolower($area)) . '">' . "\n";
+            echo '<link rel="canonical" href="' . esc_url(get_permalink()) . '">' . "\n";
+        }
 
     } else {
-        echo '<meta name="description" content="247 Renovations — Johannesburg\'s trusted renovation and building contractors. Kitchen renovations, bathroom renovations, home extensions, roofing, painting, tiling and more across Gauteng. Free quotes, workmanship guaranteed.">' . "\n";
-        echo '<meta name="keywords" content="renovations johannesburg, home renovations johannesburg, kitchen renovations johannesburg, bathroom renovations johannesburg, building contractors johannesburg, renovation company gauteng">' . "\n";
-        echo '<link rel="canonical" href="' . esc_url(home_url('/')) . '">' . "\n";
+        if (!$has_seo_plugin) {
+            echo '<meta name="description" content="247 Renovations — Johannesburg\'s trusted renovation and building contractors. Kitchen renovations, bathroom renovations, home extensions, roofing, painting, tiling and more across Gauteng. Free quotes, workmanship guaranteed.">' . "\n";
+            echo '<meta name="keywords" content="renovations johannesburg, home renovations johannesburg, kitchen renovations johannesburg, bathroom renovations johannesburg, building contractors johannesburg, renovation company gauteng">' . "\n";
+            echo '<link rel="canonical" href="' . esc_url(home_url('/')) . '">' . "\n";
+        }
         // LocalBusiness schema
         $schema = [
             '@context' => 'https://schema.org', '@type' => 'HomeAndConstructionBusiness',
@@ -151,12 +172,16 @@ function rn_seo_head() {
         ];
         echo '<script type="application/ld+json">' . wp_json_encode($schema, JSON_UNESCAPED_SLASHES) . '</script>' . "\n";
     }
-    echo '<meta property="og:type" content="website">' . "\n";
-    echo '<meta property="og:locale" content="en_ZA">' . "\n";
-    echo '<meta property="og:url" content="' . esc_url(get_permalink()) . '">' . "\n";
+    if (!$has_seo_plugin) {
+        echo '<meta property="og:type" content="website">' . "\n";
+        echo '<meta property="og:locale" content="en_ZA">' . "\n";
+        echo '<meta property="og:url" content="' . esc_url(get_permalink()) . '">' . "\n";
+    }
     echo '<meta name="geo.region" content="ZA-GP">' . "\n";
     echo '<meta name="geo.placename" content="Johannesburg, Gauteng">' . "\n";
-    echo '<meta name="robots" content="index, follow, max-image-preview:large">' . "\n";
+    if (!$has_seo_plugin) {
+        echo '<meta name="robots" content="index, follow, max-image-preview:large">' . "\n";
+    }
     if (is_singular(['rn_service', 'rn_area'])) {
         $type = is_singular('rn_service') ? 'Services' : 'Areas';
         $bc = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => [
@@ -168,6 +193,19 @@ function rn_seo_head() {
     }
 }
 add_action('wp_head', 'rn_seo_head', 1);
+
+// When AIOSEO (or another major SEO plugin) already returns a complete
+// title via its own document_title_parts filter, WordPress core still
+// appends the site name as a separate 'site' part by default — producing
+// a double-suffixed title like "Page Title | 247 Renovations Johannesburg
+// - 247 Renovations". Drop the redundant 'site' part in that case; the
+// plugin's title already includes the brand name where it wants it.
+add_filter('document_title_parts', function($parts) {
+    if (rn_seo_plugin_active() && !empty($parts['title'])) {
+        unset($parts['site']);
+    }
+    return $parts;
+}, 20);
 
 // ── REGISTER CPTs ──────────────────────────────────────────────────────────────
 function rn_register_cpts() {
