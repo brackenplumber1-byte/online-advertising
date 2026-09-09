@@ -363,6 +363,25 @@ add_filter('document_title_parts', function($parts) {
     return $parts;
 }, 20);
 
+// AIOSEO actually short-circuits title generation via `pre_get_document_title`
+// (returning its own fully-built string, including its own site-name suffix,
+// before WordPress core ever reaches document_title_parts above) — so that
+// filter alone doesn't reach this case. Catch it here instead: if the site
+// name appears at the very end of the title AND still appears earlier in
+// the string once that trailing copy is removed, it's a genuine duplicate
+// (not the title's only brand mention) — strip just the trailing copy.
+add_filter('pre_get_document_title', function($title) {
+    if (empty($title) || !tp_seo_plugin_active()) return $title;
+    $site = get_bloginfo('name');
+    if ($site === '') return $title;
+    $pattern = '/\s*[\x{2013}\x{2014}-]\s*' . preg_quote($site, '/') . '\s*$/u';
+    $stripped = preg_replace($pattern, '', $title);
+    if ($stripped !== null && $stripped !== $title && strpos($stripped, $site) !== false) {
+        return $stripped;
+    }
+    return $title;
+}, 999);
+
 // When AIOSEO is active but hasn't been given a custom description for a
 // specific page yet, fall back to this theme's own good description
 // instead of AIOSEO's generic default — steps aside automatically once a
