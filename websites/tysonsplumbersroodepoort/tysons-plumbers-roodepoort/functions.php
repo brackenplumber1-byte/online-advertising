@@ -349,38 +349,35 @@ function tp_seo_head() {
 }
 add_action('wp_head','tp_seo_head',1);
 
-// When AIOSEO (or another major SEO plugin) already returns a complete
-// title via its own document_title_parts filter, WordPress core still
-// appends the site name as a separate 'site' part by default — producing
-// a double-suffixed title like "Plumbers X | 24/7 Service — Tysons
-// Plumbers Roodepoort – Tysons Plumbers Roodepoort". Drop the redundant
-// 'site' part in that case; the plugin's title already includes the
-// brand name where it wants it.
-add_filter('document_title_parts', function($parts) {
-    if (tp_seo_plugin_active() && !empty($parts['title'])) {
-        unset($parts['site']);
-    }
-    return $parts;
-}, 20);
-
-// AIOSEO actually short-circuits title generation via `pre_get_document_title`
-// (returning its own fully-built string, including its own site-name suffix,
-// before WordPress core ever reaches document_title_parts above) — so that
-// filter alone doesn't reach this case. Catch it here instead: if the site
-// name appears at the very end of the title AND still appears earlier in
-// the string once that trailing copy is removed, it's a genuine duplicate
-// (not the title's only brand mention) — strip just the trailing copy.
-add_filter('pre_get_document_title', function($title) {
-    if (empty($title) || !tp_seo_plugin_active()) return $title;
+// The active SEO plugin (SiteSEO) renders its own <title> tag directly
+// during wp_head rather than going through WordPress core's title filters
+// (document_title_parts / pre_get_document_title never fire for it), and
+// its resolved title already contains full brand text — so it ends up
+// with the site name appended a second time, e.g. "Plumbers X | 24/7
+// Service — Tysons Plumbers Roodepoort – Tysons Plumbers Roodepoort".
+// Since we can't intercept it via a filter, buffer wp_head's own output
+// (not the whole page — just this one action) and clean up the rendered
+// <title> tag directly. Only strips the trailing site-name copy when it
+// still appears earlier in the tag afterward, so a title whose only
+// brand mention is at the end is left untouched.
+add_action('wp_head', function() { ob_start(); }, 0);
+add_action('wp_head', function() {
+    $html = ob_get_clean();
     $site = get_bloginfo('name');
-    if ($site === '') return $title;
-    $pattern = '/\s*[\x{2013}\x{2014}-]\s*' . preg_quote($site, '/') . '\s*$/u';
-    $stripped = preg_replace($pattern, '', $title);
-    if ($stripped !== null && $stripped !== $title && strpos($stripped, $site) !== false) {
-        return $stripped;
+    if ($site !== '') {
+        // The separator between the two copies renders as the literal HTML
+        // entity "&#8211;"/"&#8212;" by the time wp_head's output reaches
+        // here (not an actual Unicode dash character), so the pattern has
+        // to match the entity form, not just the raw character.
+        $dash = '(?:[\x{2013}\x{2014}-]|&#821[12];|&ndash;|&mdash;)';
+        $pattern = '/(<title>.*?)(?:\s|&nbsp;)*' . $dash . '(?:\s|&nbsp;)*' . preg_quote($site, '/') . '(\s*<\/title>)/isu';
+        $fixed = preg_replace_callback($pattern, function($m) use ($site) {
+            return (strpos($m[1], $site) !== false) ? ($m[1] . $m[2]) : $m[0];
+        }, $html);
+        if ($fixed !== null) $html = $fixed;
     }
-    return $title;
-}, 999);
+    echo $html;
+}, PHP_INT_MAX);
 
 // When AIOSEO is active but hasn't been given a custom description for a
 // specific page yet, fall back to this theme's own good description
