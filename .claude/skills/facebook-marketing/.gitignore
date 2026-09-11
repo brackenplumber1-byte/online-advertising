@@ -1,0 +1,27 @@
+# --- Auth & local state (NEVER commit) -----------------------------
+.env
+.env.*
+!.env.example
+tokens.json
+*.token.json
+
+# --- Python --------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# --- Editors / OS --------------------------------------------------
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# --- Logs / scratch ------------------------------------------------
+*.log
+.tmp/
+tmp/
