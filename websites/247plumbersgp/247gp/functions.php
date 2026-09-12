@@ -737,6 +737,7 @@ function gp_legacy_area_redirects() {
         'plumbers-in-centurion'  => '/areas/centurion/',
         'plumbers-in-pretoria'   => '/areas/pretoria/',
         'plumbers-in-sandton'    => '/areas/sandton/',
+        'plumbers-in-edenvale'   => '/areas/edenvale/',
         'geyser-repairs'         => '/services/geyser-repair/',
         'geyser-installations'   => '/services/geyser-installation/',
         'drain-cleaning-services'=> '/services/drain-cleaning/',
