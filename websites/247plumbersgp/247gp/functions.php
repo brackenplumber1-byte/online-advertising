@@ -331,6 +331,17 @@ function gp_build_page_title() {
     if ($wp_query->is_page('articles')) {
         return 'Plumbing Articles & Guides | 247 Plumbers GP';
     }
+    // gp_area / gp_service archive index pages (/areas/, /services/) — these
+    // aren't singular posts, so get_the_ID() returns nothing for them and
+    // they fell through to WordPress's generic "Areas - 247 Plumbers GP" /
+    // "Services - 247 Plumbers GP" default title (flagged as "title too
+    // short" by the site audit). Give them real, keyword-rich titles.
+    if ($wp_query->is_post_type_archive('gp_area')) {
+        return 'Plumbing Service Areas We Cover in Gauteng | 247 Plumbers GP';
+    }
+    if ($wp_query->is_post_type_archive('gp_service')) {
+        return 'Our Plumbing Services | 247 Plumbers GP';
+    }
     // Return empty string instead of wp_get_document_title() — calling
     // wp_get_document_title() here would trigger pre_get_document_title
     // again, causing the infinite recursion. Empty string tells WordPress
@@ -363,6 +374,15 @@ function gp_build_meta_description() {
     if ($wp_query->is_page('articles')) {
         return 'Plumbing tips and guides for Midrand, Johannesburg and Gauteng homeowners — geysers, leaks, drains and more, from the team at 247 Plumbers GP.';
     }
+    // gp_area / gp_service archive index pages — same missing-branch gap as
+    // gp_build_page_title() above, which left these two pages with no meta
+    // description at all (flagged by the site audit).
+    if ($wp_query->is_post_type_archive('gp_area')) {
+        return '247 Plumbers GP serves Midrand, Centurion, Pretoria, Sandton, Johannesburg and areas across Gauteng with 24/7 emergency plumbing, no call-out fee. Find your area below.';
+    }
+    if ($wp_query->is_post_type_archive('gp_service')) {
+        return 'From geyser repairs and drain cleaning to leak detection and emergency plumbing — see the full range of services 247 Plumbers GP offers across Gauteng, 24/7.';
+    }
     return 'PIRB registered plumbers serving Midrand and all of Gauteng. 24/7 emergency plumbing, no call-out fee. Call ' . gp_phone() . '.';
 }
 
@@ -374,6 +394,24 @@ add_filter('pre_get_document_title', function($title) {
     $custom = gp_build_page_title();
     return $custom !== '' ? $custom : $title;
 });
+
+// Safety net for the gp_area / gp_service archive pages (/areas/, /services/)
+// specifically: their titles were showing up as WordPress's raw default
+// "Areas - 247 Plumbers GP" / "Services - 247 Plumbers GP" even with AIOSEO
+// active — meaning AIOSEO isn't generating a custom title for these two
+// archives at all (they were never added to its Search Appearance settings),
+// so this falls all the way through to core's document_title_parts. Set the
+// 'title' part directly here rather than relying on gp_seo_plugin_active()
+// gating above, since that gate is exactly what's leaving these two pages
+// with the short generic title in the first place.
+add_filter('document_title_parts', function($parts) {
+    if (is_post_type_archive('gp_area')) {
+        $parts['title'] = 'Plumbing Service Areas We Cover in Gauteng';
+    } elseif (is_post_type_archive('gp_service')) {
+        $parts['title'] = 'Our Plumbing Services';
+    }
+    return $parts;
+}, 20);
 
 // When Yoast IS active: Yoast still needs *something* to show for every page.
 // Rather than defer blindly (which left every page with no description until
