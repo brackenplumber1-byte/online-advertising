@@ -18,6 +18,20 @@ that trigger for the pattern; a matching one exists for this site too).
 2. Pick from the **topic backlog** below, or a genuinely new angle.
 3. Append a row to `calendar.csv` the moment the post is published.
 
+## Priority backlog (added 2026-09-12 — pick these before the general backlog below)
+
+Sourced from a Sept 2026 competitor-gap audit that confirmed strong,
+low-effort content-gap demand directly matching the business's standing
+priority categories (blocked drains, geyser repairs/compliance, leak
+detection). Write these next, in order, before returning to the general
+backlog:
+- Drain Camera Inspection: What It Costs and When You Need One (targets
+  "drain camera", "camera for drain pipe" cluster)
+- Geyser Compliance Certificate: What SA Homeowners Need to Know (targets
+  "geyser compliance certificate", "geyser certificate of compliance")
+- Gas Leak Detection: Signs & What to Do (targets "gas leak detection",
+  "gas leak detector")
+
 ## Topic backlog (untapped as of 2026-08-12)
 
 247plumbersgp serves Midrand/Johannesburg/Pretoria (Gauteng) — keep local
