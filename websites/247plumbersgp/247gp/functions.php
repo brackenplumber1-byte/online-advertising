@@ -413,6 +413,38 @@ add_filter('document_title_parts', function($parts) {
     return $parts;
 }, 20);
 
+// The document_title_parts filter above (and the aioseo_title/aioseo_description
+// fallbacks further down) did NOT fix /areas/ or /services/ live — AIOSEO is
+// evidently generating a title/description for these two archives through some
+// internal path that bypasses every standard WP/AIOSEO filter hook (same class
+// of issue hit on tysonsplumbersroodepoort's title bug). Falling back to the
+// same proven fix used there: buffer the entire wp_head output and rewrite the
+// <title> tag and meta description directly in the final rendered HTML, which
+// works regardless of which internal mechanism produced them.
+add_action('wp_head', function() {
+    if (is_post_type_archive('gp_area') || is_post_type_archive('gp_service')) {
+        ob_start();
+    }
+}, 0);
+add_action('wp_head', function() {
+    if (!is_post_type_archive('gp_area') && !is_post_type_archive('gp_service')) return;
+    $html = ob_get_clean();
+    if (is_post_type_archive('gp_area')) {
+        $title = 'Plumbing Service Areas We Cover in Gauteng | 247 Plumbers GP';
+        $desc  = '247 Plumbers GP serves Midrand, Centurion, Pretoria, Sandton, Johannesburg and areas across Gauteng with 24/7 emergency plumbing, no call-out fee. Find your area below.';
+    } else {
+        $title = 'Our Plumbing Services | 247 Plumbers GP';
+        $desc  = 'From geyser repairs and drain cleaning to leak detection and emergency plumbing — see the full range of services 247 Plumbers GP offers across Gauteng, 24/7.';
+    }
+    $html = preg_replace('/<title>.*?<\/title>/is', '<title>' . esc_html($title) . '</title>', $html, 1);
+    if (preg_match('/<meta\s+name=["\']description["\'][^>]*>/i', $html)) {
+        $html = preg_replace('/<meta\s+name=["\']description["\'][^>]*>/i', '<meta name="description" content="' . esc_attr($desc) . '">', $html, 1);
+    } else {
+        $html = preg_replace('/(<title>.*?<\/title>)/is', '$1' . "\n" . '<meta name="description" content="' . esc_attr($desc) . '">', $html, 1);
+    }
+    echo $html;
+}, PHP_INT_MAX);
+
 // When Yoast IS active: Yoast still needs *something* to show for every page.
 // Rather than defer blindly (which left every page with no description until
 // each one was manually edited), hook Yoast's own extension filters so our
