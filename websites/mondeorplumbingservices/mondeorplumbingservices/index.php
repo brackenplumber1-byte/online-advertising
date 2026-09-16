@@ -330,7 +330,12 @@ echo '<script type="application/ld+json">'.wp_json_encode($faq_schema, JSON_UNES
         </div>
         <?php else: ?>
         <div class="map-wrap">
-          <iframe src="https://www.google.com/maps?q=10+Boswell+Ave,+Mondeor,+Johannesburg+South,+2095&output=embed" allowfullscreen loading="lazy" title="Mondeor Plumbing Services location — 10 Boswell Ave, Mondeor"></iframe>
+          <?php // CID-based embed tied to the actual verified Google Business Profile
+          // listing (cid = decimal form of the ftid Google returns for this
+          // business's own review-request short link, g.page/r/CcLgHJKPQX3bEAI),
+          // rather than a plain address search that could match a nearby
+          // building instead of this specific verified listing. ?>
+          <iframe src="https://www.google.com/maps?cid=15815869551282544834&output=embed" allowfullscreen loading="lazy" title="Mondeor Plumbing Services location — 10 Boswell Ave, Mondeor"></iframe>
         </div>
         <?php endif; ?>
         <div class="cf-box">
