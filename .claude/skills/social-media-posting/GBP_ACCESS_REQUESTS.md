@@ -9,7 +9,7 @@ allowlist step needed repeating.
 
 | Business | Case ID | Submitted | Status |
 |---|---|---|---|
-| brackendownsplumber | `8-9447000041546` | 2026-08-26 | Pending review (~7-10 business days) |
+| brackendownsplumber | `8-9447000041546` | 2026-08-26 | **Approved 2026-09-16.** OAuth connected, `sites/brackendownsplumber.env` fully populated (Account/Location ID looked up, verified with a live account/location call). Refresh token currently on a 7-day expiry — pending publishing the OAuth consent screen out of Testing mode for a permanent token. |
 | 247plumbersgp | `2-2574000042213` | 2026-08-27 | Pending review (~7-10 business days) |
 | mondeorplumbingservices | `9-5304000041498` | 2026-08-27 | Pending review (~7-10 business days) |
 
