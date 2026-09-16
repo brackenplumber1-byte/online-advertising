@@ -44,6 +44,34 @@ GOOGLE_REFRESH_TOKEN=...
 The script exchanges the refresh token for a short-lived access token
 on each run — no need to manage access token expiry manually.
 
+## ⚠️ Known blocker: Local Post creation is currently unavailable via API (confirmed 2026-09-16)
+
+`scripts/gbp_post.py` targets `mybusiness.googleapis.com` (the legacy v4
+API), which is where Google's own reference docs still document the
+`localPosts` resource. In practice, **this service can no longer be
+enabled for an ordinary approved project** — attempting to enable it in
+Cloud Console (`APIs & Services → Library`) either fails to load or
+succeeds but calls still return `403 SERVICE_DISABLED`, permanently
+(not a propagation delay). The 8 APIs that *do* appear under a
+"Google My Business API" library search (Business Information, Account
+Management, Performance, Place Actions, Q&A [itself shut down
+2025-11-03], Verifications, Lodging, Notifications) have no
+post-creation replacement. Confirmed against Google's own developer
+forums and third-party integration platforms (Make.com) hitting the
+identical wall — this is a Google-side restriction, not a
+misconfiguration on our end.
+
+**Until Google reopens this** (or grants a partner-level exception),
+treat GBP as draft-only regardless of API approval/credential status:
+draft the post text + image + CTA as usual, and have the business
+owner paste it manually into business.google.com or the Google Maps
+app ("Add update"). Re-check this periodically — Google's Local Posts
+API access model has changed multiple times; it may open back up.
+
+Everything else in this file (OAuth setup, Account/Location ID lookup)
+still works fine and is worth doing anyway, since the other Business
+Profile APIs (read business info, performance metrics) are unaffected.
+
 ## How posting works
 
 Local Posts live at:
