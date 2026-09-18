@@ -25,8 +25,6 @@ low-effort content-gap demand directly matching the business's standing
 priority categories (blocked drains, geyser repairs/compliance, leak
 detection). Write these next, in order, before returning to the general
 backlog:
-- Geyser Compliance Certificate: What SA Homeowners Need to Know (targets
-  "geyser compliance certificate", "geyser certificate of compliance")
 - Gas Leak Detection: Signs & What to Do (targets "gas leak detection",
   "gas leak detector")
 
