@@ -9,9 +9,9 @@ allowlist step needed repeating.
 
 | Business | Case ID | Submitted | Status |
 |---|---|---|---|
-| brackendownsplumber | `8-9447000041546` | 2026-08-26 | Pending review (~7-10 business days) |
-| 247plumbersgp | `2-2574000042213` | 2026-08-27 | Pending review (~7-10 business days) |
-| mondeorplumbingservices | `9-5304000041498` | 2026-08-27 | Pending review (~7-10 business days) |
+| brackendownsplumber | `8-9447000041546` | 2026-08-26 | **Approved 2026-09-20** — OAuth/token setup in progress |
+| 247plumbersgp | `2-2574000042213` | 2026-08-27 | **Approved 2026-09-20** — OAuth/token setup in progress |
+| mondeorplumbingservices | `9-5304000041498` | 2026-08-27 | **Approved 2026-09-20** — OAuth/token setup in progress |
 
 ## Next steps once approved (per business)
 
