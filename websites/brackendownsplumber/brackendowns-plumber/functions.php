@@ -256,7 +256,16 @@ function gp_build_page_title() {
     }
     if ($wp_query->is_singular('post')) {
         $t = get_the_title();
-        if (mb_strlen($t) > 50) $t = mb_substr($t, 0, 47) . '...';
+        // Was a hard mb_substr(0,47) cut — sliced mid-word (e.g. "...Washing Mac...",
+        // "...Lasts Long..."), producing a genuinely broken-looking <title> tag.
+        // Same bug found and fixed on 247plumbersgp's functions.php — snap to the
+        // last whole word instead so a shortened title still reads cleanly.
+        if (mb_strlen($t) > 50) {
+            $cut = mb_substr($t, 0, 47);
+            $last_space = mb_strrpos($cut, ' ');
+            if ($last_space !== false) $cut = mb_substr($cut, 0, $last_space);
+            $t = rtrim($cut, " :-–—") . '...';
+        }
         return $t . ' | Brackendowns Plumber';
     }
     if ($wp_query->is_page('articles')) {
