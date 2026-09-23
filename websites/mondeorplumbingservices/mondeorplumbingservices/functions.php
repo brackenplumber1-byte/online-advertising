@@ -284,7 +284,17 @@ function gp_build_page_title() {
     }
     if ($wp_query->is_singular('post')) {
         $t = get_the_title();
-        if (mb_strlen($t) > 50) $t = mb_substr($t, 0, 47) . '...';
+        // Same mid-word truncation bug found and fixed on 247plumbersgp and
+        // brackendownsplumber's functions.php (identical theme family, identical
+        // code) — hard mb_substr(0,47) cut sliced mid-word regardless of word
+        // boundaries. Fixed proactively here even though no blog posts are live
+        // yet on this site, so it doesn't bite the first time one is published.
+        if (mb_strlen($t) > 50) {
+            $cut = mb_substr($t, 0, 47);
+            $last_space = mb_strrpos($cut, ' ');
+            if ($last_space !== false) $cut = mb_substr($cut, 0, $last_space);
+            $t = rtrim($cut, " :-–—") . '...';
+        }
         return $t . ' | Mondeor Plumbing Services';
     }
     if ($wp_query->is_page('articles')) {
