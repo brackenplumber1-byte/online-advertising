@@ -91,10 +91,10 @@ $areas      = unserialize(GP_AREAS);
     <h2 class="display" style="font-size:clamp(1.6rem,3vw,2.2rem);color:var(--navy);margin:6px 0 24px">Real Plumbers. Real Jobs. Real Johannesburg South.</h2>
     <div class="photo-strip-grid">
       <?php $imgdir = get_template_directory_uri() . '/assets/images/'; ?>
-      <img src="<?php echo esc_url($imgdir . 'mondeor-geyser-installation.jpg'); ?>" alt="Mondeor Plumbing Services geyser repair technician">
-      <img src="<?php echo esc_url($imgdir . 'job-pressure-valve.jpg'); ?>" alt="Mondeor Plumbing Services water meter and pressure valve installation">
-      <img src="<?php echo esc_url($imgdir . 'mondeor-plumber-basin-install.jpg'); ?>" alt="Mondeor Plumbing Services pipe repair technician">
-      <img src="<?php echo esc_url($imgdir . 'job-geyser-highpressure.jpg'); ?>" alt="Mondeor Plumbing Services geyser installation">
+      <img src="<?php echo esc_url($imgdir . 'mondeor-geyser-installation.webp'); ?>" alt="Mondeor Plumbing Services geyser repair technician">
+      <img src="<?php echo esc_url($imgdir . 'job-pressure-valve.webp'); ?>" alt="Mondeor Plumbing Services water meter and pressure valve installation">
+      <img src="<?php echo esc_url($imgdir . 'mondeor-plumber-basin-install.webp'); ?>" alt="Mondeor Plumbing Services pipe repair technician">
+      <img src="<?php echo esc_url($imgdir . 'job-geyser-highpressure.webp'); ?>" alt="Mondeor Plumbing Services geyser installation">
     </div>
   </div>
 </section>

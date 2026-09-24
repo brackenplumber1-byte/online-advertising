@@ -44,7 +44,7 @@
 
 <!-- AREA PHOTO -->
 <?php
-$area_photo_pool = ['job-geyser-replacement.jpg', 'job-leak-detection.jpg', 'job-tree-root-drain.jpg', 'job-jojo-tank.jpg', 'job-geyser-highpressure.jpg', 'job-kitchen-tap.jpg', 'job-drain-manhole.jpg', 'mondeor-geyser-installation.jpg', 'mondeor-plumber-basin-install.jpg'];
+$area_photo_pool = ['job-geyser-replacement.webp', 'job-leak-detection.webp', 'job-tree-root-drain.webp', 'job-jojo-tank.webp', 'job-geyser-highpressure.webp', 'job-kitchen-tap.webp', 'job-drain-manhole.webp', 'mondeor-geyser-installation.webp', 'mondeor-plumber-basin-install.webp'];
 $area_photo = $area_photo_pool[abs(crc32($slug)) % count($area_photo_pool)];
 $imgdir = get_template_directory_uri() . '/assets/images/';
 ?>

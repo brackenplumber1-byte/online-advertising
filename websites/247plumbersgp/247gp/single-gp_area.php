@@ -43,7 +43,7 @@
 
 <!-- AREA PHOTO -->
 <?php
-$area_photo_pool = ['geyser-branded.jpg', 'leak-detection-branded.jpg', 'pipe-branded.jpg', 'geyser-solar-roof.jpg', 'bathroom-freestanding-bath.jpg', 'water-tank-1.jpg'];
+$area_photo_pool = ['geyser-branded.webp', 'leak-detection-branded.webp', 'pipe-branded.webp', 'geyser-solar-roof.webp', 'bathroom-freestanding-bath.webp', 'water-tank-1.webp'];
 $area_photo = $area_photo_pool[abs(crc32($slug)) % count($area_photo_pool)];
 $imgdir = get_template_directory_uri() . '/assets/images/';
 ?>

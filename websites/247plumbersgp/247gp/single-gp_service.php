@@ -5,15 +5,15 @@
     $services = unserialize(GP_SERVICES);
     $imgdir   = get_template_directory_uri() . '/assets/images/';
     $svc_photos = [
-        'emergency-plumbing'  => 'burst-pipe-wall.jpg',
-        'leak-detection'      => 'pressure-valve-midrand.jpg',
-        'geyser-repair'       => 'geyser-branded.jpg',
-        'geyser-installation' => 'geyser-solar-roof.jpg',
-        'drain-cleaning'      => 'drain-rodding.jpg',
-        'pipe-repair'         => 'pipe-branded.jpg',
-        'bathroom-plumbing'   => 'bathroom-freestanding-bath.jpg',
-        'toilet-repairs'      => 'toilet-cistern.jpg',
-        'water-backup-tank'   => 'water-tank-1.jpg',
+        'emergency-plumbing'  => 'burst-pipe-wall.webp',
+        'leak-detection'      => 'pressure-valve-midrand.webp',
+        'geyser-repair'       => 'geyser-branded.webp',
+        'geyser-installation' => 'geyser-solar-roof.webp',
+        'drain-cleaning'      => 'drain-rodding.webp',
+        'pipe-repair'         => 'pipe-branded.webp',
+        'bathroom-plumbing'   => 'bathroom-freestanding-bath.webp',
+        'toilet-repairs'      => 'toilet-cistern.webp',
+        'water-backup-tank'   => 'water-tank-1.webp',
     ];
     $svc_photo = $svc_photos[$slug] ?? '';
 
@@ -173,14 +173,14 @@
 
       <?php
       $svc_extra_photos = [
-        'emergency-plumbing'  => ['pipe-excavation.jpg', 'burst-pipe-jhb.jpg'],
-        'leak-detection'      => ['water-meter-install.jpg', 'pressure-valve-jhb-south.jpg'],
-        'geyser-repair'       => ['geyser-roof-space.jpg', 'geyser-superline.jpg'],
-        'geyser-installation' => ['geyser-new-install.jpg', 'solar-geyser-roof2.jpg'],
-        'pipe-repair'         => ['pipe-prv.jpg'],
-        'bathroom-plumbing'   => ['basin-install.jpg'],
-        'toilet-repairs'      => ['toilet-drain-install.jpg', 'toilet-install.jpg'],
-        'drain-cleaning'      => ['drain-blocked-flooding.jpg'],
+        'emergency-plumbing'  => ['pipe-excavation.webp', 'burst-pipe-jhb.webp'],
+        'leak-detection'      => ['water-meter-install.webp', 'pressure-valve-jhb-south.webp'],
+        'geyser-repair'       => ['geyser-roof-space.webp', 'geyser-superline.webp'],
+        'geyser-installation' => ['geyser-new-install.webp', 'solar-geyser-roof2.webp'],
+        'pipe-repair'         => ['pipe-prv.webp'],
+        'bathroom-plumbing'   => ['basin-install.webp'],
+        'toilet-repairs'      => ['toilet-drain-install.webp', 'toilet-install.webp'],
+        'drain-cleaning'      => ['drain-blocked-flooding.webp'],
       ];
       $extras = $svc_extra_photos[$slug] ?? [];
       if ($extras): ?>

@@ -497,7 +497,7 @@ add_filter('aioseo_description', function($desc) {
 // versions. Takes about 2 minutes, fixes all 60 pages at once.
 add_filter('wpseo_opengraph_image', function($image) {
     if ($image) return $image; // a real image (e.g. featured image) already found
-    return get_template_directory_uri() . '/assets/images/geyser-branded.jpg';
+    return get_template_directory_uri() . '/assets/images/geyser-branded.jpg'; // kept as JPG — WebP has inconsistent Open Graph/social-preview support
 });
 
 function gp_seo_meta() {

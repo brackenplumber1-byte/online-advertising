@@ -5,22 +5,22 @@
     $services = unserialize(GP_SERVICES);
     $imgdir   = get_template_directory_uri() . '/assets/images/';
     $svc_photos = [
-        'emergency-plumbing'  => 'job-kitchen-tap.jpg',
-        'leak-detection'      => 'job-water-meter-valve.jpg',
-        'geyser-repair'       => 'job-geyser-roofspace.jpg',
-        'geyser-installation' => 'job-ariston-install.jpg',
-        'drain-cleaning'      => 'job-toilet-drain-snake.jpg',
-        'pipe-repair'         => 'job-pipe-excavation.jpg',
-        'bathroom-plumbing'   => 'job-geberit-toilet.jpg',
-        'toilet-repairs'      => 'job-toilet-drain-snake.jpg',
+        'emergency-plumbing'  => 'job-kitchen-tap.webp',
+        'leak-detection'      => 'job-water-meter-valve.webp',
+        'geyser-repair'       => 'job-geyser-roofspace.webp',
+        'geyser-installation' => 'job-ariston-install.webp',
+        'drain-cleaning'      => 'job-toilet-drain-snake.webp',
+        'pipe-repair'         => 'job-pipe-excavation.webp',
+        'bathroom-plumbing'   => 'job-geberit-toilet.webp',
+        'toilet-repairs'      => 'job-toilet-drain-snake.webp',
         'water-backup-tank'   => 'photo-placeholder.svg',
         'gutters-downpipes'        => 'photo-placeholder.svg',
         'grease-trap-cleaning'     => 'photo-placeholder.svg',
         'drain-camera-inspections' => 'photo-placeholder.svg',
         'heat-pumps'               => 'photo-placeholder.svg',
         'water-filtration'         => 'photo-placeholder.svg',
-        'maintenance-contracts'    => 'job-multi-geyser-db.jpg',
-        'industrial-plumbing'      => 'job-trenching-elbow.jpg',
+        'maintenance-contracts'    => 'job-multi-geyser-db.webp',
+        'industrial-plumbing'      => 'job-trenching-elbow.webp',
     ];
     $svc_photo = $svc_photos[$slug] ?? '';
 
@@ -204,14 +204,14 @@
 
       <?php
       $svc_extra_photos = [
-        'emergency-plumbing'  => ['job-water-meter-valve.jpg', 'job-pipe-excavation.jpg'],
-        'leak-detection'      => ['job-pipe-excavation.jpg', 'job-trenching-elbow.jpg'],
-        'geyser-repair'       => ['job-multi-geyser-db.jpg', 'job-ariston-install.jpg'],
-        'geyser-installation' => ['job-geyser-roofspace.jpg', 'job-multi-geyser-db.jpg'],
-        'pipe-repair'         => ['job-trenching-elbow.jpg'],
-        'bathroom-plumbing'   => ['job-kitchen-tap.jpg'],
-        'toilet-repairs'      => ['job-geberit-toilet.jpg', 'job-toilet-drain-snake.jpg'],
-        'drain-cleaning'      => ['job-trenching-elbow.jpg'],
+        'emergency-plumbing'  => ['job-water-meter-valve.webp', 'job-pipe-excavation.webp'],
+        'leak-detection'      => ['job-pipe-excavation.webp', 'job-trenching-elbow.webp'],
+        'geyser-repair'       => ['job-multi-geyser-db.webp', 'job-ariston-install.webp'],
+        'geyser-installation' => ['job-geyser-roofspace.webp', 'job-multi-geyser-db.webp'],
+        'pipe-repair'         => ['job-trenching-elbow.webp'],
+        'bathroom-plumbing'   => ['job-kitchen-tap.webp'],
+        'toilet-repairs'      => ['job-geberit-toilet.webp', 'job-toilet-drain-snake.webp'],
+        'drain-cleaning'      => ['job-trenching-elbow.webp'],
       ];
       $extras = $svc_extra_photos[$slug] ?? [];
       if ($extras): ?>

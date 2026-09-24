@@ -42,7 +42,7 @@
 
 <!-- AREA PHOTO -->
 <?php
-$area_photo_pool = ['job-kitchen-tap.jpg', 'job-water-meter-valve.jpg', 'job-geyser-roofspace.jpg', 'job-ariston-install.jpg', 'job-toilet-drain-snake.jpg', 'job-pipe-excavation.jpg', 'job-geberit-toilet.jpg', 'job-multi-geyser-db.jpg', 'job-trenching-elbow.jpg'];
+$area_photo_pool = ['job-kitchen-tap.webp', 'job-water-meter-valve.webp', 'job-geyser-roofspace.webp', 'job-ariston-install.webp', 'job-toilet-drain-snake.webp', 'job-pipe-excavation.webp', 'job-geberit-toilet.webp', 'job-multi-geyser-db.webp', 'job-trenching-elbow.webp'];
 $area_photo = $area_photo_pool[abs(crc32($slug)) % count($area_photo_pool)];
 $imgdir = get_template_directory_uri() . '/assets/images/';
 ?>

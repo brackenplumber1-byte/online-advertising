@@ -177,19 +177,19 @@
       <?php
       $imgdir = rn_imgdir();
       $page_photos = [
-        'kitchen-renovations'        => ['kitchen-1.jpg','kitchen-3.jpg','kitchen-4.jpg'],
-        'bathroom-renovations'       => ['bathroom-1.jpg','bathroom-guest.jpg'],
-        'home-renovations'           => ['kitchen-3.jpg','bathroom-1.jpg'],
-        'building-extensions'        => ['extension-rear.jpg'],
-        'roof-repairs-waterproofing' => ['roofing-1.jpg','roofing-2.jpg'],
-        'tiling-flooring'            => ['tiler-2.jpg','tiler-3.jpg','tiler-4.jpg'],
-        'paving-driveways'           => ['paving-2.jpg','paving-1.jpg'],
-        'palisade-fencing'           => ['palisade-1.jpg','palisade-2.jpg'],
-        'garage-conversions'         => ['tiler-1.jpg'],
-        'garden-flats'               => ['garden-flat.jpg'],
-        'painting-plastering'        => ['kitchen-4.jpg'],
-        'maintenance-repairs'        => ['bathroom-guest.jpg'],
-        'granite-quartz-countertops' => ['granite-1.jpg','granite-2.jpg'],
+        'kitchen-renovations'        => ['kitchen-1.webp','kitchen-3.webp','kitchen-4.webp'],
+        'bathroom-renovations'       => ['bathroom-1.webp','bathroom-guest.webp'],
+        'home-renovations'           => ['kitchen-3.webp','bathroom-1.webp'],
+        'building-extensions'        => ['extension-rear.webp'],
+        'roof-repairs-waterproofing' => ['roofing-1.webp','roofing-2.webp'],
+        'tiling-flooring'            => ['tiler-2.webp','tiler-3.webp','tiler-4.webp'],
+        'paving-driveways'           => ['paving-2.webp','paving-1.webp'],
+        'palisade-fencing'           => ['palisade-1.webp','palisade-2.webp'],
+        'garage-conversions'         => ['tiler-1.webp'],
+        'garden-flats'               => ['garden-flat.webp'],
+        'painting-plastering'        => ['kitchen-4.webp'],
+        'maintenance-repairs'        => ['bathroom-guest.webp'],
+        'granite-quartz-countertops' => ['granite-1.webp','granite-2.webp'],
       ];
       $photos = $page_photos[$slug] ?? [];
       ?>

@@ -40,7 +40,7 @@ $svc_colors = [
 <!-- ═══ HERO ═══════════════════════════════════════════════════════════════════ -->
 <section class="hero" id="home">
   <div class="hero-bg">
-    <img src="<?php echo esc_url($imgdir . 'hero-bg.jpg'); ?>" alt="247 Renovations — Johannesburg construction and renovation contractors" loading="eager">
+    <img src="<?php echo esc_url($imgdir . 'hero-bg.webp'); ?>" alt="247 Renovations — Johannesburg construction and renovation contractors" loading="eager">
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-stripe"></div>
@@ -92,7 +92,7 @@ $svc_colors = [
   <div class="container">
     <div class="about-grid">
       <div class="about-img-wrap">
-        <img src="<?php echo esc_url($imgdir . 'kitchen-1.jpg'); ?>" alt="247 Renovations — completed kitchen renovation Johannesburg" class="about-img-main" loading="lazy">
+        <img src="<?php echo esc_url($imgdir . 'kitchen-1.webp'); ?>" alt="247 Renovations — completed kitchen renovation Johannesburg" class="about-img-main" loading="lazy">
         <div class="about-img-badge"><div class="big">50+</div><div class="small">Projects Completed<br>in Johannesburg</div></div>
         <div class="about-ribbon">Johannesburg's Trusted Renovators</div>
       </div>
@@ -129,19 +129,19 @@ $svc_colors = [
     <div class="svc-grid">
       <?php
       $svc_photos = [
-        'kitchen-renovations'        => 'kitchen-2.jpg',
-        'bathroom-renovations'       => 'bathroom-2.jpg',
-        'home-renovations'           => 'kitchen-3.jpg',
-        'building-extensions'        => 'extension-rear.jpg',
-        'roof-repairs-waterproofing' => 'roofing-1.jpg',
-        'tiling-flooring'            => 'tiler-2.jpg',
-        'paving-driveways'           => 'paving-2.jpg',
-        'palisade-fencing'           => 'palisade-1.jpg',
-        'garage-conversions'         => 'tiler-1.jpg',
-        'garden-flats'               => 'garden-flat.jpg',
-        'painting-plastering'        => 'kitchen-4.jpg',
-        'maintenance-repairs'        => 'bathroom-guest.jpg',
-        'granite-quartz-countertops' => 'granite-1.jpg',
+        'kitchen-renovations'        => 'kitchen-2.webp',
+        'bathroom-renovations'       => 'bathroom-2.webp',
+        'home-renovations'           => 'kitchen-3.webp',
+        'building-extensions'        => 'extension-rear.webp',
+        'roof-repairs-waterproofing' => 'roofing-1.webp',
+        'tiling-flooring'            => 'tiler-2.webp',
+        'paving-driveways'           => 'paving-2.webp',
+        'palisade-fencing'           => 'palisade-1.webp',
+        'garage-conversions'         => 'tiler-1.webp',
+        'garden-flats'               => 'garden-flat.webp',
+        'painting-plastering'        => 'kitchen-4.webp',
+        'maintenance-repairs'        => 'bathroom-guest.webp',
+        'granite-quartz-countertops' => 'granite-1.webp',
       ];
       foreach ($services as $slug => $data):
         $p     = get_posts(['name'=>$slug,'post_type'=>'rn_service','post_status'=>'publish','numberposts'=>1]);
@@ -178,7 +178,7 @@ $svc_colors = [
 <!-- ═══ WHY US ═══════════════════════════════════════════════════════════════ -->
 <div class="why-grid" id="why">
   <div class="why-image">
-    <img src="<?php echo esc_url($imgdir . 'bathroom-guest.jpg'); ?>" alt="Completed bathroom renovation Johannesburg — 247 Renovations" loading="lazy">
+    <img src="<?php echo esc_url($imgdir . 'bathroom-guest.webp'); ?>" alt="Completed bathroom renovation Johannesburg — 247 Renovations" loading="lazy">
     <div class="why-image-overlay"></div>
     <div class="why-image-stat"><div class="big">12mo</div><div class="lbl">Workmanship Guarantee</div></div>
   </div>
@@ -212,39 +212,39 @@ $svc_colors = [
   </div>
   <div class="gallery-grid">
     <div class="gal-item gal-item--tall">
-      <img src="<?php echo esc_url($imgdir . 'granite-1.jpg'); ?>" alt="Granite and quartz countertop installation Johannesburg — 247 Renovations" loading="lazy">
+      <img src="<?php echo esc_url($imgdir . 'granite-1.webp'); ?>" alt="Granite and quartz countertop installation Johannesburg — 247 Renovations" loading="lazy">
       <div class="gal-cap">Granite Countertop Installation</div>
     </div>
     <div class="gal-item">
-      <img src="<?php echo esc_url($imgdir . 'kitchen-1.jpg'); ?>" alt="Kitchen renovation Johannesburg — 247 Renovations" loading="lazy">
+      <img src="<?php echo esc_url($imgdir . 'kitchen-1.webp'); ?>" alt="Kitchen renovation Johannesburg — 247 Renovations" loading="lazy">
       <div class="gal-cap">Kitchen Renovation</div>
     </div>
     <div class="gal-item">
-      <img src="<?php echo esc_url($imgdir . 'roofing-1.jpg'); ?>" alt="Roof repair and re-tiling Johannesburg" loading="lazy">
+      <img src="<?php echo esc_url($imgdir . 'roofing-1.webp'); ?>" alt="Roof repair and re-tiling Johannesburg" loading="lazy">
       <div class="gal-cap">Roof Re-Tiling</div>
     </div>
     <div class="gal-item">
-      <img src="<?php echo esc_url($imgdir . 'bathroom-1.jpg'); ?>" alt="Bathroom renovation Johannesburg — 247 Renovations" loading="lazy">
+      <img src="<?php echo esc_url($imgdir . 'bathroom-1.webp'); ?>" alt="Bathroom renovation Johannesburg — 247 Renovations" loading="lazy">
       <div class="gal-cap">Bathroom Renovation</div>
     </div>
     <div class="gal-item">
-      <img src="<?php echo esc_url($imgdir . 'extension-rear.jpg'); ?>" alt="Home extension and outdoor renovation Johannesburg" loading="lazy">
+      <img src="<?php echo esc_url($imgdir . 'extension-rear.webp'); ?>" alt="Home extension and outdoor renovation Johannesburg" loading="lazy">
       <div class="gal-cap">Home Extension</div>
     </div>
     <div class="gal-item">
-      <img src="<?php echo esc_url($imgdir . 'tiler-2.jpg'); ?>" alt="Marble tiling installation Johannesburg" loading="lazy">
+      <img src="<?php echo esc_url($imgdir . 'tiler-2.webp'); ?>" alt="Marble tiling installation Johannesburg" loading="lazy">
       <div class="gal-cap">Premium Tiling Work</div>
     </div>
     <div class="gal-item">
-      <img src="<?php echo esc_url($imgdir . 'palisade-1.jpg'); ?>" alt="Palisade security fencing installation Johannesburg" loading="lazy">
+      <img src="<?php echo esc_url($imgdir . 'palisade-1.webp'); ?>" alt="Palisade security fencing installation Johannesburg" loading="lazy">
       <div class="gal-cap">Palisade Fencing</div>
     </div>
     <div class="gal-item">
-      <img src="<?php echo esc_url($imgdir . 'paving-2.jpg'); ?>" alt="Driveway paving installation Johannesburg" loading="lazy">
+      <img src="<?php echo esc_url($imgdir . 'paving-2.webp'); ?>" alt="Driveway paving installation Johannesburg" loading="lazy">
       <div class="gal-cap">Paving &amp; Driveways</div>
     </div>
     <div class="gal-item">
-      <img src="<?php echo esc_url($imgdir . 'garden-flat.jpg'); ?>" alt="Garden flat construction Johannesburg" loading="lazy">
+      <img src="<?php echo esc_url($imgdir . 'garden-flat.webp'); ?>" alt="Garden flat construction Johannesburg" loading="lazy">
       <div class="gal-cap">Garden Flat Build</div>
     </div>
   </div>
