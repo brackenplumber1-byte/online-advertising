@@ -400,6 +400,33 @@ function gp_seo_meta() {
 }
 add_action('wp_head','gp_seo_meta',1);
 
+// FAQPage schema for the homepage's existing "Frequently Asked Questions"
+// section — the visible FAQ content already existed in index.php but had no
+// matching structured data. Added to help AI answer engines (ChatGPT,
+// Gemini, Google AI Overviews) surface direct answers, not just traditional
+// search. Text here must stay word-for-word identical to what's visible in
+// index.php's #faq section — update both together if either changes.
+function gp_faq_schema() {
+    if (!is_front_page()) return;
+    $faqs = [
+        ['Is there a call-out fee?', 'No. We never charge a call-out fee. You only pay for the work carried out, and we always provide a clear quote before starting.'],
+        ['How fast can you respond to an emergency?', 'We aim to be on-site within 30 minutes for emergencies in and around Brackendowns, and as fast as possible across our wider East Rand coverage area. Being local is our biggest advantage.'],
+        ['Do you work on weekends and public holidays?', 'Yes — 24 hours a day, 7 days a week, including all South African public holidays.'],
+        ['Are your plumbers PIRB registered?', 'Yes. All our plumbers are registered with the Plumbing Industry Registration Board (PIRB). We issue compliance certificates for geyser installations and all qualifying work.'],
+        ['Do you guarantee your work?', 'Absolutely. Every repair and installation carries a workmanship guarantee. If the same problem recurs due to our work, we return and fix it at no charge.'],
+        ['Can you help with insurance plumbing claims?', 'Yes. We provide detailed invoices and technical reports for home insurance claims related to burst pipes, water damage, and other plumbing incidents.'],
+        ['How do I find a reliable, licensed plumber in Alberton?', "Check for PIRB registration (South Africa's Plumbing Industry Registration Board), a fixed local address rather than just a call centre, and reviews you can actually verify on Google. Brackendowns Plumber is PIRB-registered and based in Brackendowns, with all our reviews visible on our Google Business Profile."],
+        ['Where can I see reviews for Brackendowns Plumber?', "All our reviews are on our Google Business Profile. We don't publish selected quotes elsewhere without linking back to the real source."],
+    ];
+    $schema = ['@context'=>'https://schema.org','@type'=>'FAQPage','mainEntity'=>
+        array_map(function($f){
+            return ['@type'=>'Question','name'=>$f[0],'acceptedAnswer'=>['@type'=>'Answer','text'=>$f[1]]];
+        }, $faqs)
+    ];
+    echo '<script type="application/ld+json">'.wp_json_encode($schema, JSON_UNESCAPED_SLASHES).'</script>'."\n";
+}
+add_action('wp_head','gp_faq_schema',1);
+
 // ── FAVICON ────────────────────────────────────────────────────────────────────
 function gp_favicon() {
     $imgdir = get_template_directory_uri() . '/assets/images/';
