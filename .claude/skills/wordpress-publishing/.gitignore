@@ -1,0 +1,5 @@
+.env
+sites/*.env
+!sites/*.env.example
+__pycache__/
+*.pyc
