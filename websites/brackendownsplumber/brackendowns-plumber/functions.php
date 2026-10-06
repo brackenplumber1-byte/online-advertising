@@ -103,6 +103,17 @@ define('GP_AREAS', serialize([
     'sunward-park'   => 'Sunward Park',
     'selcourt'       => 'Selcourt',
     'van-dyk-park'   => 'Van Dyk Park',
+    // ── Added: micro-suburbs with confirmed search demand, no page previously ──
+    'rynfield'           => 'Rynfield',
+    'farrarmere'         => 'Farrarmere',
+    'crystal-park'       => 'Crystal Park',
+    'lakefield'          => 'Lakefield',
+    'northmead'          => 'Northmead',
+    'helderwyk'          => 'Helderwyk',
+    'edenglen'           => 'Edenglen',
+    'marais-steyn-park'  => 'Marais Steyn Park',
+    'raceview'           => 'Raceview',
+    'greenstone'         => 'Greenstone',
 ]));
 
 // ── REAL CUSTOMER REVIEWS ──────────────────────────────────────────────────────
