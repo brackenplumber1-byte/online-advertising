@@ -320,7 +320,13 @@ function gp_build_page_title() {
         return $name . ' Midrand | 247 Plumbers GP';
     }
     if ($wp_query->is_singular('gp_area')) {
-        $area = get_post_meta(get_the_ID(), 'gp_area_name', true) ?: get_the_title();
+        // Was reading a 'gp_area_name' postmeta field first, falling back to
+        // the post title — but that meta goes stale whenever an area page is
+        // renamed/repurposed (slug+title updated, meta left behind), producing
+        // a <title> tag for a different suburb than the page actually covers
+        // (e.g. a renamed Soweto->Buccleuch post still titled "Plumber in
+        // Soweto"). The post title is always correct, so use it directly.
+        $area = get_the_title();
         return 'Plumber in ' . $area . ' | 24/7 Service | 247 Plumbers GP';
     }
     if ($wp_query->is_singular('post')) {
@@ -372,7 +378,10 @@ function gp_build_meta_description() {
         return $name . ' across Midrand and Gauteng. Available 24/7, no call-out fee, PIRB registered plumbers. Call ' . gp_phone() . '.';
     }
     if ($wp_query->is_singular('gp_area')) {
-        $area = get_post_meta(get_the_ID(), 'gp_area_name', true) ?: get_the_title();
+        // Same stale-postmeta issue as gp_build_page_title() above — use the
+        // post title directly rather than a 'gp_area_name' field that can
+        // drift out of sync after a rename.
+        $area = get_the_title();
         return 'Looking for a plumber in ' . $area . '? 247 Plumbers GP offers 24/7 emergency plumbing, geyser repairs and drain cleaning. No call-out fee. Call ' . gp_phone() . '.';
     }
     if ($wp_query->is_singular('post')) {
