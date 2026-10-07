@@ -1,22 +1,12 @@
 # mondeorplumbingservices — Keyword Rank Tracking
 
-## Status: Ubersuggest project not yet created
+## Source of truth
 
-The account's Ubersuggest plan caps at 2 tracked projects, both already in
-use (247plumbersgp, brackendownsplumber). User is upgrading the plan to
-add a 3rd slot (as of 2026-10-07). **Once the project exists**, create it
-with `mcp__Ubersuggest__create_project`, domain `mondeorplumbingservices.co.za`,
-loc_id 2710, lang en, seeded with the ~38 real/striking-distance keywords
-already identified from the domain_overview organicKeywords pull on
-2026-10-07 (plumbing services near me, plumber near me, plumbing near me,
-plumber johannesburg, plumbing business near me, plumbing in johannesburg,
-plumbers in johannesburg, plus suburb-specific: plumber mondeor, plumber
-kibler park, plumber ormonde, plumber bassonia, geyser repair johannesburg
-south, and the rest of the "near me"/emergency variant cluster — see the
-create_project call attempted 2026-10-07 for the exact full list). Then
-set up the monthly check-in trigger the same way as the other two sites
-(cron `0 7 3 * *`, reading this README + monthly-log.csv, calling
-project_position_info, appending a row, committing/pushing).
+Ubersuggest project `09009150ccfbf59b3991a3b5f2c4d5db5a36baabf6b5785afa30d1d21a85e1e0`
+(domain: mondeorplumbingservices.co.za), 40 keywords tracked at loc_id 2710
+(Gauteng), lang en. Created 2026-10-07 after the account's Ubersuggest plan
+was upgraded to a 3-project limit. Refreshes weekly — pull via
+`mcp__Ubersuggest__project_position_info`.
 
 ## Context (as of 2026-10-07 baseline)
 
