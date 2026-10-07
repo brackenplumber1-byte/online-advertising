@@ -108,6 +108,8 @@ define('GP_AREAS', serialize([
     'erand-gardens'  => 'Erand Gardens',
     'randjiespark'   => 'Randjiespark',
     'waterfall'      => 'Waterfall City',
+    'dainfern'       => 'Dainfern',
+    'sandown'        => 'Sandown',
 ]));
 
 // ── HELPERS ────────────────────────────────────────────────────────────────────
@@ -137,6 +139,8 @@ function gp_area_region($slug) {
         'bryanston'      => 'sandton',
         'rivonia'        => 'sandton',
         'rosebank'       => 'sandton',
+        'sandown'        => 'sandton',
+        'dainfern'       => 'sandton',
         'johannesburg'   => 'joburg',
         'norwood'        => 'joburg',
         'parkview'       => 'joburg',
