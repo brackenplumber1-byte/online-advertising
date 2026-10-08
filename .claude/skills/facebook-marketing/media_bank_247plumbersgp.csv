@@ -88,3 +88,4 @@ Both include everything needed to get it running, not just the tank on its own.
 Message us now or call/WhatsApp 072 280 7603 for a site visit and firm quote.
 
 247 Plumbers GP - Midrand, Centurion, Sandton & the rest of Gauteng",2026-08-30,2026-09-11,https://www.facebook.com/1744588314341787/posts/1756571979810087
+19,NEEDS_LINK,"Underground black poly pipe with a fitting/coupling, lying in a dug-out muddy trench against a wall foundation, water pooling around it. Clear leak-repair dig shot. Raw file saved at raw_photos/247-leak-trench-pipe-fitting.jpg - for FB, pass that local path directly to facebook_post.py --image; for IG, first upload it as an unpublished FB photo (facebook_post.py --action create, no --publish-now) to get a public CDN URL, then delete the draft after use.",both,needs_link,,2026-10-08,,
