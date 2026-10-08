@@ -250,15 +250,20 @@ add_action('after_setup_theme', 'gp_setup');
 // link equity from ever reaching older posts/pages that have fallen off
 // page 1, since that's their only remaining internal link path. noindex is
 // correct (avoids duplicate-content pagination shells); nofollow isn't —
-// standard practice is noindex,follow so links still get credited. Runs at
-// a very late priority so it overrides whatever AIOSEO already set.
+// standard practice is noindex,follow so links still get credited.
+//
+// is_paged() alone isn't enough: /articles/ is a static Page
+// (page-articles.php) running its own nested WP_Query keyed off the
+// 'paged' query var, so WordPress's main query never sets is_paged() true
+// there even on /articles/page/2/ — check the query var directly too.
+// Runs at PHP_INT_MAX priority so it overrides whatever AIOSEO already set.
 function gp_fix_pagination_robots($robots) {
-    if (is_paged()) {
+    if (is_paged() || (int) get_query_var('paged') > 1) {
         unset($robots['nofollow']);
     }
     return $robots;
 }
-add_filter('wp_robots', 'gp_fix_pagination_robots', 9999);
+add_filter('wp_robots', 'gp_fix_pagination_robots', PHP_INT_MAX);
 
 // ── ENQUEUE ASSETS ─────────────────────────────────────────────────────────────
 function gp_assets() {
