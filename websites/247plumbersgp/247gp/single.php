@@ -27,7 +27,19 @@
 <div class="page-hero">
   <div class="page-hero-stripe"></div>
   <div class="container">
-    <div class="eyebrow">Plumbing Articles</div>
+    <div class="eyebrow">
+      <?php
+      // Links the post's category archive, which otherwise has zero internal
+      // links pointing to it anywhere on the site (confirmed via Ahrefs —
+      // 10 category pages were fully orphaned despite being in the sitemap).
+      $cats = get_the_category();
+      if (!empty($cats) && $cats[0]->slug !== 'uncategorized') {
+          echo '<a href="' . esc_url(get_category_link($cats[0]->term_id)) . '" style="color:inherit;text-decoration:underline">' . esc_html($cats[0]->name) . '</a>';
+      } else {
+          echo 'Plumbing Articles';
+      }
+      ?>
+    </div>
     <h1 class="display"><?php echo esc_html($title); ?></h1>
     <p style="opacity:.85"><?php echo esc_html(get_the_date('j F Y')); ?> &middot; <?php echo esc_html(get_the_author()); ?></p>
     <div class="page-hero-actions">
