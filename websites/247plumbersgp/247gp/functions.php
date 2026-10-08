@@ -245,6 +245,21 @@ function gp_setup() {
 }
 add_action('after_setup_theme', 'gp_setup');
 
+// ── FIX: AIOSEO sets "noindex, nofollow" on paginated archives (page 2+ of
+// /articles/, /areas/, category archives, etc.) — the nofollow half blocks
+// link equity from ever reaching older posts/pages that have fallen off
+// page 1, since that's their only remaining internal link path. noindex is
+// correct (avoids duplicate-content pagination shells); nofollow isn't —
+// standard practice is noindex,follow so links still get credited. Runs at
+// a very late priority so it overrides whatever AIOSEO already set.
+function gp_fix_pagination_robots($robots) {
+    if (is_paged()) {
+        unset($robots['nofollow']);
+    }
+    return $robots;
+}
+add_filter('wp_robots', 'gp_fix_pagination_robots', 9999);
+
 // ── ENQUEUE ASSETS ─────────────────────────────────────────────────────────────
 function gp_assets() {
     // Main theme stylesheet loads immediately, with NO dependency on the
