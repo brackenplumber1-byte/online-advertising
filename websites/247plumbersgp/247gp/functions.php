@@ -252,18 +252,28 @@ add_action('after_setup_theme', 'gp_setup');
 // correct (avoids duplicate-content pagination shells); nofollow isn't —
 // standard practice is noindex,follow so links still get credited.
 //
-// is_paged() alone isn't enough: /articles/ is a static Page
-// (page-articles.php) running its own nested WP_Query keyed off the
-// 'paged' query var, so WordPress's main query never sets is_paged() true
-// there even on /articles/page/2/ — check the query var directly too.
-// Runs at PHP_INT_MAX priority so it overrides whatever AIOSEO already set.
-function gp_fix_pagination_robots($robots) {
+// The wp_robots filter approach (tried first) had no effect even after
+// confirmed-fresh deploys and full cache purges — this AIOSEO version
+// isn't building this particular tag through that filter, so there's
+// nothing to intercept there. Buffering the actual <head> output and
+// patching the rendered string works regardless of which internal code
+// path AIOSEO used to print it.
+function gp_start_robots_buffer() {
     if (is_paged() || (int) get_query_var('paged') > 1) {
-        unset($robots['nofollow']);
+        ob_start();
     }
-    return $robots;
 }
-add_filter('wp_robots', 'gp_fix_pagination_robots', PHP_INT_MAX);
+add_action('wp_head', 'gp_start_robots_buffer', -9999);
+
+function gp_fix_robots_buffer() {
+    if (is_paged() || (int) get_query_var('paged') > 1) {
+        $html = ob_get_clean();
+        if ($html !== false) {
+            echo str_replace('noindex, nofollow', 'noindex, follow', $html);
+        }
+    }
+}
+add_action('wp_head', 'gp_fix_robots_buffer', PHP_INT_MAX);
 
 // ── ENQUEUE ASSETS ─────────────────────────────────────────────────────────────
 function gp_assets() {
