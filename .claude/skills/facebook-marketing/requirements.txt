@@ -1,0 +1,4 @@
+# Runtime dependencies for the Facebook Marketing skill.
+# Pinned to floors only so users always get the latest patch versions.
+requests>=2.31.0
+python-dotenv>=1.0.0
