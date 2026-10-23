@@ -332,6 +332,16 @@ function gp_build_meta_description() {
     if ($wp_query->is_page('articles')) {
         return 'Plumbing tips and guides for Mondeor and Johannesburg South homeowners — geysers, leaks, drains and more, from the team at Mondeor Plumbing Services.';
     }
+    // These two standalone pages fell through to the generic catch-all
+    // below with no page-specific handling, so both ended up with the
+    // exact same meta description (flagged as a duplicate-description
+    // issue in Ubersuggest's site audit).
+    if ($wp_query->is_page('geyser-repair-vs-replacement')) {
+        return 'Not sure whether to repair or replace your geyser? A practical cost and decision guide for Mondeor and Johannesburg South homeowners, from PIRB registered plumbers.';
+    }
+    if ($wp_query->is_page('plumbing-emergency-gauteng')) {
+        return 'Burst pipe or flooding in Mondeor or Johannesburg South? Here\'s exactly what to do before help arrives — from PIRB registered plumbers, available 24/7.';
+    }
     return 'PIRB registered plumbers serving Mondeor and Johannesburg South. 24/7 emergency plumbing, no call-out fee. Call ' . gp_phone() . '.';
 }
 
