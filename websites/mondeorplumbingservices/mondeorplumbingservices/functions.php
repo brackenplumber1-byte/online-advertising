@@ -267,20 +267,20 @@ function gp_build_page_title() {
     // those functions call get_option() too early in the load cycle,
     // which was causing the infinite recursion loop reported by hosting.
     if (!isset($wp_query)) {
-        return 'Mondeor Plumbing Services | 24/7 Plumber Mondeor & Johannesburg South';
+        return 'Mondeor Plumbing | 24/7 Plumber, Johannesburg South';
     }
     if ($wp_query->is_front_page() || $wp_query->is_home()) {
-        return 'Mondeor Plumbing Services | 24/7 Plumber Mondeor & Johannesburg South';
+        return 'Mondeor Plumbing | 24/7 Plumber, Johannesburg South';
     }
     if ($wp_query->is_singular('gp_service')) {
         $services = unserialize(GP_SERVICES);
         $slug = get_post_field('post_name', get_the_ID());
         $name = $services[$slug] ?? get_the_title();
-        return $name . ' | Mondeor Plumbing Services';
+        return $name . ' | Mondeor Plumbing';
     }
     if ($wp_query->is_singular('gp_area')) {
         $area = get_post_meta(get_the_ID(), 'gp_area_name', true) ?: get_the_title();
-        return 'Plumber in ' . $area . ' | 24/7 Service | Mondeor Plumbing Services';
+        return 'Plumber in ' . $area . ' | 24/7 | Mondeor Plumbing';
     }
     if ($wp_query->is_singular('post')) {
         $t = get_the_title();

@@ -55,6 +55,13 @@ $articles = new WP_Query([
   <div class="trust-item"><svg width="18" height="18" fill="#fff" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>4.9★ Google Rating</div>
 </div></div>
 
+<!-- INTRO COPY -->
+<section class="section" style="padding-bottom:0">
+  <div class="container">
+    <p style="max-width:760px;color:var(--muted);line-height:1.7">This is where we put what we've learned from years of plumbing jobs across Mondeor, Kibler Park, Meredale, Ormonde and the rest of Johannesburg South into writing. You'll find straightforward guides on the issues that come up most often for homeowners here — when a geyser is worth repairing versus replacing, what to do in the first few minutes of a burst pipe or flooding emergency, how municipal water pressure and ageing infrastructure affect homes in this area, and what insurers actually expect to see in a plumber's report after water damage. None of it is generic advice lifted from elsewhere — it reflects what we see on real call-outs in this specific part of Johannesburg, written by PIRB-registered plumbers who work here every day. If you're dealing with a plumbing issue right now rather than researching one, skip the reading and call us — we're on site within 30 minutes, 24/7, with no call-out fee.</p>
+  </div>
+</section>
+
 <!-- FEATURED GUIDES (separate WordPress Pages, not part of the Posts query below) -->
 <section class="section" style="padding-bottom:0">
   <div class="container">
