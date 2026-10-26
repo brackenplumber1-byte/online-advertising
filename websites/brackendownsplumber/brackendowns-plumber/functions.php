@@ -254,6 +254,24 @@ function gp_async_fonts($html, $handle) {
 }
 add_filter('style_loader_tag', 'gp_async_fonts', 10, 2);
 
+// Defers jQuery core + migrate so they stop blocking HTML parsing. Nothing
+// in <head> (JSON-LD schema, cookie-consent config vars, gtag) touches
+// jQuery before DOMContentLoaded, so deferring is safe — the browser still
+// preserves execution order between deferred scripts. Flagged by
+// Ubersuggest's PageSpeed audit: desktop load 1.71s (great) vs mobile
+// 5.09s (poor), with interactivity and visual stability already great on
+// both — pointing specifically at render-blocking <head> scripts rather
+// than JS execution cost, which hits harder under mobile's throttled
+// CPU/network simulation than on desktop.
+function gp_defer_scripts($tag, $handle) {
+    $defer_handles = ['jquery-core', 'jquery-migrate'];
+    if (in_array($handle, $defer_handles, true) && strpos($tag, 'defer') === false) {
+        return str_replace(' src=', ' defer src=', $tag);
+    }
+    return $tag;
+}
+add_filter('script_loader_tag', 'gp_defer_scripts', 10, 2);
+
 // ── SEO META + SCHEMA ──────────────────────────────────────────────────────────
 // ── PAGE TITLE + META DESCRIPTION BUILDERS ─────────────────────────────────────
 // Centralised here so every page type (service, area, article, home, static
