@@ -289,13 +289,19 @@ function gp_build_page_title() {
         // code) — hard mb_substr(0,47) cut sliced mid-word regardless of word
         // boundaries. Fixed proactively here even though no blog posts are live
         // yet on this site, so it doesn't bite the first time one is published.
-        if (mb_strlen($t) > 50) {
-            $cut = mb_substr($t, 0, 47);
+        // Threshold also tightened to account for the suffix length below (and
+        // the suffix itself shortened to match the other title templates on
+        // this site) — the old 50/47 cap didn't factor the suffix in at all,
+        // so a title right at the cap could still push the full <title> tag
+        // well past 65 chars, which is exactly what the site audit flagged on
+        // 247plumbersgp's equivalent, unfixed threshold.
+        if (mb_strlen($t) > 39) {
+            $cut = mb_substr($t, 0, 36);
             $last_space = mb_strrpos($cut, ' ');
             if ($last_space !== false) $cut = mb_substr($cut, 0, $last_space);
             $t = rtrim($cut, " :-–—") . '...';
         }
-        return $t . ' | Mondeor Plumbing Services';
+        return $t . ' | Mondeor Plumbing';
     }
     if ($wp_query->is_page('articles')) {
         return 'Plumbing Articles & Guides | Mondeor Plumbing Services';

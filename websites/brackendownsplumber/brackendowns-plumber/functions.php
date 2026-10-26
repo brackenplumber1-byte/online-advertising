@@ -318,8 +318,12 @@ function gp_build_page_title() {
         // "...Lasts Long..."), producing a genuinely broken-looking <title> tag.
         // Same bug found and fixed on 247plumbersgp's functions.php — snap to the
         // last whole word instead so a shortened title still reads cleanly.
-        if (mb_strlen($t) > 50) {
-            $cut = mb_substr($t, 0, 47);
+        // Threshold also tightened to account for the 23-char " | Brackendowns
+        // Plumber" suffix below — the old 50/47 cap didn't factor the suffix in,
+        // so a title right at the cap could still push the full <title> tag past
+        // 65 chars. Keeps the full tag at 58 chars or under.
+        if (mb_strlen($t) > 35) {
+            $cut = mb_substr($t, 0, 32);
             $last_space = mb_strrpos($cut, ' ');
             if ($last_space !== false) $cut = mb_substr($cut, 0, $last_space);
             $t = rtrim($cut, " :-–—") . '...';

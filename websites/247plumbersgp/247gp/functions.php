@@ -365,12 +365,15 @@ function gp_build_page_title() {
     }
     if ($wp_query->is_singular('post')) {
         $t = get_the_title();
-        // Was a hard mb_substr(0,47) cut — sliced mid-word (e.g. "...What to Pl...")
-        // producing a genuinely broken-looking <title> tag, flagged by the site
-        // audit on every recent post with a title over 50 chars. Snap to the last
-        // whole word instead so a shortened title still reads cleanly.
-        if (mb_strlen($t) > 50) {
-            $cut = mb_substr($t, 0, 47);
+        // The 50/47 threshold here only accounted for the title itself, not
+        // the 18-char " | 247 Plumbers GP" suffix appended below — so a title
+        // right at (or just under) the cap still produced a full <title> tag
+        // over 65 chars, exactly what the site audit flagged on 3 recent
+        // posts (e.g. a 50-char title + suffix = 68 chars). Cap now accounts
+        // for the suffix, keeping the full tag at 58 chars or under. Snap to
+        // the last whole word so a shortened title still reads cleanly.
+        if (mb_strlen($t) > 40) {
+            $cut = mb_substr($t, 0, 37);
             $last_space = mb_strrpos($cut, ' ');
             if ($last_space !== false) $cut = mb_substr($cut, 0, $last_space);
             $t = rtrim($cut, " :-–—") . '...';
