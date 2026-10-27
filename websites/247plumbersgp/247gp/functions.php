@@ -317,6 +317,23 @@ function gp_async_fonts($html, $handle) {
 }
 add_filter('style_loader_tag', 'gp_async_fonts', 10, 2);
 
+// Defers jQuery core + migrate so they stop blocking HTML parsing. Checked
+// all inline <head> scripts (JSON-LD schema, gtag) for jQuery usage before
+// a page was ever touched here — none found, so deferring is safe. Same
+// fix already applied to brackendownsplumber's functions.php (identical
+// theme family, identical bug): PageSpeed showed mobile LCP at 5.3-5.8s
+// vs desktop's 1.1-1.3s, with nothing else in the audit explaining a gap
+// that size — pointing at render-blocking <head> scripts, which hit much
+// harder under mobile's throttled CPU/network simulation than desktop.
+function gp_defer_scripts($tag, $handle) {
+    $defer_handles = ['jquery-core', 'jquery-migrate'];
+    if (in_array($handle, $defer_handles, true) && strpos($tag, 'defer') === false) {
+        return str_replace(' src=', ' defer src=', $tag);
+    }
+    return $tag;
+}
+add_filter('script_loader_tag', 'gp_defer_scripts', 10, 2);
+
 // ── SEO META + SCHEMA ──────────────────────────────────────────────────────────
 // ── PAGE TITLE + META DESCRIPTION BUILDERS ─────────────────────────────────────
 // Centralised here so every page type (service, area, article, home, static
