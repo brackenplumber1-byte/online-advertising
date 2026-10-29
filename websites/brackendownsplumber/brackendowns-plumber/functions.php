@@ -227,6 +227,21 @@ function gp_assets() {
 }
 add_action('wp_enqueue_scripts', 'gp_assets');
 
+// Dashicons (WordPress's admin icon font) loads on every front-end page by
+// default, 57.6 KB of CSS, even though it's only meant for wp-admin. The
+// only dashicons references anywhere in this theme are the 'menu_icon'
+// values on gp_service/gp_area's register_post_type() calls below — those
+// render in the wp-admin sidebar only and are unaffected by this, since
+// wp_enqueue_scripts never fires in the dashboard. Same bug and fix as
+// 247plumbersgp's functions.php (identical theme family), confirmed there
+// via DevTools coverage that 100% of dashicons.min.css goes unused on the
+// public site.
+function gp_dequeue_dashicons() {
+    wp_dequeue_style('dashicons');
+    wp_deregister_style('dashicons');
+}
+add_action('wp_enqueue_scripts', 'gp_dequeue_dashicons', 100);
+
 // ── PRECONNECT + ASYNC FONT LOADING ────────────────────────────────────────────
 // Preconnect tells the browser to open the connection to Google Fonts' two
 // domains early, in parallel with everything else, instead of waiting to
