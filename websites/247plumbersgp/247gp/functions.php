@@ -431,6 +431,22 @@ function gp_build_page_title() {
     return '';
 }
 
+// Ahrefs flags anything over ~160 chars as "meta description too long" — 20
+// pages hit this, almost all blog posts whose description came from
+// wp_trim_words($excerpt, 28), which trims by WORD count, not character
+// count, so length varied with how long each post's words happened to be
+// (observed 161-209 chars in practice). Truncates by character count
+// instead, snapped to the last whole word, so every description reliably
+// stays under the limit regardless of word length.
+function gp_trim_meta_description($text, $max_chars = 155) {
+    $text = trim(wp_strip_all_tags($text));
+    if (mb_strlen($text) <= $max_chars) return $text;
+    $cut = mb_substr($text, 0, $max_chars - 1);
+    $last_space = mb_strrpos($cut, ' ');
+    if ($last_space !== false) $cut = mb_substr($cut, 0, $last_space);
+    return rtrim($cut, " .,;:-–—") . '…';
+}
+
 function gp_build_meta_description() {
     global $wp_query;
     if (!isset($wp_query) || $wp_query->is_front_page() || $wp_query->is_home()) {
@@ -441,20 +457,22 @@ function gp_build_meta_description() {
         $slug = get_post_field('post_name', get_the_ID());
         $name = $services[$slug] ?? get_the_title();
         $excerpt = get_the_excerpt();
-        if ($excerpt) return wp_trim_words($excerpt, 28);
+        if ($excerpt) return gp_trim_meta_description($excerpt);
         return $name . ' across Midrand and Gauteng. Available 24/7, no call-out fee, PIRB registered plumbers. Call ' . gp_phone() . '.';
     }
     if ($wp_query->is_singular('gp_area')) {
         // Same stale-postmeta issue as gp_build_page_title() above — use the
         // post title directly rather than a 'gp_area_name' field that can
-        // drift out of sync after a rename.
+        // drift out of sync after a rename. Shortened the fixed wording
+        // around $area (was 161 chars for "Midstream Estate", the longest
+        // area name) so even the longest name in GP_AREAS stays under 155.
         $area = get_the_title();
-        return 'Looking for a plumber in ' . $area . '? 247 Plumbers GP offers 24/7 emergency plumbing, geyser repairs and drain cleaning. No call-out fee. Call ' . gp_phone() . '.';
+        return 'Plumber in ' . $area . '? 247 Plumbers GP — 24/7 emergency plumbing, geyser repairs, drain cleaning. No call-out fee. Call ' . gp_phone() . '.';
     }
     if ($wp_query->is_singular('post')) {
         $excerpt = get_the_excerpt();
-        if ($excerpt) return wp_trim_words($excerpt, 28);
-        return wp_trim_words(get_the_content(), 28);
+        if ($excerpt) return gp_trim_meta_description($excerpt);
+        return gp_trim_meta_description(get_the_content());
     }
     if ($wp_query->is_page('articles')) {
         return 'Plumbing tips and guides for Midrand, Johannesburg and Gauteng homeowners — geysers, leaks, drains and more, from the team at 247 Plumbers GP.';
@@ -463,7 +481,7 @@ function gp_build_meta_description() {
     // gp_build_page_title() above, which left these two pages with no meta
     // description at all (flagged by the site audit).
     if ($wp_query->is_post_type_archive('gp_area')) {
-        return '247 Plumbers GP serves Midrand, Centurion, Pretoria, Sandton, Johannesburg and areas across Gauteng with 24/7 emergency plumbing, no call-out fee. Find your area below.';
+        return '247 Plumbers GP serves Midrand, Centurion, Pretoria, Sandton and Johannesburg with 24/7 emergency plumbing, no call-out fee. Find your area below.';
     }
     if ($wp_query->is_post_type_archive('gp_service')) {
         return 'From geyser repairs and drain cleaning to leak detection and emergency plumbing — see the full range of services 247 Plumbers GP offers across Gauteng, 24/7.';

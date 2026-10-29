@@ -313,6 +313,24 @@ function gp_build_page_title() {
     return '';
 }
 
+// Ahrefs flags anything over ~160 chars as "meta description too long" —
+// wp_trim_words($excerpt, 28) trims by WORD count, not character count, so
+// length varies with how long each post's words happen to be. Same bug
+// found and fixed on 247plumbersgp's and brackendownsplumber's
+// functions.php (identical theme family). Fixed proactively here even
+// though no blog posts are live yet on this site, so it doesn't bite the
+// first time one is published. Truncates by character count instead,
+// snapped to the last whole word, so every description reliably stays
+// under the limit.
+function gp_trim_meta_description($text, $max_chars = 155) {
+    $text = trim(wp_strip_all_tags($text));
+    if (mb_strlen($text) <= $max_chars) return $text;
+    $cut = mb_substr($text, 0, $max_chars - 1);
+    $last_space = mb_strrpos($cut, ' ');
+    if ($last_space !== false) $cut = mb_substr($cut, 0, $last_space);
+    return rtrim($cut, " .,;:-–—") . '…';
+}
+
 function gp_build_meta_description() {
     global $wp_query;
     if (!isset($wp_query) || $wp_query->is_front_page() || $wp_query->is_home()) {
@@ -323,7 +341,7 @@ function gp_build_meta_description() {
         $slug = get_post_field('post_name', get_the_ID());
         $name = $services[$slug] ?? get_the_title();
         $excerpt = get_the_excerpt();
-        if ($excerpt) return wp_trim_words($excerpt, 28);
+        if ($excerpt) return gp_trim_meta_description($excerpt);
         return $name . ' across Mondeor and Johannesburg South. Available 24/7, no call-out fee, PIRB registered plumbers. Call ' . gp_phone() . '.';
     }
     if ($wp_query->is_singular('gp_area')) {
@@ -332,8 +350,8 @@ function gp_build_meta_description() {
     }
     if ($wp_query->is_singular('post')) {
         $excerpt = get_the_excerpt();
-        if ($excerpt) return wp_trim_words($excerpt, 28);
-        return wp_trim_words(get_the_content(), 28);
+        if ($excerpt) return gp_trim_meta_description($excerpt);
+        return gp_trim_meta_description(get_the_content());
     }
     if ($wp_query->is_page('articles')) {
         return 'Plumbing tips and guides for Mondeor and Johannesburg South homeowners — geysers, leaks, drains and more, from the team at Mondeor Plumbing Services.';

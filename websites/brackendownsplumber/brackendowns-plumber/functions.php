@@ -355,6 +355,21 @@ function gp_build_page_title() {
     return '';
 }
 
+// Ahrefs flags anything over ~160 chars as "meta description too long" —
+// wp_trim_words($excerpt, 28) trims by WORD count, not character count, so
+// length varied with how long each post's words happened to be. Same bug
+// found and fixed on 247plumbersgp's functions.php (identical theme
+// family). Truncates by character count instead, snapped to the last
+// whole word, so every description reliably stays under the limit.
+function gp_trim_meta_description($text, $max_chars = 155) {
+    $text = trim(wp_strip_all_tags($text));
+    if (mb_strlen($text) <= $max_chars) return $text;
+    $cut = mb_substr($text, 0, $max_chars - 1);
+    $last_space = mb_strrpos($cut, ' ');
+    if ($last_space !== false) $cut = mb_substr($cut, 0, $last_space);
+    return rtrim($cut, " .,;:-–—") . '…';
+}
+
 function gp_build_meta_description() {
     global $wp_query;
     if (!isset($wp_query) || $wp_query->is_front_page() || $wp_query->is_home()) {
@@ -365,17 +380,20 @@ function gp_build_meta_description() {
         $slug = get_post_field('post_name', get_the_ID());
         $name = $services[$slug] ?? get_the_title();
         $excerpt = get_the_excerpt();
-        if ($excerpt) return wp_trim_words($excerpt, 28);
+        if ($excerpt) return gp_trim_meta_description($excerpt);
         return $name . ' across Brackendowns and the East Rand. Available 24/7, no call-out fee, PIRB registered plumbers. Call ' . gp_phone() . '.';
     }
     if ($wp_query->is_singular('gp_area')) {
+        // Shortened the fixed wording around $area (was 158 chars for
+        // "Marais Steyn Park", the longest area name — right at the edge
+        // of the ~160 char limit) so even the longest name stays under 155.
         $area = get_post_meta(get_the_ID(), 'gp_area_name', true) ?: get_the_title();
-        return 'Need a plumber in ' . $area . '? Brackendowns Plumber offers 24/7 emergency plumbing, geyser repairs & drain cleaning. No call-out fee. Call ' . gp_phone() . '.';
+        return 'Plumber in ' . $area . '? Brackendowns Plumber — 24/7 emergency plumbing, geyser repairs, drain cleaning. No call-out fee. Call ' . gp_phone() . '.';
     }
     if ($wp_query->is_singular('post')) {
         $excerpt = get_the_excerpt();
-        if ($excerpt) return wp_trim_words($excerpt, 28);
-        return wp_trim_words(get_the_content(), 28);
+        if ($excerpt) return gp_trim_meta_description($excerpt);
+        return gp_trim_meta_description(get_the_content());
     }
     if ($wp_query->is_page('articles')) {
         return 'Plumbing tips and guides for Brackendowns, Alberton and East Rand homeowners — geysers, leaks, drains and more, from the team at Brackendowns Plumber.';
