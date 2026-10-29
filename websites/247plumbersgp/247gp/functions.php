@@ -534,7 +534,12 @@ add_action('wp_head', function() {
     $html = ob_get_clean();
     if (is_post_type_archive('gp_area')) {
         $title = 'Plumbing Service Areas We Cover in Gauteng | 247 Plumbers GP';
-        $desc  = '247 Plumbers GP serves Midrand, Centurion, Pretoria, Sandton, Johannesburg and areas across Gauteng with 24/7 emergency plumbing, no call-out fee. Find your area below.';
+        // Was 168 chars, flagged by Ahrefs as "meta description too long" —
+        // this is a second, separate copy of the same string that exists in
+        // gp_build_meta_description() above (which was already shortened);
+        // this wp_head buffer overrides that function's output entirely for
+        // this one page, so it needed the same fix applied here too.
+        $desc  = '247 Plumbers GP serves Midrand, Centurion, Pretoria, Sandton and Johannesburg with 24/7 emergency plumbing, no call-out fee. Find your area below.';
     } else {
         $title = 'Our Plumbing Services | 247 Plumbers GP';
         $desc  = 'From geyser repairs and drain cleaning to leak detection and emergency plumbing — see the full range of services 247 Plumbers GP offers across Gauteng, 24/7.';
