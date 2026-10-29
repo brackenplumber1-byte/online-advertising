@@ -622,7 +622,16 @@ function gp_create_articles_page() {
         }
     }
 }
-add_action('init', 'gp_create_articles_page', 31);
+// Was hooked to 'init' (every single request) relying solely on the
+// get_page_by_path() existence check above for idempotency — which proved
+// fragile in practice: a duplicate "geyser-repair-vs-replacement"/
+// "plumbing-emergency-gauteng" page got auto-created again on 2026-10-23,
+// bumping the real pages to "-2" slugs a second time. gp_create_all_pages()
+// below never had this problem because it's hooked to 'after_switch_theme'
+// (fires once, only on theme activation) instead — switching this function
+// to the same hook for the same reason, now that all three pages it
+// creates already exist correctly.
+add_action('after_switch_theme', 'gp_create_articles_page');
 
 // ── REGISTER CUSTOM POST TYPES — fires on every init ──────────────────────────
 // THIS IS THE KEY FIX: must run on init every time, not just on activation
