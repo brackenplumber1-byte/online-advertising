@@ -470,7 +470,13 @@ add_action('wp_head', function() {
         $post_id = get_the_ID();
         $correct_desc = get_post_meta($post_id, 'tp_meta_desc', true) ?: get_the_excerpt();
     } elseif (is_singular('tp_area')) {
-        $area = get_the_title();
+        // post_title for tp_area is deliberately stored as the long,
+        // SEO-stuffed string ("Plumbers X | 24/7 Service — ..."), not the
+        // plain area name — gp_create_all_areas()/the area-creation code
+        // sets a separate 'tp_area_name' meta field for exactly this kind
+        // of use. get_the_title() here would nest that whole long string
+        // into the description, duplicating the brand name a third time.
+        $area = get_post_meta(get_the_ID(), 'tp_area_name', true) ?: get_the_title();
         $correct_desc = "Trusted plumbers in $area — Tysons Plumbers Roodepoort. 24/7 emergency plumbing, geyser repairs, drain cleaning, pipe repairs. No call-out fee. Call 071 363 1433.";
     } else {
         $correct_desc = 'Tysons Plumbers Roodepoort — local plumbers in Roodepoort. 24/7 emergency plumbing, geyser repairs, drain cleaning, pipe repair. No call-out fee. Call 071 363 1433.';
@@ -507,7 +513,7 @@ add_filter('aioseo_description', function($description) {
         return $custom ?: $description;
     }
     if (is_singular('tp_area')) {
-        $area = get_the_title();
+        $area = get_post_meta($post_id, 'tp_area_name', true) ?: get_the_title();
         return "Trusted plumbers in $area — Tysons Plumbers Roodepoort. 24/7 emergency plumbing, geyser repairs, drain cleaning, pipe repairs. No call-out fee. Call 071 363 1433.";
     }
     if (is_front_page()) {
