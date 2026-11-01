@@ -253,6 +253,32 @@ function tp_assets() {
 }
 add_action('wp_enqueue_scripts','tp_assets');
 
+// Dashicons (WordPress's admin icon font) loads on every front-end page by
+// default, 57.6 KB of CSS, even though it's only meant for wp-admin. This
+// theme has no dashicons-* references outside wp-admin menu icons, so it's
+// never actually used on the public site. Same bug and fix as the other
+// three sites in this portfolio (identical finding, independently
+// confirmed on this one too via DevTools coverage showing 100% unused).
+function tp_dequeue_dashicons() {
+    wp_dequeue_style('dashicons');
+    wp_deregister_style('dashicons');
+}
+add_action('wp_enqueue_scripts', 'tp_dequeue_dashicons', 100);
+
+// Defers jQuery core + migrate so they stop blocking HTML parsing. Checked
+// all inline <head> scripts (JSON-LD schema, cookie-consent config, gtag)
+// for jQuery usage first — none found, so deferring is safe. Same
+// render-blocking issue already fixed on the other three sites in this
+// portfolio.
+function tp_defer_scripts($tag, $handle) {
+    $defer_handles = ['jquery-core', 'jquery-migrate'];
+    if (in_array($handle, $defer_handles, true) && strpos($tag, 'defer') === false) {
+        return str_replace(' src=', ' defer src=', $tag);
+    }
+    return $tag;
+}
+add_filter('script_loader_tag', 'tp_defer_scripts', 10, 2);
+
 // ── SEO META + SCHEMA ──────────────────────────────────────────────────────
 // Detect if a major SEO plugin is active — if so, that plugin owns the
 // title, meta description, canonical URL and Open Graph tags. We defer to
@@ -370,12 +396,101 @@ add_action('wp_head', function() {
         // here (not an actual Unicode dash character), so the pattern has
         // to match the entity form, not just the raw character.
         $dash = '(?:[\x{2013}\x{2014}-]|&#821[12];|&ndash;|&mdash;)';
-        $pattern = '/(<title>.*?)(?:\s|&nbsp;)*' . $dash . '(?:\s|&nbsp;)*' . preg_quote($site, '/') . '(\s*<\/title>)/isu';
+        $sep  = '(?:\s|&nbsp;)*';
+        $pattern = '/(<title>.*?)' . $sep . $dash . $sep . preg_quote($site, '/') . '(' . $sep . '<\/title>)/isu';
         $fixed = preg_replace_callback($pattern, function($m) use ($site) {
             return (strpos($m[1], $site) !== false) ? ($m[1] . $m[2]) : $m[0];
         }, $html);
         if ($fixed !== null) $html = $fixed;
+
+        // Service-page titles show a second, shorter form of the brand
+        // immediately before the full one, e.g. "Bathroom Plumbing
+        // Roodepoort | Renovations & Repairs — Tysons Plumbers – Tysons
+        // Plumbers Roodepoort" — the pass above only catches an exact
+        // repeat of the FULL site name, so this doesn't match it. The
+        // short form is the site name with its last word (the town)
+        // dropped; collapse that mid-title mention too, keeping only the
+        // one full brand mention at the end.
+        $site_core = trim(preg_replace('/\s+\S+$/u', '', $site));
+        if ($site_core !== '' && $site_core !== $site) {
+            $pattern2 = '/(<title>.*?)' . $sep . $dash . $sep . preg_quote($site_core, '/') . $sep . $dash . $sep . preg_quote($site, '/') . '(' . $sep . '<\/title>)/isu';
+            $fixed2 = preg_replace_callback($pattern2, function($m) use ($site) {
+                return $m[1] . ' – ' . $site . $m[2];
+            }, $html);
+            if ($fixed2 !== null) $html = $fixed2;
+        }
+
+        // Even after de-duplicating, some titles are simply too long on
+        // their own (e.g. area pages: "Plumbers Constantia Kloof | 24/7
+        // Service – Tysons Plumbers Roodepoort", 69 chars, no repeat).
+        // Cap the rendered title at 60 chars by trimming the part before
+        // the brand suffix to the last whole word, rather than shipping
+        // an oversized title live — only touches titles that already end
+        // in "dash + full site name", so untitled/short titles (e.g. the
+        // homepage) are left alone.
+        $html = preg_replace_callback('/<title>(.*?)' . $sep . $dash . $sep . preg_quote($site, '/') . $sep . '<\/title>/isu', function($m) use ($site) {
+            $prefix = html_entity_decode(rtrim($m[1]), ENT_QUOTES);
+            $suffix = ' – ' . $site;
+            if (mb_strlen($prefix . $suffix) <= 60) {
+                return '<title>' . esc_html($prefix) . $suffix . '</title>';
+            }
+            $budget = 60 - mb_strlen($suffix);
+            $trimmed = mb_substr($prefix, 0, max($budget, 0));
+            $trimmed = preg_replace('/\s+\S*$/u', '', $trimmed);
+            $trimmed = rtrim($trimmed, " \t|–—-&");
+            return '<title>' . esc_html($trimmed) . $suffix . '</title>';
+        }, $html);
+
+        // The homepage title is just the bare site name with nothing added
+        // ("Tysons Plumbers Roodepoort", 26 chars) — too short to carry any
+        // keyword value. Give it a short, accurate suffix instead.
+        if (is_front_page()) {
+            $html = preg_replace(
+                '/<title>' . $sep . preg_quote($site, '/') . $sep . '<\/title>/isu',
+                '<title>' . esc_html($site) . ' – 24/7 Emergency Plumber</title>',
+                $html
+            );
+        }
     }
+
+    // SiteSEO renders its own <meta name="description"> directly during
+    // wp_head too (same bypass-every-filter behavior as its <title>
+    // handling above), landing BEFORE tp_seo_head()'s own description —
+    // so the page shipped two description tags, and browsers/crawlers
+    // honor whichever comes first, meaning SiteSEO's generic two-word
+    // "Plumbers Roodepoort" (with an empty site name in its Organization
+    // schema, suggesting it was never actually configured) was what
+    // actually rendered in search results instead of the theme's real
+    // one. Recomputes the same correct description tp_seo_head() already
+    // builds per page type, then collapses every description tag (plus
+    // the matching og:description / twitter:description, which SiteSEO
+    // had also populated with its generic text) down to that single
+    // correct value.
+    if (is_singular('tp_service')) {
+        $post_id = get_the_ID();
+        $correct_desc = get_post_meta($post_id, 'tp_meta_desc', true) ?: get_the_excerpt();
+    } elseif (is_singular('tp_area')) {
+        $area = get_the_title();
+        $correct_desc = "Trusted plumbers in $area — Tysons Plumbers Roodepoort. 24/7 emergency plumbing, geyser repairs, drain cleaning, pipe repairs. No call-out fee. Call 071 363 1433.";
+    } else {
+        $correct_desc = 'Tysons Plumbers Roodepoort — local plumbers in Roodepoort. 24/7 emergency plumbing, geyser repairs, drain cleaning, pipe repair. No call-out fee. Call 071 363 1433.';
+    }
+    if ($correct_desc) {
+        $desc_tag = '<meta name="description" content="' . esc_attr($correct_desc) . '">';
+        $count = 0;
+        $html = preg_replace('/<meta\s+name=["\']description["\'][^>]*>/i', $desc_tag, $html, -1, $count);
+        if ($count > 1) {
+            // Keep only the first (now-correct) occurrence, drop any extras.
+            $first = true;
+            $html = preg_replace_callback('/<meta\s+name=["\']description["\'][^>]*>/i', function($m) use (&$first) {
+                if ($first) { $first = false; return $m[0]; }
+                return '';
+            }, $html);
+        }
+        $html = preg_replace('/(<meta\s+property=["\']og:description["\'][^>]*content=["\'])[^"\']*(["\'][^>]*>)/i', '${1}' . esc_attr($correct_desc) . '${2}', $html);
+        $html = preg_replace('/(<meta\s+name=["\']twitter:description["\'][^>]*content=["\'])[^"\']*(["\'][^>]*>)/i', '${1}' . esc_attr($correct_desc) . '${2}', $html);
+    }
+
     echo $html;
 }, PHP_INT_MAX);
 
