@@ -26,14 +26,27 @@ fixes (fake-review removal, crc32 phrase-rotation de-duplication, 6
 redirect fixes via .htaccess) in an earlier session. The content should
 already be reasonable; it just was never being told to Google.
 
-## What "success" looks like here
+## Update, 2026-11-06: indexing is already recovered
 
-Since there's no automated position tracking for this site, the signal
-to watch is simple: **does the indexed-page count in GSC's Coverage
-report start climbing from near-zero?** That's the whole story. A
-secondary signal: does `domainTraffic`/organic traffic in an ad-hoc
-Ubersuggest `domain_overview` lookup (not a tracked project — a one-off
-query doesn't cost a project slot) start moving off zero?
+The 2026-11-06 GSC Coverage export showed indexed count had jumped from
+2 to 81 on **2026-09-05** — a full month before the sitemap fix above —
+and had climbed to 84 and held flat there since 2026-09-22 (17
+not-indexed, matching the Critical issues breakdown exactly). So the
+2026-10-07 sitemap fix documented above is NOT what caused this jump;
+something else (an earlier partial fix, or Google crawling via internal
+links independent of the sitemap) already got the site indexed by early
+September. Indexing is no longer the open question for this site — it's
+recovered and stable at 84/101 known pages.
+
+## What "success" looks like here, now
+
+The indexing signal is resolved (see above) — the open question now is
+**ranking and traffic**, not indexing. Despite 84 pages being indexed,
+Ubersuggest's ad-hoc `domain_overview` still shows DA 2, ~5/mo traffic,
+and no tracked keywords above position ~24. Watch whether
+`domainTraffic`/organic traffic starts moving off near-zero, and whether
+any keyword breaks into the top 20-30 — that's the real next milestone,
+not the indexed-page count.
 
 ## Monthly check process
 
@@ -46,10 +59,9 @@ query doesn't cost a project slot) start moving off zero?
    (NOT `create_project` — do not create a tracked project for this
    site) to check whether traffic/organicKeywords have moved off zero.
 4. Append a row to monthly-log.csv, commit, push.
-5. Give an honest, calibrated read — this is a slow recovery situation,
-   not a quick-win one. A jump from 3 indexed pages to 20-30 over the
-   first month would already be a strong result; don't expect the full
-   92 pages to index immediately.
+5. Give an honest, calibrated read. Indexing recovered already (see
+   above) — the thing to watch now is whether traffic/rankings move off
+   their still-near-zero baseline, not the indexed-page count.
 
 ## monthly-log.csv columns
 
