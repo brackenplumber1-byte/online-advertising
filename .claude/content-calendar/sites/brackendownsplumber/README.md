@@ -21,10 +21,11 @@ session) for the exact publishing process.
 3. Append a row to `calendar.csv` the moment the post is published —
    don't batch this at the end of a session.
 
-## Topic backlog (untapped as of 2026-08-10)
+## Topic backlog (untapped as of 2026-08-10) — EXHAUSTED as of 2026-11-06
 
-Pull from this list roughly in order, skipping anything that's since been
-covered (check `calendar.csv` first):
+Every item below has now been covered (check `calendar.csv` for exact
+dates/URLs) — this list is kept for reference only, not as a pull queue
+anymore. For new topics, see "Where to look next" below.
 
 - Geyser installation cost & process breakdown (Alberton/East Rand pricing)
 - Gas geysers & gas plumbing safety
@@ -50,10 +51,27 @@ covered (check `calendar.csv` first):
 - Commercial plumbing beyond grease traps — restaurant/office compliance
 - Sectional title / body corporate plumbing responsibilities (who pays
   for what between owner and body corporate)
-- New suburb-specific "common problems" posts for any served area not
-  yet covered by `functions.php`'s area list (check against existing
-  `common-plumbing-problems-in-alberton-homes` post — only one area has
-  a dedicated post so far)
+- New suburb-specific "common problems" posts (Alberton, Boksburg and
+  Edenvale now have dedicated posts — see "Where to look next" for more
+  candidate suburbs)
+
+## Where to look next (once the list above is exhausted)
+
+- More suburb-specific "common problems" posts: `functions.php`'s
+  `GP_AREAS` list (line ~74) has 41 served suburbs, only 3 have a
+  dedicated post so far (Alberton, Boksburg, Edenvale as of 2026-11-06).
+  Bias toward suburbs with real tracked-keyword activity in
+  `.claude/keyword-tracking/sites/brackendownsplumber/monthly-log.csv`
+  (e.g. Benoni, Germiston, Kempton Park, Springs, Brakpan all have
+  tracked keywords) over picking blind.
+- Seasonal refreshes: existing winter-heavy topics (burst pipes, load
+  shedding/geyser) could get a second pass each year rather than being
+  "done forever" — but don't duplicate near-identical angles, find a
+  genuinely new one (new regulation, new product type, a angle not yet
+  covered).
+- Check `.claude/keyword-tracking/sites/brackendownsplumber/README.md`
+  for striking-distance keywords (position 11-20) that a dedicated post
+  could help push onto page 1.
 
 ## CSV columns
 
