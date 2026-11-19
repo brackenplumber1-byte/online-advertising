@@ -1,0 +1,2 @@
+date,new_spam_domains_found,total_disavowed,action,notes
+2026-11-19,24,24,disavow_sent,"First check for this site. Found the 'Premium PBN & Link Building' template spam network (identical pages, anchor text literally reading 'buy backlinks online cheap') across 24 domains, dofollow, spam scores up to 13. Same network already confirmed on 247plumbersgp/mondeor/tysons -- not a targeted attack. Disavow file sent to user; domains logged to disavowed-domains.txt as the running baseline."

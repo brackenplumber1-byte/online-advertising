@@ -1,0 +1,5 @@
+# Never checked for backlink spam before this file was created
+# (2026-11-19) -- the 2026-10-11 baseline audit for this site found
+# zero backlinks entirely (DA 1), so there was nothing to check at the
+# time. The first monthly backlink-spam check should establish a real
+# baseline from a fresh Ubersuggest backlinks pull.

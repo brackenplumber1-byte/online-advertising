@@ -1,0 +1,10 @@
+# A disavow file (~246 fake Google-CSE-redirect backlinks) was sent to
+# the user on 2026-10-06 for a DIFFERENT spam pattern than the
+# "Premium PBN & Link Building" template network tracked elsewhere in
+# this directory -- the exact domain list from that file isn't
+# retained in this session's context, so it's not reproduced here
+# rather than guessed. The first monthly backlink-spam check run for
+# this site should treat this file as empty/unverified and establish
+# a real baseline from a fresh Ubersuggest backlinks pull, cross-
+# checking anything that looks like the Google-CSE-redirect pattern
+# too, not just the PBN-template one.

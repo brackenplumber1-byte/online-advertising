@@ -1,0 +1,3 @@
+date,new_spam_domains_found,total_disavowed,action,notes
+2026-11-12,3,3,disavow_sent,"Ubersuggest alerted the user to '40 new backlinks' from the PBN template network. Only 3 domains were individually confirmed at the time (dominicamag.com, aplicabbs.com, websquemolan.com) -- the detailed backlinks API hadn't synced with the new count yet."
+2026-11-19,44,47,disavow_sent,"Full backlinks pull now returns real data. Found 47 total domains on the same PBN template network (44 new beyond the 3 already sent Nov 12), dofollow, spam scores up to 12. One legitimate link (bizcommunity.com directory listing, nofollow) correctly NOT disavowed. Updated disavow file sent to user, supersedes the Nov 12 one."

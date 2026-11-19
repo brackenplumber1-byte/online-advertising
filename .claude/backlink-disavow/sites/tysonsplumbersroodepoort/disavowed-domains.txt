@@ -1,0 +1,11 @@
+# This site's backlink profile was checked earlier in this project and
+# a "Dark Side Links"/Quarterlinks Telegram-channel link-selling spam
+# pattern was found and assessed -- concluded no disavow needed at the
+# time since those links were nofollow (Google already excludes
+# nofollow from authority calculations). The exact domain list from
+# that check isn't retained in this session's context, so it's not
+# reproduced here rather than guessed. The first monthly backlink-spam
+# check for this site should establish a real baseline from a fresh
+# Ubersuggest backlinks pull and check specifically whether the
+# "Premium PBN & Link Building" template network (confirmed on the
+# other 4 sites in this portfolio) has also reached this one.
