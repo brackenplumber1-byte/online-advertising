@@ -58,12 +58,12 @@ anymore. For new topics, see "Where to look next" below.
 ## Where to look next (once the list above is exhausted)
 
 - More suburb-specific "common problems" posts: `functions.php`'s
-  `GP_AREAS` list (line ~74) has 41 served suburbs, only 6 have a
+  `GP_AREAS` list (line ~74) has 41 served suburbs, only 7 have a
   dedicated post so far (Alberton, Boksburg, Edenvale, Brakpan, Benoni,
-  Kempton Park as of 2026-11-17). Bias toward suburbs with real
-  tracked-keyword activity in
+  Kempton Park, Germiston as of 2026-11-20). Bias toward suburbs with
+  real tracked-keyword activity in
   `.claude/keyword-tracking/sites/brackendownsplumber/monthly-log.csv`
-  (e.g. Germiston, Springs have tracked keywords) over picking blind.
+  (e.g. Springs has tracked keywords) over picking blind.
 - Seasonal refreshes: existing winter-heavy topics (burst pipes, load
   shedding/geyser) could get a second pass each year rather than being
   "done forever" — but don't duplicate near-identical angles, find a
