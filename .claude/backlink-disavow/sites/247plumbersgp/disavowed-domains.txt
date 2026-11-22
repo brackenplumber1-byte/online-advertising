@@ -1,10 +1,62 @@
-# A disavow file (~246 fake Google-CSE-redirect backlinks) was sent to
-# the user on 2026-10-06 for a DIFFERENT spam pattern than the
-# "Premium PBN & Link Building" template network tracked elsewhere in
-# this directory -- the exact domain list from that file isn't
-# retained in this session's context, so it's not reproduced here
-# rather than guessed. The first monthly backlink-spam check run for
-# this site should treat this file as empty/unverified and establish
-# a real baseline from a fresh Ubersuggest backlinks pull, cross-
-# checking anything that looks like the Google-CSE-redirect pattern
-# too, not just the PBN-template one.
+# This is a DIFFERENT spam pattern than the "Premium PBN & Link
+# Building" template network tracked for the other sites in this
+# directory -- these are Google Custom Search Engine redirect URLs
+# (clients1.google.<tld>/url?q=... and cse.google.<tld>/url?q=...),
+# an artifact of some third-party site's embedded Google CSE widget
+# whose search results happened to include this domain, not a real
+# backlink in any meaningful sense. A disavow file covering this
+# pattern (~246 domains) was sent to the user on 2026-10-06; confirmed
+# live again via a fresh pull on 2026-11-22 -- same domains, no growth,
+# nothing new. Backfilled below with every such domain actually seen
+# in that 2026-11-22 pull (the exhaustive original Oct-6 list itself
+# isn't retained in this session's context).
+cse.google.de
+clients1.google.de
+cse.google.es
+clients1.google.es
+clients1.google.com.br
+cse.google.com.br
+clients1.google.co.uk
+cse.google.co.uk
+cse.google.co.jp
+clients1.google.co.jp
+cse.google.fr
+clients1.google.fr
+clients1.google.it
+cse.google.it
+cse.google.ca
+clients1.google.ca
+cse.google.ru
+clients1.google.ru
+clients1.google.pl
+cse.google.pl
+clients1.google.nl
+cse.google.nl
+clients1.google.co.in
+cse.google.co.in
+cse.google.co.id
+clients1.google.co.id
+cse.google.com.tw
+clients1.google.com.tw
+cse.google.com.mx
+clients1.google.com.mx
+cse.google.cz
+clients1.google.cz
+cse.google.com.ar
+clients1.google.com.ar
+clients1.google.com.au
+cse.google.com.au
+cse.google.be
+clients1.google.be
+cse.google.co.th
+clients1.google.co.th
+clients1.google.pt
+cse.google.pt
+clients1.google.com.ua
+cse.google.com.ua
+cse.google.hu
+clients1.google.hu
+cse.google.se
+clients1.google.se
+cse.google.ch
+clients1.google.ch

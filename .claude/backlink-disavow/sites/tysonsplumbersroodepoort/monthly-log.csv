@@ -1,1 +1,2 @@
 date,new_spam_domains_found,total_disavowed,action,notes
+2026-11-22,0,0,no_action,"Ubersuggest's detailed backlinks API returned empty for this domain on two attempts (same data-lag issue seen on this domain before). Overview confirms backlinks flat at 10, refDomains flat at 7 -- unchanged from the longstanding baseline, no sign of the PBN network reaching this site yet. Will retry the detailed pull next month."
